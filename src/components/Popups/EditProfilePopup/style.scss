@@ -1,0 +1,68 @@
+.edit-profile-popup-container {
+  position: fixed;
+  left: 0;
+  top: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  z-index: 101;
+
+  .edit-profile-popup-wrapper {
+    background-color: #fff;
+    width: 600px;
+    margin: 0 20px;
+
+    .epp-top {
+      padding: 15px 30px;
+      background-color: #fafafa;
+      box-shadow: 0 1px 0 0 rgba(222, 222, 222, 0.5);
+      display: flex;
+      justify-content: space-between;
+
+      button {
+        width: 20px;
+        height: 20px;
+
+        img {
+          width: 100%;
+        }
+      }
+    }
+
+    form {
+      padding: 15px 30px;
+
+      #user-edit-email {
+        background-color: #eeeeee;
+      }
+
+      .user-name-row {
+        select {
+          border: 1px solid #bdbdbd;
+          border-right: none;
+          border-top-left-radius: 0.25rem;
+          border-bottom-left-radius: 0.25rem;
+          padding-right: 30pxSS;
+        }
+
+        input {
+          border-top-left-radius: 0;
+          border-bottom-left-radius: 0;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: "576px") {
+  .edit-profile-popup-container {
+    .edit-profile-popup-wrapper {
+      width: 100%;
+      margin: 0;
+      height: 100%;
+      border: 1px solid rgba(222, 222, 222, 0.5);
+    }
+  }
+}

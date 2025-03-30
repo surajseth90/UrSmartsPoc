@@ -1,0 +1,343 @@
+.mt-24 {
+  margin-top: 24px;
+}
+
+section {
+  width: 100%;
+}
+
+.home-page-container {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  overflow-y: auto;
+
+  .home-page-carousel-container {
+    // background-image: url("../../assets/images/HomePage_BG1.png");
+    width: 100%;
+    height: 290px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    .swiper {
+      width: 100%;
+      height: 100%;
+
+      .swiper-pagination-bullet {
+        background-color: rgb(255, 255, 255, 0.5);
+
+        &.swiper-pagination-bullet-active {
+          background-color: #ffffff;
+        }
+      }
+    }
+
+    .carousel-slide {
+      width: 100%;
+      height: 100%;
+
+      img {
+        width: 100%;
+        height: 100%;
+      }
+    }
+  }
+
+  .home-page-wrapper {
+    width: 100%;
+    padding-bottom: 130px;
+
+    // padding: 0 80px;
+
+    .text-container {
+      max-width: 798px;
+      margin: auto;
+      margin-top: 62px;
+
+      p {
+        color: #212121;
+        font-family: Montserrat;
+        font-size: 30px;
+        font-weight: bold;
+        letter-spacing: 0;
+        line-height: 37px;
+        max-width: 604px;
+      }
+
+      span {
+        margin-top: 35px;
+        color: #757575;
+        font-family: Montserrat;
+        font-size: 18px;
+        font-weight: 500;
+        letter-spacing: 0;
+        line-height: 30px;
+      }
+    }
+
+    .card-section {
+      margin-top: 100px;
+      width: 100%;
+
+      .card-section-top-container {
+        display: flex;
+        justify-content: space-between;
+
+        p {
+          color: #212121;
+          font-family: Montserrat;
+          font-size: 24px;
+          font-weight: bold;
+          letter-spacing: 0;
+          line-height: 29px;
+        }
+      }
+      .card-section-top-btn-container {
+        display: flex;
+
+        button {
+          height: 30px;
+          width: 30px;
+          border: 1px solid #e5794c;
+          border-radius: 50%;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+
+          div {
+            width: 15px;
+            height: 15px;
+            background-image: url("../../assets/images/HomePage/right-arrow.png");
+          }
+
+          &.card-prev-btn {
+            margin-right: 8px;
+
+            div {
+              transform: rotate(180deg);
+            }
+          }
+
+          &:disabled {
+            border: 1px solid #bdbdbd;
+
+            div {
+              background-image: url("../../assets/images/HomePage/right-arrow-disabled.png");
+            }
+          }
+        }
+      }
+
+      &.our-services-section {
+        .card-list-wrapper {
+          display: flex;
+          justify-content: space-between;
+
+          .card {
+            max-width: 190px;
+            width: 100%;
+            height: 190px;
+            border: 1px solid #eeeeee;
+            border-radius: 2px;
+            background-color: #ffffff;
+
+            button {
+              width: 100%;
+              height: 100%;
+
+              &:hover {
+                box-shadow: 0 4px 10px 0 rgba(226, 226, 226, 0.5);
+              }
+
+              img {
+                width: 60px;
+                height: 60px;
+                margin-bottom: 25px;
+              }
+            }
+
+            // &:not(:first-child) {
+            //   margin-left: 28px;
+            // }
+          }
+        }
+      }
+
+      &.top-professional-section {
+        .card-list-wrapper {
+          display: flex;
+          justify-content: space-between;
+
+          .card {
+            border: 1px solid #eeeeee;
+            border-radius: 2px;
+            background-color: #ffffff;
+
+            button {
+              padding: 31px 20px;
+              width: 100%;
+              height: 100%;
+
+              .top-professional-img-container {
+                width: 124px;
+                height: 124px;
+                margin: auto;
+                background: grey;
+                border-radius: 50%;
+              }
+
+              img {
+                width: 60px;
+                height: 60px;
+                margin-bottom: 25px;
+              }
+
+              .professional-name {
+                margin-top: 27px;
+                font-weight: bold;
+              }
+
+              .professional-exp {
+                color: #757575;
+              }
+
+              .rating-star-wrapper {
+                width: 60px;
+                height: 20px;
+                color: white;
+                background-color: #44b776;
+                margin: 0 auto;
+                margin-top: 15px;
+
+                span {
+                  font-size: 12px;
+                  line-height: 0;
+
+                  &:nth-child(2) {
+                    margin-left: 5px;
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+
+      &.how-mud-works-section {
+        .card-list-wrapper {
+          display: flex;
+          justify-content: space-between;
+
+          .card-wrapper {
+            .card {
+              padding: 42px 31px 30px 28px;
+              img {
+                max-width: 58px;
+                max-height: 58px;
+              }
+
+              span {
+                margin-top: 24px;
+                font-weight: bold;
+                font-size: 18px;
+              }
+
+              p {
+                margin-top: 12px;
+                color: #757575;
+                font-family: Montserrat;
+                font-size: 14px;
+              }
+
+              button {
+                margin-top: 24px;
+                color: #e5794c;
+                font-family: Montserrat;
+                font-size: 11px;
+              }
+            }
+          }
+        }
+      }
+
+      &.card-section-2-cards {
+        .card {
+          padding: 39px 34px 41px 30px;
+
+          .quote-img {
+            width: 60px;
+            height: 60px;
+          }
+
+          .user-feedback {
+            margin-top: 26px;
+            color: #212121;
+            font-family: Montserrat;
+            font-size: 16px;
+            letter-spacing: 0;
+            line-height: 22px;
+          }
+
+          .feedback-user-container {
+            .feedback-img {
+              width: 70px;
+              height: 70px;
+              background: grey;
+              border-radius: 50%;
+              img {
+                width: 100%;
+              }
+            }
+
+            .feedback-text {
+              margin-left: 18px;
+              p {
+                font-family: Montserrat;
+                font-size: 14px;
+                letter-spacing: 0;
+                line-height: 22px;
+                font-weight: bold;
+              }
+              span {
+                color: #757575;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 992px) {
+  .home-page-container {
+    .home-page-wrapper {
+      .text-container {
+        max-width: 600px;
+        p {
+          font-size: 25px;
+          max-width: 500px;
+        }
+        span {
+          font-size: 15px;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .home-page-container {
+    .home-page-wrapper {
+      .text-container {
+        max-width: 500px;
+        p {
+          font-size: 20px;
+          max-width: 400px;
+        }
+        span {
+          font-size: 13px;
+        }
+      }
+    }
+  }
+}

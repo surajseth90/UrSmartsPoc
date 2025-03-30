@@ -1,0 +1,67 @@
+.mt-24 {
+  margin-top: 24px;
+}
+
+section {
+  width: 100%;
+}
+
+.FAQs-page-container {
+  overflow-y: auto;
+
+  .FAQs-top-container {
+    background: linear-gradient(90deg, #e5794c 0%, #e54c79 100%);
+    padding: 93px 0 100px 0;
+    color: white !important;
+
+    h1 {
+      font-weight: bold;
+      font-size: 42px;
+      letter-spacing: 0;
+      line-height: 52px;
+      margin: 0;
+    }
+
+    p {
+      font-size: 18px;
+      letter-spacing: 0;
+      line-height: 30px;
+      margin-top: 22px;
+    }
+  }
+
+  .card {
+    padding: 29px 31px;
+    margin-bottom: 21px;
+
+    .faq-expand-btn {
+      line-height: 0;
+      width: 30px;
+    }
+
+    .plus-sign-animation {
+      width: 30px;
+      height: 3px;
+      background-color: #e5794c;
+      transition: all 0.3s;
+
+      &.verticle {
+        transform: rotate(90deg);
+      }
+    }
+
+    .FAQ-description {
+      font-size: 14px;
+      margin-top: 21px;
+    }
+  }
+}
+
+@media (max-width: 992px) {
+}
+
+@media (max-width: 768px) {
+}
+
+@media (max-width: 645px) {
+}

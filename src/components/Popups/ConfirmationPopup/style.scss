@@ -1,0 +1,83 @@
+.reject-popup-container {
+  position: fixed;
+  width: 100%;
+  // height: 100%;
+  top: 15vh;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  // align-items: center;
+  z-index: 101;
+
+  .reject-popup-wrapper {
+    box-sizing: border-box;
+    max-width: 460px;
+    width: 90%;
+    border: 1px solid #eeeeee;
+    border-radius: 6px;
+    background: linear-gradient(180deg, #ffffff 0%, #ffffff 100%);
+    box-shadow: 0 20px 20px 0 rgba(0, 0, 0, 0.06);
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    padding: 50px;
+    align-items: center;
+    text-align: center;
+
+    .close-btn {
+      background-image: url("../../../assets/images/close.png");
+      width: 15px;
+      height: 15px;
+      background-size: contain;
+      background-repeat: no-repeat;
+      position: absolute;
+      top: 15px;
+      right: 15px;
+    }
+
+    span {
+      color: #212121;
+      font-family: Poppins;
+      font-size: 14px;
+      letter-spacing: 0;
+      line-height: 24px;
+      text-align: center;
+      text-wrap: nowrap;
+    }
+
+    .reject-popup-btns-container {
+      width: 100%;
+      display: flex;
+      margin: 0 -10px;
+      margin-top: 40px;
+
+      button {
+        border-radius: 3px;
+        width: 50%;
+        padding: 10px 30px;
+        font-family: Montserrat;
+        font-size: 14px;
+        margin: 0 10px;
+      }
+      .cancel-btn {
+        background-color: #bdbdbd;
+        border: 1px solid #bdbdbd;
+        color: #ffffff;
+
+        &:hover {
+          border-color: #e5794c;
+          background-color: transparent;
+          color: #e5794c;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 420px) {
+  .reject-popup-wrapper {
+    .reject-popup-container {
+      padding: 50px 20px;
+    }
+  }
+}
