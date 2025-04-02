@@ -78,7 +78,7 @@ const CustomCalendar = (props) => {
                   setSelectedDay(day.toDateString());
                 }}
               >
-                <p className="font-bold font-11">
+                <p className="font-bold">
                   {getDayName(day).slice(0, 3).toUpperCase()}
                 </p>
                 <p className="font-12 text-grey">

@@ -28,7 +28,7 @@ export default function RejectPopup(props) {
     <div className={`ratings-popup-container`}>
       <div className={`ratings-popup-wrapper`}>
         <div className="rating-popup-top d-flex justify-content-between w-100 align-items-center ">
-          <p className="label-black font-18 font-bold">Write a Review</p>
+          <p className="label-black font-bold">Write a Review</p>
           <button
             className="close-btn"
             onClick={() => {

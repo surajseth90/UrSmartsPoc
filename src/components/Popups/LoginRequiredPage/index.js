@@ -20,7 +20,7 @@ export default function LoginRequiredPopup(props) {
           }}
         ></button>
         <div>
-          <h3 className="label-black font-18 font-bold">{heading}</h3>
+          <h3 className="label-black font-bold">{heading}</h3>
           <p className="label-black mt-2 font-medium">{text}</p>
         </div>
 
