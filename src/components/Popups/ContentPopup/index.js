@@ -1,5 +1,10 @@
 import React, { useEffect } from "react";
 import "./style.scss";
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
+import { Pagination, Autoplay } from "swiper/modules";
 
 export default function ContentPopup({ img, title, description, onClose }) {
   useEffect(() => {
@@ -15,7 +20,12 @@ export default function ContentPopup({ img, title, description, onClose }) {
       <div className="overlay"></div>
 
       <div className="content-popup-container bg-white w-100 d-flex position-relative">
-        <button onClick={onClose} className="position-absolute" title="close" aria-label="close">
+        <button
+          onClick={onClose}
+          className="position-absolute"
+          title="close"
+          aria-label="close"
+        >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="23"
@@ -29,11 +39,39 @@ export default function ContentPopup({ img, title, description, onClose }) {
             />
           </svg>
         </button>
-        <img src={img} />
+        <div className="images-wrapper col-lg-4 d-flex col-sm-6">
+          {Array.isArray(img) && img.length > 1 ? (
+            <Swiper
+              pagination={true}
+              modules={[Pagination, Autoplay]}
+              autoplay={{
+                delay: 2000,
+                disableOnInteraction: false,
+              }}
+              slidesPerView={1}
+              className="mySwiper"
+            >
+              {img.map((image) => {
+                return (
+                  <SwiperSlide>
+                    <div className="">
+                      <img className="w-100" src={image} alt="content image" />
+                    </div>
+                  </SwiperSlide>
+                );
+              })}
+            </Swiper>
+          ) : (
+            <img src={img} className="w-100" alt="content image" />
+          )}
+        </div>
 
         <div>
           <h3>{title}</h3>
-          <p dangerouslySetInnerHTML={{__html: description}}></p>
+          <p
+            className="mt-3"
+            dangerouslySetInnerHTML={{ __html: description }}
+          ></p>
         </div>
       </div>
     </div>

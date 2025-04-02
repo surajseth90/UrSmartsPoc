@@ -21,7 +21,6 @@
 
   .home-page-wrapper {
     width: 100%;
-    padding-bottom: 130px;
 
     .text-container {
       max-width: 798px;
@@ -106,7 +105,36 @@
 
 section.our-stories {
   background-color: var(--bs-orange);
-  padding: 80px 0;
+  padding: 80px 0  40px 0;
+
+
+
+  .card-prev-btn,
+  .card-next-btn {
+    color: white;
+  }
+
+  .stories-wrapper {
+    .w-100 {
+      width: calc(100% + 2px) !important;
+    }
+
+    .swiper {
+      padding-bottom: 80px;
+    }
+
+    .swiper-pagination {
+      width: max-content;
+      margin-left: 50%;
+      .swiper-pagination-bullet {
+        background: rgba(0, 0, 0);
+  
+        &.swiper-pagination-bullet-active {
+          background-color: white;
+        }
+      }
+    }
+  }
 
   .container div {
     gap: 20px;
@@ -166,7 +194,7 @@ section.gst-details-section {
       width: 30px;
       height: 30px;
       border-radius: 50%;
-      background-color: aquamarine;
+      // background-color: aquamarine;
     }
 
     button.hotspot-1 {
@@ -269,5 +297,31 @@ section.home-page-content-section {
 
   .font-bold {
     font-size: 2.25rem;
+  }
+}
+
+section.brand-carousel {
+  white-space: nowrap;
+
+  padding: 40px 0 80px 0;
+
+  .carousel-track {
+    gap: 40px;
+    animation: scroll 15s linear infinite;
+    width: fit-content;
+  }
+
+  .brand-logo {
+    height: 70px;
+    width: auto;
+  }
+
+  @keyframes scroll {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-50%);
+    }
   }
 }

@@ -27,7 +27,7 @@ const GSTDetails = () => {
             <button className="position-absolute hotspot-1">
               <div className="dialog-overlay position-relative">
                 <div className="dialog-content">
-                  <div className="dialog-body">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</div>
+                  {/* <div className="dialog-body">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</div> */}
                 </div>
               </div>
             </button>
@@ -38,7 +38,7 @@ const GSTDetails = () => {
           </div>
         </div>
 
-        <p className="text-white text-center">
+        <p className="text-white text-center fs-4">
           Lorem Ipsum is simply dummy text of the printing and typesetting
           industry. Lorem Ipsum has been the industry's standard dummy text ever
           since the 1500s, when an unknown printer took a galley of type and

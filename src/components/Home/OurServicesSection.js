@@ -5,7 +5,6 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 import { Navigation, Pagination } from "swiper/modules";
 import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import SwiperNavigation from "../../app/SwiperNavigation";
@@ -14,7 +13,6 @@ import BG from "../../assets/images/our_services_bg.svg"
 
 function OurServicesSection() {
   const [dimension] = useSelector((state) => [state.dimension]);
-  const navigate = useNavigate();
 
   const [popupData, setPopupData] = useState(null);
 

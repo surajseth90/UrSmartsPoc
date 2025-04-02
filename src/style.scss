@@ -1,13 +1,24 @@
 @import "./bootstrap.scss";
 
 @font-face {
-  font-family: "Cursive";
-  src: url("./assets/fonts/Pacifico-Regular.ttf") format("truetype");
+  font-family: "SF  Pro";
+  src: url("./assets/fonts/SFPRODISPLAYMEDIUM.OTF") format("opentype");
+  font-weight: 500;
+  font-style: normal;
 }
 
 @font-face {
-  font-family: "Montserrat";
-  src: url("./assets/fonts/Montserrat-VariableFont.ttf") format("truetype");
+  font-family: "SF  Pro";
+  src: url("./assets/fonts/SFPRODISPLAYBOLD.OTF") format("opentype");
+  font-weight: bold;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "SF  Pro";
+  src: url("./assets/fonts/SFPRODISPLAYREGULAR.OTF") format("opentype");
+  font-weight: 400;
+  font-style: normal;
 }
 
 * {
@@ -35,9 +46,10 @@ body,
 }
 
 body {
-  font-family: "Montserrat";
+  font-family: "SF  Pro";
   font-size: 16px;
   color: #000 !important;
+  font-weight: 400;
 }
 
 .container {
