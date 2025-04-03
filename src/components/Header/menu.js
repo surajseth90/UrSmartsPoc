@@ -10,7 +10,7 @@ export default function MobileNavbar({ isLogin, headerRightContainerRef }) {
 
   const NavigationListELement = ({ title, link, childern, onClick }) => {
     return (
-      <li className="px-4 d-flex header-li position-relative">
+      <li className="px-4 d-flex header-li position-relative ">
         <Link aria-current="page" to={link} onClick={onClick}>
           <div className="hd-content-wrapper">
             <span className="font-medium text-center">{title}</span>
@@ -24,7 +24,7 @@ export default function MobileNavbar({ isLogin, headerRightContainerRef }) {
 
   return (
     <>
-      <ul className="d-flex align-items-center">
+      <ul className="d-flex align-content-lg-center align-items-start flex-column flex-lg-row">
         <NavigationListELement link="/" title="Home" />
         <NavigationListELement link="/" title="About us" />
         <NavigationListELement link="/" title="Services" />

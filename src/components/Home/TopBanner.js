@@ -4,11 +4,23 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import { Pagination, Autoplay } from "swiper/modules";
-import BottomHeaderSliderImage1 from "../../assets/images/bottom_header_slider_image1.avif";
-import BottomHeaderSliderImage2 from "../../assets/images/bottom_header_slider_image2.avif";
-import BottomHeaderSliderImage3 from "../../assets/images/bottom_header_slider_image3.avif";
+// import BottomHeaderSliderImage1 from "../../assets/images/bottom_header_slider_image1.avif";
+import BottomHeaderSliderImage1 from "../../assets/images/aus.png";
+
+import BottomHeaderSliderImage2 from "../../assets/images/ista.png";
+import BottomHeaderSliderImage3 from "../../assets/images/thai.png";
+import BottomHeaderSliderImage4 from "../../assets/images/sou-e-as.png";
+import BottomHeaderSliderImage5 from "../../assets/images/swiss.png";
 
 export default function TopBanner() {
+  const imgData = [
+    BottomHeaderSliderImage1,
+    BottomHeaderSliderImage2,
+    BottomHeaderSliderImage3,
+    BottomHeaderSliderImage4,
+    BottomHeaderSliderImage5,
+  ];
+
   return (
     <section className="home-page-carousel-container bg">
       <div className="container">
@@ -21,21 +33,15 @@ export default function TopBanner() {
           }}
           className="mySwiper"
         >
-          <SwiperSlide>
-            <div className="d-flex justify-content-center">
-              <img src={BottomHeaderSliderImage1} alt="home page logo" />
-            </div>
-          </SwiperSlide>
-          <SwiperSlide>
-            <div className="d-flex justify-content-center">
-              <img src={BottomHeaderSliderImage2} alt="home page logo" />
-            </div>
-          </SwiperSlide>
-          <SwiperSlide>
-            <div className="d-flex justify-content-center">
-              <img src={BottomHeaderSliderImage3} alt="home page logo" />
-            </div>
-          </SwiperSlide>
+          {imgData.map((img, key) => {
+            return (
+              <SwiperSlide key={`top-banner-img-${key}`}>
+                <div className="d-flex justify-content-center w-100">
+                  <img src={img} alt="home page logo" className="w-100"/>
+                </div>
+              </SwiperSlide>
+            );
+          })}
         </Swiper>
       </div>
     </section>

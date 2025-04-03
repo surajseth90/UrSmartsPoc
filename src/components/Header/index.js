@@ -21,10 +21,7 @@ function Header() {
   return (
     <div className="header-container w-100 position-relative top-0 bg-white">
       <div className="container">
-        <nav
-          className="header d-flex navbar-light position-relative align-items-center justify-content-between"
-          ref={headerRightContainerRef}
-        >
+        <nav className="header d-flex navbar-light position-relative align-items-center justify-content-between">
           <div className="header-left-container d-flex justify-content-between align-items-center">
             <Link to={"/"}>
               <div className="header-logo d-flex justify-content-center align-items-center">
@@ -86,8 +83,10 @@ function Header() {
           {dimension.windowSize > 992 ? (
             <Menu />
           ) : (
-            <div>
-              {" "}
+            <div
+              className="mobile-drawer position-fixed end-0 top-0 h-100 m-0 p-3"
+              ref={headerRightContainerRef}
+            >
               <Menu />
             </div>
           )}

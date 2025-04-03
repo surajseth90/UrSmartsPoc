@@ -12,6 +12,7 @@ import {
 } from "./action";
 import Home from "./components/Home";
 import RouteTemplate from "./app/RouteTemplate";
+import ChatButton from "./components/ChatButton";
 
 const UnknownRoute = lazy(() => import("./app/UnknownRoute"));
 const AboutUsPage = lazy(() => import("./components/AboutUs"));
@@ -94,11 +95,12 @@ function App() {
         <div
           className="overlay"
           onClick={() => {
-            const navDrawer = document.querySelector(".header-right-container");
+            const navDrawer = document.querySelector(".mobile-drawer");
+            console.log("navDrawer", navDrawer);
+            
             if (navDrawer.classList.contains("show")) {
               navDrawer.classList.remove("show");
               dispatch(setIsOverlay(false));
-              dispatch(setSecondDrawerOpen(null));
               document.body.style.overflowY = "auto";
             }
           }}
@@ -121,6 +123,8 @@ function App() {
           <div className="snackbar-cross snackbar-cross-2"></div>
         </button>
       </div>
+
+      <ChatButton />
     </div>
   );
 }

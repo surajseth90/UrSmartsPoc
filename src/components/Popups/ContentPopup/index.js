@@ -66,7 +66,7 @@ export default function ContentPopup({ img, title, description, onClose }) {
           )}
         </div>
 
-        <div>
+        <div className="w-100 d-flex flex-column align-items-center">
           <h3>{title}</h3>
           <p
             className="mt-3"

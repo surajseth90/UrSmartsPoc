@@ -1,0 +1,23 @@
+.chat-button-wrapper {
+  position: fixed;
+  right: -60px;
+  z-index: 1000;
+  top: 50%;
+  transform: translateY(-50%) rotate(-90deg);
+
+  a {
+    background: rgba(248, 204, 53, 1);
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    gap: 20px;
+    text-decoration: none;
+
+    p {
+      color: black;
+    }
+
+    svg {
+      transform: rotate(-90deg);
+    }
+  }
+}

@@ -33,26 +33,23 @@ export default function ContentSection() {
     <section className="home-page-content-section w-100">
       <div className="container">
         <p className="text-center mb-3 font-medium">
-          Lorem Ipsum is simply dummy text of the printing and typesetting
-          industry. Lorem Ipsum has been the industry's standard dummy text ever
-          since the 1500s, when an unknown printer took a galley of type and
-          scrambled it to make a type specimen book.
+        At UrSmartSpoc, we offer unbeatable prices, top-tier customer support, and endless travel options! Our Best Price Guarantee ensures premium Destination Management services at the most competitive rates. Need help? Our 24x7 Live Chat & Call Support is always available. With 100,000+ hotels, resorts, and service apartments worldwide, we turn your travel dreams into reality!
         </p>
 
         <div className="row pt-5">
           <div className="col-lg-4 col-md-5 d-flex flex-column align-items-center px-4">
             {SVGImg()}
-            <p className="font-bold text-center">State of modern retailing report 2025</p>
+            <p className="font-bold text-center">Best price guaranteed</p>
           </div>
 
           <div className="col-lg-4 col-md-5 d-flex flex-column align-items-center px-4">
             {SVGImg()}
-            <p className="font-bold text-center">State of modern retailing report 2025</p>
+            <p className="font-bold text-center">24x7 Live Chat & Call Support </p>
           </div>
 
           <div className="col-lg-4 col-md-5 d-flex flex-column align-items-center px-4">
             {SVGImg()}
-            <p className="font-bold text-center">State of modern retailing report 2025</p>
+            <p className="font-bold text-center">Pandora's Box of options</p>
           </div>
         </div>
       </div>

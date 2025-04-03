@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/navigation";
@@ -18,70 +18,50 @@ const data = [
     displayImg: Story1,
     hoverImgs: [Story2, Story3, Story4, Story5, Story6],
     city: "@Banglore",
-    popupTitle: "@Banglore story was work with fun",
-    popupDesc:
-      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing ",
+    popupTitle: "@Banglore",
+    popupDesc: "",
   },
   {
     displayImg: Story2,
     hoverImgs: [Story1, Story3, Story4, Story5, Story6],
-    city: "@Noida",
-    popupTitle: "@Banglore story was work with fun",
-    popupDesc:
-      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing ",
+    city: "@Goa",
+    popupTitle: "@Goa",
+    popupDesc: "",
   },
   {
     displayImg: Story3,
     hoverImgs: [Story2, Story1, Story4, Story5, Story6],
-    city: "@Gujrat",
-    popupTitle: "@Banglore story was work with fun",
-    popupDesc:
-      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing ",
+    city: "@Jaipur",
+    popupTitle: "@Jaipur",
+    popupDesc: "",
   },
   {
     displayImg: Story4,
     hoverImgs: [Story2, Story3, Story1, Story5, Story6],
-    city: "@Delhi",
-    popupTitle: "@Banglore story was work with fun",
-    popupDesc:
-      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing ",
-  },
-  {
-    displayImg: Story5,
-    hoverImgs: [Story2, Story3, Story4, Story1, Story6],
-    city: "@Gurugram",
-    popupTitle: "@Banglore story was work with fun",
-    popupDesc:
-      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing ",
-  },
-  {
-    displayImg: Story1,
-    hoverImgs: [Story2, Story3, Story4, Story5, Story6],
-    city: "@Banglore",
-    popupTitle: "@Banglore story was work with fun",
-    popupDesc:
-      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing ",
-  },
-  {
-    displayImg: Story4,
-    hoverImgs: [Story2, Story3, Story1, Story5, Story6],
-    city: "@Delhi",
-    popupTitle: "@Banglore story was work with fun",
-    popupDesc:
-      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing ",
-  },
-  {
-    displayImg: Story5,
-    hoverImgs: [Story2, Story3, Story4, Story1, Story6],
-    city: "@Gurugram",
-    popupTitle: "@Banglore story was work with fun",
-    popupDesc:
-      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing ",
+    city: "@Dubai",
+    popupTitle: "@Dubai",
+    popupDesc: "",
   },
 ];
 
 export default function OurStories() {
   const [popupData, setPopupData] = useState(null);
+  const timerRef = useRef(null);
+
+  const onHoverHandle = (e, story) => {
+    let index = 0;
+    timerRef.current = setInterval(() => {
+      e.target.src = story.hoverImgs[index];
+      if (index == story.hoverImgs.length - 1) {
+        index = 0;
+      } else index++;
+    }, 1000);
+  };
+
+  const onHoverLeaveHandle = (e, story) => {
+    clearInterval(timerRef.current);
+    e.target.src = story.displayImg;
+  };
 
   return (
     <section className="our-stories w-100">
@@ -176,7 +156,7 @@ export default function OurStories() {
             nextEl: "#next-story-btn",
           }}
           pagination={true}
-          slidesPerView={6}
+          slidesPerView={4}
           spaceBetween={0}
           modules={[Pagination, Navigation]}
         >
@@ -184,8 +164,19 @@ export default function OurStories() {
             return (
               <SwiperSlide key={`story-${index}`}>
                 <div className="d-flex flex-column">
-                  <img className="w-100" src={story.displayImg} alt="" />
-                  <button className="w-100 bg-white py-2" onClick={()=>setPopupData(story)}>{story.city}</button>
+                  <img
+                    className="w-100"
+                    src={story.displayImg}
+                    alt=""
+                    onMouseOver={(e) => onHoverHandle(e, story)}
+                    onMouseLeave={(e) => onHoverLeaveHandle(e, story)}
+                  />
+                  <button
+                    className="w-100 bg-white py-2"
+                    onClick={() => setPopupData(story)}
+                  >
+                    {story.city}
+                  </button>
                 </div>
               </SwiperSlide>
             );
