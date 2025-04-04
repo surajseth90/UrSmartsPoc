@@ -1,13 +1,12 @@
-import React from "react";
+import React, { Suspense, useState } from "react";
 import "./style.scss";
 import HeaderLogo from "../../assets/images/logo.svg";
-import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
 import MapImg from "../../assets/images/map.svg";
 
+const ContactForm = React.lazy(() => import("../Popups/ContactForm"));
+
 export default function Footer() {
-  const navigate = useNavigate();
-  const services = useSelector((state) => state.services);
+  const [isContactFormOpen, setIsContactFormOpen] = useState(false);
 
   return (
     <footer className="footer-container w-100">
@@ -21,9 +20,13 @@ export default function Footer() {
           </div>
           <div className="d-flex w-100 justify-content-between">
             <div className="footer-map-col d-flex mb-3 align-items-start col-md-2 col-6 col-lg-8">
-              <button className="w-75 h-100">
+              <a
+                target="_blank"
+                href="https://maps.app.goo.gl/oEsFY3rRbZWeGY1x5"
+                className="w-75  h-100"
+              >
                 <img className="w-100" src={MapImg} />
-              </button>
+              </a>
 
               <div className="d-flex flex-column" style={{ maxWidth: "256px" }}>
                 <h5>Corporate Office</h5>
@@ -98,7 +101,12 @@ export default function Footer() {
         </div>
 
         <div className="d-flex justify-content-end">
-          <button className="want-to-reach-btn">WANT US TO REACH OUT</button>
+          <button
+            onClick={() => setIsContactFormOpen(true)}
+            className="want-to-reach-btn"
+          >
+            WANT US TO REACH OUT
+          </button>
         </div>
       </div>
       <div className="footer-bottom bg d-flex justify-content-end">
@@ -106,6 +114,12 @@ export default function Footer() {
           © 2025 URSMARTSPOC. All Rights Reserved 
         </p>
       </div>
+
+      {isContactFormOpen && (
+        <Suspense fallback={<div className="loader"></div>}>
+          <ContactForm onClose={() => setIsContactFormOpen(false)} />
+        </Suspense>
+      )}
     </footer>
   );
 }

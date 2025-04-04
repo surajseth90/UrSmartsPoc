@@ -39,10 +39,7 @@ const GSTDetails = () => {
         </div>
 
         <p className="text-white text-center fs-4">
-          Lorem Ipsum is simply dummy text of the printing and typesetting
-          industry. Lorem Ipsum has been the industry's standard dummy text ever
-          since the 1500s, when an unknown printer took a galley of type and
-          scrambled it to make a type specimen book.
+        Currently registered for GST in 16 states & UT(s) and expanding rapidly to serve you better! 
         </p>
       </div>
     </section>
