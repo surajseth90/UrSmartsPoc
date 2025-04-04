@@ -15,7 +15,8 @@ function Header() {
   useEffect(() => {
     dispatch(setIsOverlay(false));
     document.body.style.overflowY = "auto";
-    headerRightContainerRef.current.classList.remove("show");
+    if (headerRightContainerRef.current)
+      headerRightContainerRef.current.classList.remove("show");
   }, [location.pathname]);
 
   return (

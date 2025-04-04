@@ -12,31 +12,31 @@ export default function AboutUsPage() {
       name: "Priyanka Gupta",
       jobTitle: "Senior Manager, Strategic",
       description:
-        "Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet. There are many variations of passages of available, but the majority have suffered alteration in some form, by injected humour Lorem Ipsum predefined...",
+        "Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet. There are many variations of passages of available, but the majority have suffered alteration in some form, by injected humour Lorem Ipsum predefined.",
     },
     {
       name: "Vipin Malhotra",
       jobTitle: "Senior Account Manager",
       description:
-        "Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet. There are many variations of passages of available, but the majority have suffered alteration in some form, by injected humour Lorem Ipsum predefined...",
+        "Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet. There are many variations of passages of available, but the majority have suffered alteration in some form, by injected humour Lorem Ipsum predefined.",
     },
     {
       name: "Akash Verma",
       jobTitle: "CEO",
       description:
-        "Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet. There are many variations of passages of available, but the majority have suffered alteration in some form, by injected humour Lorem Ipsum predefined...",
+        "Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet. There are many variations of passages of available, but the majority have suffered alteration in some form, by injected humour Lorem Ipsum predefined.",
     },
     {
       name: "Priyanka Gupta",
       jobTitle: "Senior Manager, Strategic",
       description:
-        "Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet. There are many variations of passages of available, but the majority have suffered alteration in some form, by injected humour Lorem Ipsum predefined...",
+        "Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet. There are many variations of passages of available, but the majority have suffered alteration in some form, by injected humour Lorem Ipsum predefined.",
     },
     {
       name: "Vipin Malhotra",
       jobTitle: "Senior Account Manager",
       description:
-        "Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet. There are many variations of passages of available, but the majority have suffered alteration in some form, by injected humour Lorem Ipsum predefined...",
+        "Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet. There are many variations of passages of available, but the majority have suffered alteration in some form, by injected humour Lorem Ipsum predefined.",
     },
   ];
 
@@ -45,7 +45,7 @@ export default function AboutUsPage() {
       <section className="about-top-container w-100">
         <div className="container-sm">
           <div className="about-mud-text">
-            <h1>About MUD</h1>
+            <h1>About UrSmartsPOC</h1>
             <p>
               It is a long established fact that a reader will be distracted by
               the readable content of a page when looking at its layout.
@@ -127,9 +127,6 @@ export default function AboutUsPage() {
                           <span className="text-grey">
                             {member.description}
                           </span>
-                          <button className="text-btn-orange d-inline-block">
-                            more
-                          </button>
                         </div>
                       </div>
                     </li>

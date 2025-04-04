@@ -26,7 +26,7 @@ export default function MobileNavbar({ isLogin, headerRightContainerRef }) {
     <>
       <ul className="d-flex align-content-lg-center align-items-start flex-column flex-lg-row">
         <NavigationListELement link="/" title="Home" />
-        <NavigationListELement link="/" title="About us" />
+        <NavigationListELement link="/about" title="About us" />
         <NavigationListELement link="/" title="Services" />
         <NavigationListELement link="/" title="Presence" />
         <NavigationListELement link="/" title="Book online" />
