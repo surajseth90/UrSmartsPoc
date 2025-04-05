@@ -26,10 +26,10 @@ export default function MobileNavbar({ isLogin, headerRightContainerRef }) {
     <>
       <ul className="d-flex align-content-lg-center align-items-start flex-column flex-lg-row">
         <NavigationListELement link="/" title="Home" />
-        <NavigationListELement link="/about" title="About us" />
         <NavigationListELement link="/" title="Services" />
+        <NavigationListELement link="/" title="Book Meeting" />
         <NavigationListELement link="/" title="Presence" />
-        <NavigationListELement link="/" title="Book online" />
+        <NavigationListELement link="/about" title="About us" />
       </ul>
 
       <button className="btn-orange rounded-pill px-4 py-1">Pay</button>

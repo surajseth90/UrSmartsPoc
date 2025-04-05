@@ -113,6 +113,9 @@ section.our-stories {
   }
 
   .stories-wrapper {
+    .story-img {
+      height: 400px;
+    }
     .w-100 {
       width: calc(100% + 2px) !important;
     }
@@ -154,7 +157,18 @@ section.testimonial {
   }
 
   .swiper-slide {
-    padding-bottom: 40px;
+    padding-bottom: 60px;
+    min-height: 100%;
+    height: auto;
+
+    .card {
+      border-radius: 20px;
+
+      .quote {
+        transform: rotate(180deg);
+        right: 10px;
+      }
+    }
   }
   .line {
     background-color: var(--grey-light);

@@ -1,6 +1,4 @@
 import React from "react";
-import Customer from "../../assets/images/customer.png";
-import TestimonialIcon1 from "../../assets/images/testimonial-icon-1.svg";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/navigation";
@@ -85,86 +83,71 @@ export default function Testimonial() {
       <div className="container">
         <h2 className="text-center">WHAT OUR CUSTOMER SAYS</h2>
 
-        <div className="d-flex testimonials-wrapper justify-content-between flex-column flex-lg-row">
-          <div className="d-flex col-lg-6 col-12" style={{ gap: "30px" }}>
-            <img src={Customer} height={300} />
-            <div className="d-flex flex-column">
-              <div className="d-flex justify-content-between">
-                <p className="font-20 font-bold">DAVID JONES </p>
-                <img src={TestimonialIcon1} height={45} />
-              </div>
-              <p className="mb-2">Vice President</p>
-
-              <p>
-                Lorem Ipsum is simply dummy text of the printing and typesetting
-                industry. Lorem Ipsum has been the industry's standard dummy
-                text ever since the 1500s, when an unknown printer took a galley
-                of type and scrambled it to make a type specimen book.
-              </p>
-
-              <p className="mt-2 font-14">13th March, 2025</p>
-            </div>
-          </div>
-
-          <div className="col-lg-5 col-12 position-relative">
-            {data && data.length > 0 ? (
-              <Swiper
-                navigation={{
-                  prevEl: "#prev-feedback-btn",
-                  nextEl: "#next-feedback-btn",
-                }}
-                pagination={true}
-                modules={[Pagination, Navigation]}
-                spaceBetween={38}
-                slidesPerView={1}
-              >
-                {Array.from(
-                  { length: Math.ceil(data.length / 2) },
-                  (_, rowIndex) => (
-                    <SwiperSlide key={`feedbacks-row-${rowIndex}`}>
-                      <div className="d-flex flex-column">
-                        {data
-                          .slice(rowIndex * 2, rowIndex * 2 + 2)
-                          .map((feedback, index) => (
-                            <div key={`feedback-row-${index}`} className={`p-3 ${index==0 ? "adjusted-margin": ""}`} data-index={index}>
-                              <div className="d-flex justify-content-between">
-                                <p className="font-bold text-uppercase">
-                                  {feedback.name}
-                                </p>
-                                {feedback.img && (
-                                  <img
-                                    src={feedback.img}
-                                    height={45}
-                                    alt="service-img"
-                                  />
-                                )}
-                              </div>
-
-                              <p
-                                className="font-14 mt-3"
-                                dangerouslySetInnerHTML={{
-                                  __html: feedback.feedback,
-                                }}
-                              ></p>
-
-                              {index != 1 && <div className="line"></div>}
-                            </div>
-                          ))}
+        <div className="w-100 position-relative testimonials-wrapper">
+          {data && data.length > 0 ? (
+            <Swiper
+              navigation={{
+                prevEl: "#prev-feedback-btn",
+                nextEl: "#next-feedback-btn",
+              }}
+              pagination={true}
+              modules={[Pagination, Navigation]}
+              spaceBetween={30}
+              slidesPerView={2}
+            >
+              {data.map((feedback, key) => {
+                return (
+                  <SwiperSlide key={`feedbacks-row-${key}`}>
+                    <div className="d-flex flex-column card h-100 position-relative">
+                      <div className="position-absolute  quote">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="60px" height="60px" viewBox="0 0 60 60" version="1.1">
+                            <g id="Asset-Artboard-Page" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                <g id="quote-copy">
+                                    <g id="quote">
+                                        <rect id="Rectangle" x="0" y="0" width="60" height="60"/>
+                                        <g id="Group-32" transform="translate(1.000000, 3.000000)" fill="#FF8453">
+                                            <g id="Group-30">
+                                                <path d="M22.5894737,24.1875902 L22.5894737,46.952381 L0,46.952381 L0,31.3015873 C0,25.3393504 0.983615895,19.8514646 2.95087719,14.8377654 C4.91813849,9.82406618 8.34383523,4.87819384 13.2280702,0 L21.5719298,6.50422593 C17.7730804,10.4338821 15.1953284,14.1263484 13.8385965,17.5817357 C12.9896363,19.7439066 12.4062939,21.9458494 12.0885642,24.1875902 L22.5894737,24.1875902 Z M10.9368366,25.1875902 L11.0984596,24.0472592 C11.4271884,21.7279136 12.030537,19.4504516 12.907777,17.2162564 C14.2235408,13.8652087 16.6190546,10.3353727 20.0876409,6.61512283 L13.3146383,1.33541524 C8.85279718,5.916245 5.71149433,10.539881 3.88178066,15.2030307 C1.96142681,20.0971831 1,25.4612693 1,31.3015873 L1,45.952381 L21.5894737,45.952381 L21.5894737,25.1875902 L10.9368366,25.1875902 Z" id="Path" fill-rule="nonzero"/>
+                                                <path d="M18.557373,9.06835938 C20.4206543,10.4934082 21.5047607,11.3846436 23,12.5443115 C19.0176114,16.5066325 16.3493171,20.3921712 14.9951172,24.2009277 L11,24.2009277 C13.1995056,16.9538449 15.7186299,11.9096554 18.557373,9.06835938 Z" id="Path-29"/>
+                                                <polygon id="Path-30" points="24.4174805 30.3447266 22.4389648 30.3447266 22.4389648 45.952381 2 45.952381 2 52.9697266 24.4174805 52.9697266"/>
+                                            </g>
+                                            <g id="Group-30" transform="translate(33.000000, 0.000000)">
+                                                <path d="M22.5894737,24.1875902 L22.5894737,46.952381 L0,46.952381 L0,31.3015873 C0,25.3393504 0.983615895,19.8514646 2.95087719,14.8377654 C4.91813849,9.82406618 8.34383523,4.87819384 13.2280702,0 L21.5719298,6.50422593 C17.7730804,10.4338821 15.1953284,14.1263484 13.8385965,17.5817357 C12.9896363,19.7439066 12.4062939,21.9458494 12.0885642,24.1875902 L22.5894737,24.1875902 Z M10.9368366,25.1875902 L11.0984596,24.0472592 C11.4271884,21.7279136 12.030537,19.4504516 12.907777,17.2162564 C14.2235408,13.8652087 16.6190546,10.3353727 20.0876409,6.61512283 L13.3146383,1.33541524 C8.85279718,5.916245 5.71149433,10.539881 3.88178066,15.2030307 C1.96142681,20.0971831 1,25.4612693 1,31.3015873 L1,45.952381 L21.5894737,45.952381 L21.5894737,25.1875902 L10.9368366,25.1875902 Z" id="Path" fill-rule="nonzero"/>
+                                                <path d="M18.557373,9.06835938 C20.4206543,10.4934082 21.5047607,11.3846436 23,12.5443115 C19.0176114,16.5066325 16.3493171,20.3921712 14.9951172,24.2009277 L11,24.2009277 C13.1995056,16.9538449 15.7186299,11.9096554 18.557373,9.06835938 Z" id="Path-29"/>
+                                                <polygon id="Path-30" points="24.4174805 30.3447266 22.4389648 30.3447266 22.4389648 45.952381 2 45.952381 2 52.9697266 24.4174805 52.9697266"/>
+                                            </g>
+                                        </g>
+                                    </g>
+                                </g>
+                            </g>
+                        </svg>
                       </div>
-                    </SwiperSlide>
-                  )
-                )}
-              </Swiper>
-            ) : (
-              <p>No Feedback</p>
-            )}
+                      <div className="card-body">
+                        <h3 className="card-title font-bold text-uppercase">
+                          {feedback.name}
+                        </h3>
 
-               <SwiperNavigation
-                      containerClass="position-absolute bottom-0"
-                      prevId="prev-feedback-btn"
-                      nextId="next-feedback-btn"
-                    />
-          </div>
+                        <p
+                          className="font-14 mt-3 card-text"
+                          dangerouslySetInnerHTML={{
+                            __html: feedback.feedback,
+                          }}
+                        ></p>
+                      </div>
+                    </div>
+                  </SwiperSlide>
+                );
+              })}
+            </Swiper>
+          ) : (
+            <p>No Feedback</p>
+          )}
+
+          <SwiperNavigation
+            containerClass="position-absolute bottom-0"
+            prevId="prev-feedback-btn"
+            nextId="next-feedback-btn"
+          />
         </div>
       </div>
     </section>
