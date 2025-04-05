@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useLocation } from "react-router-dom";
 import { setIsOverlay } from "../../action";
 import Menu from "./menu";
+import { scrollToTop } from "../../helper";
 
 function Header() {
   const dispatch = useDispatch();
@@ -21,7 +22,7 @@ function Header() {
       headerRightContainerRef.current.classList.remove("show");
   }, [location.pathname]);
 
-  const drawerClickHandler = () =>{
+  const drawerClickHandler = () => {
     const classList = headerRightContainerRef.current.classList;
     if (classList.contains("show")) {
       classList.remove("show");
@@ -32,14 +33,14 @@ function Header() {
       setIsMobileMenuOpened(true);
       classList.add("show");
     }
-  }
+  };
 
   return (
     <header className="header-container w-100 position-fixed top-0 bg-white">
       <div className="container">
         <nav className="header d-flex navbar-light position-relative align-items-center justify-content-between">
           <div className="header-left-container d-flex justify-content-between align-items-center">
-            <Link to={"/"}>
+            <Link to={"/"} onClick={scrollToTop}>
               <div className="header-logo d-flex justify-content-center align-items-center">
                 <img src={HeaderLogo} alt="Ursmartspoc Logo" />
               </div>
@@ -107,7 +108,7 @@ function Header() {
               className="mobile-drawer position-fixed end-0 bottom-0 w-100 m-0 p-3"
               ref={headerRightContainerRef}
             >
-              <Menu drawerClickHandler={drawerClickHandler}/>
+              <Menu drawerClickHandler={drawerClickHandler} />
             </div>
           )}
 

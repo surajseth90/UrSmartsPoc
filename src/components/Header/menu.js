@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { scrollToTop } from "../../helper";
 
 export default function MobileNavbar({ drawerClickHandler }) {
   const NavigationListELement = ({ title, link, childern, onClick }) => {
@@ -26,11 +27,11 @@ export default function MobileNavbar({ drawerClickHandler }) {
   return (
     <>
       <ul className="d-flex align-content-lg-center align-items-start flex-column flex-lg-row">
-        <NavigationListELement link="/" title="Home" />
+        <NavigationListELement link="/" title="Home" onClick={scrollToTop} />
         <NavigationListELement link="/#services" title="Services" />
-        <NavigationListELement link="/" title="Book Meeting" />
+        <NavigationListELement link="/" onClick={scrollToTop} title="Book Meeting" />
         <NavigationListELement link="/#presence" title="Presence" />
-        <NavigationListELement link="/about" title="About us" />
+        <NavigationListELement link="/about" onClick={scrollToTop} title="About us" />
       </ul>
       <button className="btn-orange pay-btn rounded-pill px-4 py-1">Pay</button>
     </>

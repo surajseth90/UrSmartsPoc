@@ -3,18 +3,12 @@ import "./style.scss";
 import HeaderLogo from "../../assets/images/logo.svg";
 import MapImg from "../../assets/images/map.svg";
 import { Link } from "react-router-dom";
+import { scrollToTop } from "../../helper";
 
 const ContactForm = React.lazy(() => import("../Popups/ContactForm"));
 
 export default function Footer() {
   const [isContactFormOpen, setIsContactFormOpen] = useState(false);
-
-  const scrollToTop = () => {
-    const element = document.querySelector("main");    
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-    }
-  }
 
   return (
     <footer className="footer-container w-100">
