@@ -12,6 +12,7 @@ import Team_Christina from "../../assets/images/Team_Christina.png";
 import Team_Pooja from "../../assets/images/Team_Pooja.png";
 import Team_Anjana from "../../assets/images/Team_Anjana.png";
 import Team_Razia from "../../assets/images/Team_Razia.png";
+import Team_Farha from "../../assets/images/Team_Farha.png";
 
 export default function AboutUsPage() {
   const leaders = [
@@ -103,13 +104,15 @@ Bevan has never been afraid to try on different hats. He started UrSmartSpoc wit
         "Smooth, streamlined, and always in control—just like a perfect itinerary!",
       img: Team_Anjana,
     },
-  ];
-
-  const facilityTeam= [
     {
-      name: "📞 RAZIA – The Desk Jockey",
+      name: "📞 RAZIA – The Facility Powerhouse",
       img: Team_Razia,
       description: `The voice, the planner, and the one making sure everything runs like clockwork!`,
+    },
+    {
+      name: "Farha - Tele Dynamo (Sales)",
+      img: Team_Farha,
+      description: `Igniting every conversation into a sales opportunity.`,
     },
   ];
 
@@ -232,7 +235,10 @@ Bevan has never been afraid to try on different hats. He started UrSmartSpoc wit
                   return (
                     <li className="mb-5" key={`member_${key}`}>
                       <div className="d-flex" style={{ gap: "40px" }}>
-                        <img src={member.img} className="w-100 h-100 flex-wrap" />
+                        <img
+                          src={member.img}
+                          className="w-100 h-100 flex-wrap"
+                        />
                         <div className="w-75">
                           <p className="t-m-name">{member.name}</p>
                           <p className="t-m-title font-14 font-bold">
@@ -347,10 +353,13 @@ Bevan has never been afraid to try on different hats. He started UrSmartSpoc wit
         </div>
       </section>
 
-      <section className="meet-team-section">
+      {/* <section className="meet-team-section">
         <div className="container">
           <h3 className="mb-3 text-center">The Facility Powerhouse 🏢</h3>
-          <p className="text-center">The voice, the planner, and the one making sure everything runs like clockwork!</p>
+          <p className="text-center">
+            The voice, the planner, and the one making sure everything runs like
+            clockwork!
+          </p>
           <div>
             <ul className="d-flex gap-5 mt-3 justify-content-center flex-wrap">
               {facilityTeam.length > 0 &&
@@ -372,7 +381,7 @@ Bevan has never been afraid to try on different hats. He started UrSmartSpoc wit
             </ul>
           </div>
         </div>
-      </section>
+      </section> */}
     </div>
   );
 }

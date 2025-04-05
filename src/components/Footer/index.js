@@ -14,14 +14,14 @@ export default function Footer() {
     <footer className="footer-container w-100">
       <div className="container">
         <div className="row">
-          <div className="d-flex col-md-6 col-6 col-lg-12 mb-3">
+          <div className="d-flex col-md-6 col-12 col-lg-12 mb-3">
             <img
               src={HeaderLogo}
               style={{ maxWidth: "165px", marginBottom: "10px" }}
             />
           </div>
-          <div className="d-flex w-100 justify-content-between">
-            <div className="footer-map-col d-flex mb-3 align-items-start col-md-2 col-6 col-lg-8">
+          <div className="d-flex w-100 justify-content-between flex-column flex-md-row">
+            <div className="footer-map-col d-flex mb-3 align-items-start col-md-8 col-12 col-lg-8">
               <a
                 target="_blank"
                 href="https://maps.app.goo.gl/oEsFY3rRbZWeGY1x5"
@@ -31,9 +31,9 @@ export default function Footer() {
               </a>
 
               <div className="d-flex flex-column" style={{ maxWidth: "256px" }}>
-                <h5>Corporate Office</h5>
+                <h5 className="mb-md-4 mb-2">Corporate Office</h5>
 
-                <p className="mt-4">
+                <p>
                   Social CoWorking Spaces Community, A UNIT OF B H @ CO, 3rd
                   Floor 305, Site no. 34 35 39 40, Horamavu Main Road,
                   <br /> Above KFC, Outer Ring Road, Bansawadi, Bangalore –
@@ -91,8 +91,8 @@ export default function Footer() {
               </div>
             </div>
 
-            <div className="d-flex flex-column col-md-2 col-6 col-lg-2 mb-3">
-              <h5 className="text-uppercase mb-4">POLICY</h5>
+            <div className="d-flex flex-column col-md-2 col-12 col-lg-2 mb-3">
+              <h5 className="text-uppercase mb-md-4 mb-2">POLICY</h5>
               <Link to={"/terms"} onClick={scrollToTop} className="footer-link mb-2 text-start">Terms of service</Link>
               <Link to="/privacy-policy" onClick={scrollToTop} className="footer-link mb-2 text-start">Privacy policy</Link>
               <Link to="/refund-policy" onClick={scrollToTop} className="footer-link mb-2 text-start">
@@ -102,7 +102,7 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="d-flex justify-content-end">
+        <div className="d-flex justify-content-sm-end justify-content-center">
           <button
             onClick={() => setIsContactFormOpen(true)}
             className="want-to-reach-btn"
@@ -111,7 +111,7 @@ export default function Footer() {
           </button>
         </div>
       </div>
-      <div className="footer-bottom bg d-flex justify-content-end">
+      <div className="footer-bottom bg d-flex justify-content-sm-end justify-content-center">
         <p className="text-uppercase">
           © 2025 URSMARTSPOC. All Rights Reserved 
         </p>

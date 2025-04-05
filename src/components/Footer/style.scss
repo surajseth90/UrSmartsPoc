@@ -4,7 +4,11 @@
   border-top: 1rem solid var(--primary-blue);
 
   .container {
-    padding: 40px 80px;
+    padding: 40px 10px;
+
+    @media screen and (min-width: 992px) {
+      padding: 40px 80px;
+    }
   }
 
   a,
