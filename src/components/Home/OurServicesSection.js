@@ -122,7 +122,7 @@ Timeshare membership is a holiday vacation membership and it’s an ownership of
   };
 
   return (
-    <section className="card-section our-services-section bg position-relative">
+    <section id="services" className="card-section our-services-section bg position-relative">
       <img src={BG} className="position-absolute top-0 start-0 h-100 our-services-section-bg w-100"/>
       <div className="container">
         <h3 className="text-center">BEST OF OUR SERVICES</h3>

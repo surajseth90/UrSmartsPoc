@@ -58,6 +58,7 @@ import Mumbai4 from "../../assets/images/Mumbai/Mumbai-4.jpeg"
 import Mumbai5 from "../../assets/images/Mumbai/Mumbai-5.jpeg"
 import Mumbai6 from "../../assets/images/Mumbai/Mumbai-6.jpeg"
 import Mumbai7 from "../../assets/images/Mumbai/Mumbai-7.jpeg"
+import { useSelector } from "react-redux";
 
 
 
@@ -127,6 +128,8 @@ const data = [
 export default function OurStories() {
   const [popupData, setPopupData] = useState(null);
   const timerRef = useRef(null);
+    const [dimension] = useSelector((state) => [state.dimension]);
+  
 
   const onHoverHandle = (e, story) => {
     let index = 0;
@@ -136,6 +139,19 @@ export default function OurStories() {
         index = 0;
       } else index++;
     }, 1000);
+  };
+
+  const getCardsCountInOneRow = () => {
+    let count = 0;
+    dimension.containerSize > 992
+      ? (count = 4)
+      : dimension.containerSize < 992 && dimension.containerSize > 768
+      ? (count = 3)
+      : dimension.containerSize < 768 && dimension.containerSize > 576
+      ? (count = 2)
+      : (count = 1);
+
+    return count;
   };
 
   const onHoverLeaveHandle = (e, story) => {
@@ -229,7 +245,7 @@ export default function OurStories() {
             nextEl: "#next-story-btn",
           }}
           pagination={true}
-          slidesPerView={4}
+          slidesPerView={getCardsCountInOneRow()}
           spaceBetween={0}
           modules={[Pagination, Navigation]}
         >

@@ -61,6 +61,9 @@ body {
 }
 
 @media screen and (max-width: 768px) {
+  :root {
+    font-size: 14px;
+  }
   .container {
     padding: 0 15px;
   }

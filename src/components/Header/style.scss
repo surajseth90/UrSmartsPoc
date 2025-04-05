@@ -2,7 +2,11 @@
   border-bottom: 1px solid var(--grey);
 
   nav {
-    padding: 10px 40px;
+    padding: 8px;
+
+    @media screen and (min-width: 992px) {
+      padding: 10px 40px;
+    }
   }
 
   .dropdown-toggle::after {
@@ -31,9 +35,8 @@
   background-color: white;
   transform: translateX(100%);
   transition: all 0.3s ease-in-out;
-  z-index: 1000;
-  max-width: 400px;
-  min-width: 375px;
+  z-index: 1001;
+  height: calc(100% - 71px);
 
   &.show {
     transform: translateX(0);
@@ -119,21 +122,17 @@
       }
     }
 
-    .dropdown {
-      margin-top: 10px;
-      border-top: 1px solid rgba(220, 220, 220, 0.5);
-      font-size: 12px !important;
-      width: 100% !important;
-      position: relative;
-      top: 0;
-      left: 0;
-      transform: translateX(0);
+    .pay-btn {
+      font-size: 20px;
+      width: 100%;
+      margin-top: 30px;
     }
 
     .navbar-toggler {
       display: block !important;
       height: 45px;
       margin: 5px 0;
+      border: none !important;
     }
   }
 }

@@ -14,7 +14,7 @@ export default function ContentSection() {
         </p>
 
         <div className="row pt-5">
-          <div className="col-lg-4 col-md-5 d-flex flex-column align-items-center px-4">
+          <div className="col-lg-4 col-md-5 d-flex flex-column align-items-center py-4 py-md-0">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="80"
@@ -30,7 +30,7 @@ export default function ContentSection() {
             <p className="font-bold text-center">Best price guaranteed</p>
           </div>
 
-          <div className="col-lg-4 col-md-5 d-flex flex-column align-items-center px-4">
+          <div className="col-lg-4 col-md-5 d-flex flex-column align-items-center py-4 py-md-0">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="80"
@@ -48,7 +48,7 @@ export default function ContentSection() {
             </p>
           </div>
 
-          <div className="col-lg-4 col-md-5 d-flex flex-column align-items-center px-4">
+          <div className="col-lg-4 col-md-5 d-flex flex-column align-items-center py-4 py-md-0">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="80"
