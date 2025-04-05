@@ -1,64 +1,26 @@
-
-
 .about-page-container {
   overflow-y: auto;
-
-  h3 {
-    color: #212121;
-    font-size: 24px;
-    font-weight: 600;
-    letter-spacing: 0;
-    line-height: 29px;
-    margin: 0;
-  }
 
   .about-top-container {
     background: linear-gradient(90deg, #e5794c 0%, #e54c79 100%);
     padding: 93px 0 100px 0;
     color: white !important;
-
-    .about-mud-text {
-      max-width: 486px;
-    }
-
-    h1 {
-      font-weight: bold;
-      font-size: 42px;
-      letter-spacing: 0;
-      line-height: 52px;
-      margin: 0;
-    }
-
-    p {
-      font-size: 18px;
-      letter-spacing: 0;
-      line-height: 30px;
-      margin-top: 22px;
-    }
-  }
-
-  .text-section {
-    p {
-      font-size: 18px;
-      letter-spacing: 0;
-      margin-top: 18px;
-      line-height: 26px;
-    }
   }
 
   .meet-team-section {
+    margin: 5rem 0;
+
     ul {
-      margin-top: 35px;
-      place-items: center
+      place-items: center;
     }
 
-    .t-m-img {
+    img {
+      max-width: 300px;
+      max-height: 300px;
+    }
+
+    .card {
       width: 300px;
-      height: 300px;
-      background-color: rgb(180, 180, 180);
-      border: none;
     }
-
   }
 }
-
