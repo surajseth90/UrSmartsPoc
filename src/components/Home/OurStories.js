@@ -29,7 +29,6 @@ import Thailand18 from "../../assets/images/Thailand/Thailand-18.jpeg";
 import Thailand19 from "../../assets/images/Thailand/Thailand-19.jpeg";
 
 import Goa1 from "../../assets/images/Goa/Goa-1.jpeg";
-import Goa2 from "../../assets/images/Goa/Goa-2.jpeg";
 import Goa3 from "../../assets/images/Goa/Goa-3.jpeg";
 import Goa4 from "../../assets/images/Goa/Goa-4.jpeg";
 import Goa5 from "../../assets/images/Goa/Goa-5.jpeg";
@@ -92,7 +91,7 @@ const data = [
   },
   {
     displayImg: Goa1,
-    hoverImgs: [Goa2, Goa3, Goa4, Goa5, Goa6, Goa7, Goa8, Goa9],
+    hoverImgs: [Goa3, Goa4, Goa5, Goa6, Goa7, Goa8, Goa9],
     city: "@Goa",
     popupTitle: "@Goa",
     popupDesc:
