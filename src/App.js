@@ -16,6 +16,9 @@ import ChatButton from "./components/ChatButton";
 
 const UnknownRoute = lazy(() => import("./app/UnknownRoute"));
 const AboutUsPage = lazy(() => import("./components/AboutUs"));
+const TermsPage = lazy(() => import("./components/Terms"));
+const PrivacyPolicyPage = lazy(() => import("./components/Privacy"));
+const RefundPolicyPage = lazy(() => import("./components/RefundPolicy"));
 
 const Fallback = () => {
   return (
@@ -88,6 +91,39 @@ function App() {
                 </RouteTemplate>
               }
             />
+
+            <Route
+              path="/terms"
+              element={
+                <RouteTemplate className="terms-page-container w-100 h-100 position-relative">
+                  <Suspense fallback={<Fallback />}>
+                    <TermsPage />
+                  </Suspense>
+                </RouteTemplate>
+              }
+            />
+
+            <Route
+              path="/privacy-policy"
+              element={
+                <RouteTemplate className="terms-page-container w-100 h-100 position-relative">
+                  <Suspense fallback={<Fallback />}>
+                    <PrivacyPolicyPage />
+                  </Suspense>
+                </RouteTemplate>
+              }
+            />
+
+            <Route
+              path="/refund-policy"
+              element={
+                <RouteTemplate className="terms-page-container w-100 h-100 position-relative">
+                  <Suspense fallback={<Fallback />}>
+                    <RefundPolicyPage />
+                  </Suspense>
+                </RouteTemplate>
+              }
+            />
           </Routes>
         </BrowserRouter>
       </ResponsiveWrapper>
@@ -97,7 +133,7 @@ function App() {
           onClick={() => {
             const navDrawer = document.querySelector(".mobile-drawer");
             console.log("navDrawer", navDrawer);
-            
+
             if (navDrawer.classList.contains("show")) {
               navDrawer.classList.remove("show");
               dispatch(setIsOverlay(false));

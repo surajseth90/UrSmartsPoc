@@ -19,6 +19,14 @@
     font-weight: 600;
   }
 
+  .footer-link {
+    transition: 0.3s all;
+    &:hover {
+      color: var(--bs-orange);
+      text-decoration: underline !important;
+    }
+  }
+
   .footer-map-col {
     gap: 24px;
   }

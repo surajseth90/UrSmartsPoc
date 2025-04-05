@@ -2,11 +2,21 @@ import React, { Suspense, useState } from "react";
 import "./style.scss";
 import HeaderLogo from "../../assets/images/logo.svg";
 import MapImg from "../../assets/images/map.svg";
+import { Link } from "react-router-dom";
 
 const ContactForm = React.lazy(() => import("../Popups/ContactForm"));
 
 export default function Footer() {
   const [isContactFormOpen, setIsContactFormOpen] = useState(false);
+
+  const scrollToTop = () => {
+    const element = document.querySelector("header");
+    console.log("element", element);
+    
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+  }
 
   return (
     <footer className="footer-container w-100">
@@ -91,11 +101,11 @@ export default function Footer() {
 
             <div className="d-flex flex-column col-md-2 col-6 col-lg-2 mb-3">
               <h5 className="text-uppercase mb-4">POLICY</h5>
-              <button className="mb-2 text-start">Terms of service</button>
-              <button className="mb-2 text-start">Privacy policy</button>
-              <button className="mb-2 text-start">
+              <Link to={"/terms"} onClick={scrollToTop} className="footer-link mb-2 text-start">Terms of service</Link>
+              <Link to="/privacy-policy" onClick={scrollToTop} className="footer-link mb-2 text-start">Privacy policy</Link>
+              <Link to="/refund-policy" onClick={scrollToTop} className="footer-link mb-2 text-start">
                 Cancellation / Refund policy
-              </button>
+              </Link>
             </div>
           </div>
         </div>
