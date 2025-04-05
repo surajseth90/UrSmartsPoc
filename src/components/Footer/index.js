@@ -10,9 +10,7 @@ export default function Footer() {
   const [isContactFormOpen, setIsContactFormOpen] = useState(false);
 
   const scrollToTop = () => {
-    const element = document.querySelector("header");
-    console.log("element", element);
-    
+    const element = document.querySelector("main");    
     if (element) {
       element.scrollIntoView({ behavior: 'smooth' });
     }

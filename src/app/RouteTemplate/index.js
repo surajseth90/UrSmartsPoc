@@ -6,7 +6,7 @@ export default function RouteTemplate({ className, children }) {
   return (
     <div className={className}>
       <Header />
-      {children}
+      <main>{children}</main>
       <Footer />
     </div>
   );

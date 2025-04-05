@@ -9,7 +9,7 @@ export default function MobileNavbar({ drawerClickHandler }) {
           aria-current="page"
           to={link}
           onClick={() => {
-            drawerClickHandler();
+            if (typeof drawerClickHandler == "function")  drawerClickHandler();
             if (typeof onClick == "function") onClick();
           }}
         >
