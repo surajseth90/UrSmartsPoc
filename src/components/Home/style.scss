@@ -62,8 +62,6 @@
       width: 100%;
 
       &.our-services-section {
-        padding: 80px 0;
-
         .our-services-section-bg {
           max-width: 1160px;
         }
@@ -82,7 +80,6 @@
           box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.14);
 
           .service-img {
-            max-width: 350px;
             border-radius: 18px;
           }
 
@@ -114,7 +111,6 @@
 
 section.our-stories {
   background-color: var(--bs-orange);
-  padding: 80px 0 40px 0;
 
   .card-prev-btn,
   .card-next-btn {

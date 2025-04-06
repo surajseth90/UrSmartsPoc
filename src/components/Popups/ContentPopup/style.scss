@@ -19,15 +19,28 @@
     border-radius: 20px;
 
     button {
-      right: -20px;
-      top: -30px;
+      right: 10px;
+      top: 10px;
+      color: black;
+
+      @media screen and (min-width: 786px) {
+        right: -20px;
+        top: -30px;
+        color: white;
+      }
     }
   }
 
   @media screen and (max-width: 786px) {
+    .swiper-slide {
+      width: 100% !important;
+    }
     .content-popup-container {
       flex-direction: column;
       align-items: center;
+      height: 100%;
+      overflow: auto;
+      border-radius: 0;
     }
   }
 }

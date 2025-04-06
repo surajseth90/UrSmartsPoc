@@ -159,8 +159,8 @@ export default function OurStories() {
   };
 
   return (
-    <section className="our-stories w-100">
-      <div className="container d-flex justify-content-between">
+    <section className="our-stories w-100 section-padding">
+      <div className="container d-flex justify-content-between flex-column flex-md-row align-items-center mb-4 gap-3">
         <h2 className="text-white">OUR STORIES</h2>
         <div className="text-white d-flex align-items-center">
           <span>FOLLOW US: </span>

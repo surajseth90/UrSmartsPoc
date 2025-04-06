@@ -16,7 +16,7 @@ export default function ContentPopup({ img, title, description, onClose }) {
   }, []);
 
   return (
-    <div className="content-popup-wrapper position-fixed top-0 start-0 w-100 h-100 d-flex justify-content-center align-items-center p-4">
+    <div className="content-popup-wrapper position-fixed top-0 start-0 w-100 h-100 d-flex justify-content-center align-items-center p-md-4 p-0">
       <div className="overlay"></div>
 
       <div className="content-popup-container bg-white w-100 d-flex position-relative">
@@ -35,7 +35,7 @@ export default function ContentPopup({ img, title, description, onClose }) {
           >
             <path
               d="M1.94417 23.2692L0 21.325L9.5275 11.7971L0 2.2692L1.94417 0.325035L11.4721 9.85254L21 0.325035L22.9442 2.2692L13.4167 11.7971L22.9442 21.325L21 23.2692L11.4721 13.7417L1.94417 23.2692Z"
-              fill="white"
+              fill="currentColor"
             />
           </svg>
         </button>

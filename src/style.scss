@@ -61,12 +61,22 @@ body {
   position: relative;
 }
 
+.section-padding {
+  padding-top: 80px;
+  padding-bottom: 80px;
+}
+
 @media screen and (max-width: 768px) {
   :root {
     font-size: 14px;
   }
   .container {
     padding: 0 15px;
+  }
+
+  .section-padding {
+    padding-top: 40px;
+    padding-bottom: 40px;
   }
 }
 
@@ -76,9 +86,7 @@ body {
   flex-direction: column;
 }
 
-.section-padding {
-  padding: 80px 0;
-}
+
 
 button,
 input {
