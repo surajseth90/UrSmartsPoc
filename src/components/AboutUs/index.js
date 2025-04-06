@@ -104,6 +104,9 @@ Bevan has never been afraid to try on different hats. He started UrSmartSpoc wit
         "Smooth, streamlined, and always in control—just like a perfect itinerary!",
       img: Team_Anjana,
     },
+  ];
+
+  const facilityTeam = [
     {
       name: "📞 RAZIA – The Facility Powerhouse",
       img: Team_Razia,
@@ -353,7 +356,7 @@ Bevan has never been afraid to try on different hats. He started UrSmartSpoc wit
         </div>
       </section>
 
-      {/* <section className="meet-team-section">
+      <section className="meet-team-section">
         <div className="container">
           <h3 className="mb-3 text-center">The Facility Powerhouse 🏢</h3>
           <p className="text-center">
@@ -381,7 +384,7 @@ Bevan has never been afraid to try on different hats. He started UrSmartSpoc wit
             </ul>
           </div>
         </div>
-      </section> */}
+      </section>
     </div>
   );
 }
