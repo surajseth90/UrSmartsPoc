@@ -209,7 +209,7 @@ const GSTDetails = () => {
             )}
           </div>
         </div>
-        <div className="d-lg-none d-flex">
+        <div className="d-lg-none d-flex flex-column">
           <img src={IndiaMap} alt="india gst map" />
           <div class="accordion mb-5" id="gstStatesAccordion">
             {gstData.map((data) => {
