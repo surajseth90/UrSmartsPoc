@@ -18,7 +18,7 @@ export default function AboutUsPage() {
   const leaders = [
     {
       name: "🚀 BEVAN MARIO HOGG – CEO & Founder",
-      title: "CEO",
+      title: "⚙️ The Visionary",
       img: Team_Bevan,
       description: `
         Founder of B H & Company and UrSmartSpoc.com.  Bevan has been into hospitality industry for last 14 years and well-connected in his field domain. The dream of UrSmartSpoc began in his Hubli apartment and took its shape in Bangalore from Dreams to reality. A Great planner, quick in thought process & decision making and an entrepreneur from an early age. He has a great strategic vision & a zeal for customer service and client relationship. Bevan strongly believes in putting right people in to right place to make things happen for better. He had remarkably set up initial operations for one of the critical alternate revenue stream by ensure online booking strategy for trading partner and the member enrollment on line module and setting up the payment gateways on online business structure and development. He strongly believes in Quality and has been in various quality process in his career.
@@ -110,7 +110,7 @@ Bevan has never been afraid to try on different hats. He started UrSmartSpoc wit
       description: `The voice, the planner, and the one making sure everything runs like clockwork!`,
     },
     {
-      name: "Farha - Tele Dynamo (Sales)",
+      name: "🌟 FARHA - Tele Dynamo (Sales)",
       img: Team_Farha,
       description: `Igniting every conversation into a sales opportunity.`,
     },
