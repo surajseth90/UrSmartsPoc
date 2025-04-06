@@ -5,6 +5,14 @@
   overflow-y: auto;
   overflow-x: hidden;
 
+  .hotspot-button {
+    width: 20px;
+    height: 20px;
+    transform: translate(-50%, -50%);
+    border: 2px solid white;
+    cursor: pointer;
+  }
+
   .home-page-carousel-container {
     padding-top: 40px;
     padding-bottom: 40px;
@@ -136,6 +144,14 @@ section.our-stories {
         }
       }
     }
+
+    .story-btn {
+      transition: all 0.3s;
+      &:hover {
+        color: var(--bs-orange);
+        text-decoration: underline;
+      }
+    }
   }
 
   .container div {
@@ -184,12 +200,15 @@ section.testimonial {
 }
 
 section.gst-details-section {
-  background: #0b1419;
   padding: 80px 40px;
 
   h2,
   .map-hotspots {
-    margin-bottom: 80px;
+    margin-bottom: 40px;
+
+    @media screen and (min-width: 992px) {
+      margin-bottom: 80px;
+    }
   }
 
   @media screen and (max-width: 768px) {
@@ -197,103 +216,142 @@ section.gst-details-section {
   }
 
   .map-hotspots {
-    background-image: url("../../assets/images/india_map.svg");
-    background-size: contain;
-    background-repeat: no-repeat;
-    max-width: 350px;
-    height: 325px;
+    min-width: 620px;
+    max-width: 620px;
+    height: 720px;
 
-    button {
-      width: 30px;
-      height: 30px;
+    img {
+      background-size: contain;
+      background-repeat: no-repeat;
+    }
+
+    .state {
+      width: 28px;
+      height: 28px;
       border-radius: 50%;
-      // background-color: aquamarine;
+      background: var(--primary-yellow);
+      border: 1px solid white;
+      transition: all 0.3s;
+
+      &:hover {
+        box-shadow: 0 0 0 10px rgb(50, 41, 11), 0 0 0 11px var(--primary-yellow);
+      }
+
+      &.selected {
+        border-width: 4px;
+      }
+
+      &.Goa {
+        left: 111px;
+        top: 507px;
+      }
+
+      &.Uttar.Pradesh {
+        left: 270px;
+        top: 245px;
+      }
+
+      &.Haryana {
+        left: 172px;
+        top: 183px;
+      }
+
+      &.Karnataka {
+        left: 155px;
+        top: 527px;
+      }
+
+      &.Maharashtra {
+        left: 155px;
+        top: 416px;
+      }
+
+      &.Telangana {
+        left: 227px;
+        top: 449px;
+      }
+
+      &.Bihar {
+        left: 370px;
+        top: 265px;
+      }
+
+      &.Gujarat {
+        left: 70px;
+        top: 327px;
+      }
+
+      &.Kerala {
+        left: 166px;
+        top: 629px;
+      }
+
+      &.Himachal.Pradesh {
+        left: 191px;
+        top: 118px;
+      }
+
+      &.Tamil.Nadu {
+        left: 216px;
+        top: 608px;
+      }
+
+      &.Jharkhand {
+        left: 356px;
+        top: 322px;
+      }
+
+      &.Rajasthan {
+        left: 115px;
+        top: 244px;
+      }
+
+      &.Madhya.Pradesh {
+        left: 206px;
+        top: 330px;
+      }
+
+      &.Odisha {
+        left: 348px;
+        top: 385px;
+      }
+
+      &.Chandigarh {
+        width: 20px;
+        height: 20px;
+        left: 184px;
+        top: 150px;
+      }
+    }
+  }
+
+  .accordion-item {
+    border-radius: 30px;
+    border: 1px solid transparent;
+
+    &:has(.accordion-collapse.show) {
+      border: 1px solid var(--grey);
+
+      .accordion-button,
+      .accordion-header {
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
+      }
     }
 
-    button.hotspot-1 {
-      top: 32%;
-      left: 47%;
+    .accordion-header,
+    .accordion-button {
+      border-radius: 30px;
+      background: var(--primary-yellow);
     }
+  }
 
-    button.hotspot-2 {
-      top: 27%;
-      left: 86%;
-    }
-
-    button.hotspot-3 {
-      top: 43%;
-      left: 23%;
-    }
-
-    button.hotspot-4 {
-      top: 60%;
-      left: 43%;
-    }
-
-    button.hotspot-5 {
-      top: 81%;
-      left: 41%;
-    }
-
-    @media screen and (min-width: 768px) {
-      max-width: 500px;
-      height: 465px;
-
-      button.hotspot-1 {
-        top: 33%;
-        left: 48%;
-      }
-
-      button.hotspot-2 {
-        top: 28%;
-        left: 87%;
-      }
-
-      button.hotspot-3 {
-        top: 44%;
-        left: 25%;
-      }
-
-      button.hotspot-4 {
-        top: 62%;
-        left: 44%;
-      }
-
-      button.hotspot-5 {
-        top: 82%;
-        left: 42%;
-      }
-    }
-
-    @media screen and (min-width: 992px) {
-      max-width: 750px;
-      height: 700px;
-
-      button.hotspot-1 {
-        top: 34%;
-        left: 48.8%;
-      }
-
-      button.hotspot-2 {
-        top: 30%;
-        left: 88%;
-      }
-
-      button.hotspot-3 {
-        top: 45.5%;
-        left: 26%;
-      }
-
-      button.hotspot-4 {
-        top: 62.5%;
-        left: 45%;
-      }
-
-      button.hotspot-5 {
-        top: 83.5%;
-        left: 43%;
-      }
-    }
+  .state-data-container {
+    background: var(--primary-yellow);
+    width: 384px;
+    height: max-content;
+    padding: 40px 30px;
+    border-radius: 30px;
   }
 }
 

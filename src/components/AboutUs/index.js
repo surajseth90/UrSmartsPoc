@@ -237,7 +237,7 @@ Bevan has never been afraid to try on different hats. He started UrSmartSpoc wit
                 leaders.map((member, key) => {
                   return (
                     <li className="mb-5" key={`member_${key}`}>
-                      <div className="d-flex" style={{ gap: "40px" }}>
+                      <div className="d-flex align-items-md-start align-items-center flex-md-row flex-column" style={{ gap: "40px" }}>
                         <img
                           src={member.img}
                           className="w-100 h-100 flex-wrap"

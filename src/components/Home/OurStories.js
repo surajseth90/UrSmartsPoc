@@ -260,7 +260,7 @@ export default function OurStories() {
                     onMouseLeave={(e) => onHoverLeaveHandle(e, story)}
                   />
                   <button
-                    className="w-100 bg-white py-2"
+                    className="w-100 bg-white py-2 story-btn"
                     onClick={() => setPopupData(story)}
                   >
                     {story.city}
