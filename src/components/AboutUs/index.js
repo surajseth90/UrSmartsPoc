@@ -108,7 +108,7 @@ Bevan has never been afraid to try on different hats. He started UrSmartSpoc wit
 
   const facilityTeam = [
     {
-      name: "📞 RAZIA – The Facility Powerhouse",
+      name: "📞 RAZIA – The Desk Jockey",
       img: Team_Razia,
       description: `The voice, the planner, and the one making sure everything runs like clockwork!`,
     },
