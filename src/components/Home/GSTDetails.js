@@ -199,12 +199,9 @@ const GSTDetails = () => {
             {dialogContent != null && dialogContent && (
               <>
                 <h3 className="text-center">{dialogContent.state}</h3>
-                <p>Trade Name: {dialogContent.tradeName}</p>
-                <p>GSTIN: {dialogContent.GSTIN}</p>
-                <p>PAN: {dialogContent.pan}</p>
-                <p>SAC Codes: {dialogContent.sacCode}</p>
-                <p>Address: {dialogContent.address}</p>
-                <p>State Code: {dialogContent.stateCode}</p>
+                <p><span className="font-bold">GSTIN: </span> {dialogContent.GSTIN}</p>
+                <p><span className="font-bold">Address:</span> <span className="text-uppercase">{dialogContent.address}</span></p>
+                <p><span className="font-bold">State Code:</span> {dialogContent.stateCode}</p>
               </>
             )}
           </div>
@@ -240,12 +237,9 @@ const GSTDetails = () => {
                     data-bs-parent="#gstStatesAccordion"
                   >
                     <div class="accordion-body">
-                      <p>Trade Name: {data.tradeName}</p>
-                      <p>GSTIN: {data.GSTIN}</p>
-                      <p>PAN: {data.pan}</p>
-                      <p>SAC Codes: {data.sacCode}</p>
-                      <p>Address: {data.address}</p>
-                      <p>State Code: {data.stateCode}</p>
+                      <p><span className="font-bold">GSTIN:</span> {data.GSTIN}</p>
+                      <p><span className="font-bold">Address:</span> <span className="text-uppercase">{data.address}</span></p>
+                      <p><span className="font-bold">State Code:</span> {data.stateCode}</p>
                     </div>
                   </div>
                 </div>
