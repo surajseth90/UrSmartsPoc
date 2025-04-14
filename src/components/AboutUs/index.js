@@ -98,20 +98,20 @@ Bevan has never been afraid to try on different hats. He started UrSmartSpoc wit
       img: Team_Pooja,
       description: `Balancing the books and keeping things in check with precision.`,
     },
-    {
-      name: "📊 ANJANA – The Kanban",
-      description:
-        "Smooth, streamlined, and always in control—just like a perfect itinerary!",
-      img: Team_Anjana,
-    },
+    // {
+    //   name: "📊 ANJANA – The Kanban",
+    //   description:
+    //     "Smooth, streamlined, and always in control—just like a perfect itinerary!",
+    //   img: Team_Anjana,
+    // },
   ];
 
   const facilityTeam = [
-    {
-      name: "📞 RAZIA – The Desk Jockey",
-      img: Team_Razia,
-      description: `The voice, the planner, and the one making sure everything runs like clockwork!`,
-    },
+    // {
+    //   name: "📞 RAZIA – The Desk Jockey",
+    //   img: Team_Razia,
+    //   description: `The voice, the planner, and the one making sure everything runs like clockwork!`,
+    // },
     {
       name: "🌟 FARHA - Tele Dynamo (Sales)",
       img: Team_Farha,
