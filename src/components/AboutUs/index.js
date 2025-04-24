@@ -277,7 +277,7 @@ Bevan has never been afraid to try on different hats. He started UrSmartSpoc wit
               {makersTeam.length > 0 &&
                 makersTeam.map((member, key) => {
                   return (
-                    <li className="card" key={`member_${key}`}>
+                    <li className="card align-items-center py-3" key={`member_${key}`}>
                       <img
                         src={member.img}
                         className="card-img-top"
@@ -308,7 +308,7 @@ Bevan has never been afraid to try on different hats. He started UrSmartSpoc wit
               {strengthTeam.length > 0 &&
                 strengthTeam.map((member, key) => {
                   return (
-                    <li className="card" key={`member_${key}`}>
+                    <li className="card align-items-center py-3" key={`member_${key}`}>
                       <img
                         src={member.img}
                         className="card-img-top"
@@ -338,7 +338,7 @@ Bevan has never been afraid to try on different hats. He started UrSmartSpoc wit
               {moneyTeam.length > 0 &&
                 moneyTeam.map((member, key) => {
                   return (
-                    <li className="card" key={`member_${key}`}>
+                    <li className="card align-items-center py-3" key={`member_${key}`}>
                       <img
                         src={member.img}
                         className="card-img-top"
@@ -368,7 +368,7 @@ Bevan has never been afraid to try on different hats. He started UrSmartSpoc wit
               {facilityTeam.length > 0 &&
                 facilityTeam.map((member, key) => {
                   return (
-                    <li className="card" key={`member_${key}`}>
+                    <li className="card align-items-center py-3" key={`member_${key}`}>
                       <img
                         src={member.img}
                         className="card-img-top"

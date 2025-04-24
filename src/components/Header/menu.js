@@ -24,6 +24,7 @@ export default function MobileNavbar({ drawerClickHandler }) {
     );
   };
 
+
   return (
     <>
       <ul className="d-flex align-content-lg-center align-items-start flex-column flex-lg-row">
@@ -33,7 +34,7 @@ export default function MobileNavbar({ drawerClickHandler }) {
         <NavigationListELement link="/#presence" title="Presence" />
         <NavigationListELement link="/about" onClick={scrollToTop} title="About us" />
       </ul>
-      <button className="btn-orange pay-btn rounded-pill px-4 py-1">Pay</button>
+      <a target="_blank" href="https://pmny.in/zIrYTtNgWD1d" className="btn-orange pay-btn rounded-pill px-4 py-1 text-decoration-none">Pay</a>
     </>
   );
 }
