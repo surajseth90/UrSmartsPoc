@@ -1,4 +1,4 @@
-import { lazy, useEffect, Suspense, useRef } from "react";
+import { lazy, useEffect, Suspense, useRef, useState } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import ResponsiveWrapper from "./app/ResponsiveWrapper";
 import { useDispatch, useSelector } from "react-redux";
@@ -13,6 +13,8 @@ import {
 import Home from "./components/Home";
 import RouteTemplate from "./app/RouteTemplate";
 import ChatButton from "./components/ChatButton";
+import { BannerImgs } from "./data";
+import { Helmet } from "react-helmet";
 
 const UnknownRoute = lazy(() => import("./app/UnknownRoute"));
 const AboutUsPage = lazy(() => import("./components/AboutUs"));
@@ -53,6 +55,11 @@ function App() {
 
   return (
     <div className="app">
+      <Helmet>
+        {BannerImgs.map((src, i) => (
+          <link key={i} rel="preload" as="image" href={src} />
+        ))}
+      </Helmet>
       <ResponsiveWrapper
         breakpoints={{
           small: [0, 639],

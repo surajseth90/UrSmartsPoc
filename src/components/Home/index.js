@@ -1,4 +1,4 @@
-import React, { useEffect, useState, Suspense } from "react";
+import React, { useEffect } from "react";
 import "./style.scss";
 
 import OurServicesSection from "./OurServicesSection.js";
@@ -17,10 +17,11 @@ export default function Home() {
     if (location.hash) {
       const element = document.querySelector(location.hash);
       if (element) {
-        element.scrollIntoView({ behavior: 'smooth' });
+        element.scrollIntoView({ behavior: "smooth" });
       }
     }
   }, [location]);
+
   return (
     <>
       <div className="home-page-wrapper">
