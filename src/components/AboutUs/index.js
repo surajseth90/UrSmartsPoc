@@ -243,7 +243,7 @@ Bevan has never been afraid to try on different hats. He started UrSmartSpoc wit
               {leaders.length > 0 &&
                 leaders.map((member, key) => {
                   return (
-                    <li className="w-100 w-md-50 mb-5 leadership-li" key={`Leadership_${key}`}>
+                    <li style={{maxWidth: "470px"}} className="w-100 w-md-50 mb-5 leadership-li" key={`Leadership_${key}`}>
                       <div
                         className="d-flex justify-content-center align-items-center flex-column"
                       >
