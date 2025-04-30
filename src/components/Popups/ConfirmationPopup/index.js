@@ -52,7 +52,7 @@ export default function RejectPopup(props) {
           >
             {leftBtnLabel}
           </button>
-          <button className="btn-orange" onClick={actionHandler}>
+          <button className="btn-primary" onClick={actionHandler}>
             {rightBtnLabel}
           </button>
         </div>

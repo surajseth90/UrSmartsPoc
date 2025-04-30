@@ -34,7 +34,7 @@ export default function MobileNavbar({ drawerClickHandler }) {
         <NavigationListELement link="/#presence" title="Presence" />
         <NavigationListELement link="/about" onClick={scrollToTop} title="About us" />
       </ul>
-      <a target="_blank" href="https://pmny.in/zIrYTtNgWD1d" className="btn-orange pay-btn rounded-pill px-4 py-1 text-decoration-none">Pay</a>
+      <a target="_blank" href="https://pmny.in/zIrYTtNgWD1d" className="btn-primary pay-btn rounded-pill px-4 py-1 text-decoration-none">Pay</a>
     </>
   );
 }

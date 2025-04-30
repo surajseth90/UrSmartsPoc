@@ -1,24 +1,42 @@
 .about-page-container {
   overflow-y: auto;
 
-  .about-top-container {
-    background: linear-gradient(90deg, #e5794c 0%, #e54c79 100%);
-    padding: 93px 0 100px 0;
-    color: white !important;
+  h1 {
+    font-size: 30px;
+  }
+
+  .font-18.text-white.bg-primary {
+    max-width: 300px;
+  }
+
+  h1 + h3 {
+    font-size: 30px;
   }
 
   .meet-team-section {
     margin: 5rem 0;
 
+    li:not(.leadership-li) {
+      max-width: 240px;
+    }
+
+    .leadership-li {
+      width: 40%;
+    }
+
     ul {
-      place-items: center;
+      gap: 60px;
+    }
+
+    ul.miracle-makers {
+      gap: 160px;
     }
 
     img {
-      max-width: 250px;
-      max-height: 250px;
+      max-width: 120px;
+      max-height: 120px;
       border-radius: 50%;
-      border: 2px solid var(--black);
+      border: 2px solid var(--white);
     }
 
     .card {

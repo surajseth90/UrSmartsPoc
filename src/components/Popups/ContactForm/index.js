@@ -1,7 +1,12 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
+import emailjs from "@emailjs/browser";
+import { useDispatch } from "react-redux";
+import { setSnakeBarContent } from "../../../action";
 import "./style.scss";
 
 export default function ContentPopup({ onClose }) {
+  const [loading, setLoading] = useState(false);
+  const dispatch = useDispatch();
   useEffect(() => {
     document.body.scrollY = "hidden";
 
@@ -9,6 +14,38 @@ export default function ContentPopup({ onClose }) {
       document.body.scrollY = "auto";
     };
   }, []);
+
+  const submitHandler = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+
+    await emailjs
+      .sendForm(
+        process.env.REACT_APP_EMAIL_JS_SERVICE_ID,
+        process.env.REACT_APP_EMAIL_TEMPLATE_ID,
+        e.target,
+        {
+          publicKey: process.env.REACT_APP_EMAIL_PUBLIC_KEY,
+        }
+      )
+      .then(
+        (res) => {
+          setLoading(false);
+          dispatch(setSnakeBarContent("Message Sent Successfully"));
+          onClose();
+        },
+        (error) => {
+          setLoading(false);
+          dispatch(
+            setSnakeBarContent(
+              "There is some issue on sending message, please try again later!"
+            )
+          );
+          onClose();
+          console.log("FAILED...", error.text);
+        }
+      );
+  };
 
   return (
     <div className="contact-form-popup-wrapper position-fixed top-0 start-0 w-100 h-100 d-flex justify-content-center align-items-center p-3">
@@ -37,12 +74,14 @@ export default function ContentPopup({ onClose }) {
 
         <div className="w-100 d-flex flex-column align-items-center">
           <h3>Contact Us</h3>
-          <form action="" className="w-100">
+          <form onSubmit={submitHandler} className="w-100">
             <div className="w-100">
               <input
                 type="text"
                 placeholder="Name"
                 className="px-2 mb-3 rounded-3 w-100 mt-3"
+                name="user_name"
+                id="user_name"
               />
             </div>
 
@@ -51,6 +90,8 @@ export default function ContentPopup({ onClose }) {
                 type="email"
                 placeholder="Email"
                 className="px-2 mb-3 rounded-3 w-100"
+                name="user_email"
+                id="user_email"
               />
             </div>
 
@@ -59,6 +100,8 @@ export default function ContentPopup({ onClose }) {
                 type="text"
                 placeholder="Phone"
                 className="px-2 mb-3 rounded-3 w-100"
+                name="user_phone"
+                id="user_phone"
               />
             </div>
 
@@ -67,6 +110,8 @@ export default function ContentPopup({ onClose }) {
                 type="text"
                 placeholder="Subject"
                 className="px-2 mb-3 rounded-3 w-100"
+                name="message_subject"
+                id="message_subject"
               />
             </div>
 
@@ -75,10 +120,18 @@ export default function ContentPopup({ onClose }) {
                 placeholder="Message"
                 style={{ height: "100px" }}
                 className="px-2 mb-3 rounded-3 w-100"
+                name="message_body"
+                id="message_body"
               />
             </div>
 
-            <button className="btn-orange w-100">Submit</button>
+            <button
+              type="submit"
+              className="btn-primary w-100 d-flex justify-content-center mt-5"
+              disabled={loading}
+            >
+              {loading ? <div className="btn-loader-white"></div> : `Submit`}
+            </button>
           </form>
         </div>
       </div>

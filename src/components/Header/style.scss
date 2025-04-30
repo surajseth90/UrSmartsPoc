@@ -25,7 +25,7 @@
     display: none;
   }
 
-  a:has(:not(.btn-orange)){
+  a:has(:not(.btn-primary)){
     text-decoration: none !important;
     color: #000 !important;
     position: relative;

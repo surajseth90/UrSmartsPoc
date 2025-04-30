@@ -10,6 +10,9 @@ const ContactForm = React.lazy(() => import("../Popups/ContactForm"));
 export default function Footer() {
   const [isContactFormOpen, setIsContactFormOpen] = useState(false);
 
+
+
+
   return (
     <footer className="footer-container w-100">
       <div className="container">

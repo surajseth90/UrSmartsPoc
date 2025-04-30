@@ -154,7 +154,7 @@ Timeshare membership is a holiday vacation membership and it’s an ownership of
                       <div className="card-footer bg-transparent border-0">
                         <button
                           onClick={() => setPopupData(service)}
-                          className="text-btn-orange"
+                          className="text-btn-primary"
                           aria-label="Read More"
                         >
                           <svg
