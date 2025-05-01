@@ -1,7 +1,7 @@
 import React, { Suspense, useState } from "react";
 import "./style.scss";
 import HeaderLogo from "../../assets/images/logo.svg";
-import MapImg from "../../assets/images/map.svg";
+import MapImg from "../../assets/images/footer_map.svg";
 import { Link } from "react-router-dom";
 import { scrollToTop } from "../../helper";
 
