@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import IndiaMap from "../../assets/images/India_Map_GST.png";
+import IndiaMap from "../../assets/images/map.svg";
 
 const gstData = [
   {
@@ -198,10 +198,10 @@ const GSTDetails = () => {
           <div className="state-data-container">
             {dialogContent != null && dialogContent && (
               <>
-                <h3 className="text-center">{dialogContent.state}</h3>
-                <p><span className="font-bold">GSTIN: </span> {dialogContent.GSTIN}</p>
-                <p><span className="font-bold">Address:</span> <span className="text-uppercase">{dialogContent.address}</span></p>
-                <p><span className="font-bold">State Code:</span> {dialogContent.stateCode}</p>
+                <h3 className="text-center font-24">{dialogContent.state}</h3>
+                <p className="font-20"><span className="font-bold">GSTIN: </span> {dialogContent.GSTIN}</p>
+                <p className="font-20"><span className="font-bold">Address:</span> <span className="text-uppercase">{dialogContent.address}</span></p>
+                <p className="font-20"><span className="font-bold">State Code:</span> {dialogContent.stateCode}</p>
               </>
             )}
           </div>

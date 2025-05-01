@@ -7611,10 +7611,12 @@ fieldset:disabled .btn {
 
 .visible {
   visibility: visible !important;
+  opacity: 1;
 }
 
 .invisible {
   visibility: hidden !important;
+  opacity: 0;
 }
 
 @media (min-width: 576px) {

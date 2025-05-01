@@ -129,7 +129,7 @@ export default function Testimonial() {
                                 <g
                                   id="Group-32"
                                   transform="translate(1.000000, 3.000000)"
-                                  fill="#FF8453"
+                                  fill="#1f3a93"
                                 >
                                   <g id="Group-30">
                                     <path

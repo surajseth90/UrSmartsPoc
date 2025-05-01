@@ -110,7 +110,6 @@
 }
 
 section.our-stories {
-  background-color: var(--bs-orange);
 
   .card-prev-btn,
   .card-next-btn {
@@ -125,10 +124,6 @@ section.our-stories {
       width: calc(100% + 2px) !important;
     }
 
-    .swiper {
-      padding-bottom: 80px;
-    }
-
     .swiper-pagination {
       width: max-content;
       margin-left: 50%;
@@ -138,14 +133,6 @@ section.our-stories {
         &.swiper-pagination-bullet-active {
           background-color: white;
         }
-      }
-    }
-
-    .story-btn {
-      transition: all 0.3s;
-      &:hover {
-        color: var(--bs-orange);
-        text-decoration: underline;
       }
     }
   }
@@ -222,15 +209,19 @@ section.gst-details-section {
     }
 
     .state {
-      width: 28px;
-      height: 28px;
+      width: 10px;
+      height: 10px;
       border-radius: 50%;
-      background: var(--primary-yellow);
-      border: 1px solid white;
+      background: var(--primary-color);
+      border: 5px solid var(--primary-yellow);
       transition: all 0.3s;
+      outline: 2px solid white;
+      box-sizing: content-box;
 
       &:hover {
-        box-shadow: 0 0 0 10px rgb(50, 41, 11), 0 0 0 11px var(--primary-yellow);
+        // box-shadow: 0 0 0 10px rgb(50, 41, 11), 0 0 0 11px var(--primary-yellow);
+        outline: 6px solid white;
+
       }
 
       &.selected {
@@ -238,85 +229,84 @@ section.gst-details-section {
       }
 
       &.Goa {
-        left: 111px;
-        top: 507px;
+        left: 128px;
+        top: 540px;
       }
 
       &.Uttar.Pradesh {
         left: 270px;
-        top: 245px;
+        top: 280px;
       }
 
       &.Haryana {
-        left: 172px;
-        top: 183px;
+        left: 188px;
+        top: 230px;
       }
 
       &.Karnataka {
-        left: 155px;
-        top: 527px;
+        left: 170px;
+        top: 560px;
       }
 
       &.Maharashtra {
-        left: 155px;
-        top: 416px;
+        left: 170px;
+        top: 450px;
       }
 
       &.Telangana {
-        left: 227px;
-        top: 449px;
+        left: 244px;
+    top: 482px;
       }
 
       &.Bihar {
-        left: 370px;
-        top: 265px;
+        left: 380px;
+        top: 305px;
       }
 
       &.Gujarat {
-        left: 70px;
-        top: 327px;
+        left: 80px;
+        top: 370px;
       }
 
       &.Kerala {
-        left: 166px;
-        top: 629px;
+        left: 180px;
+        top: 644px;
       }
 
       &.Himachal.Pradesh {
-        left: 191px;
-        top: 118px;
+        left: 205px;
+        top: 165px;
+    
       }
 
       &.Tamil.Nadu {
-        left: 216px;
-        top: 608px;
+        left: 229px;
+        top: 634px;
       }
 
       &.Jharkhand {
-        left: 356px;
-        top: 322px;
+        left: 364px;
+        top: 353px;
       }
 
       &.Rajasthan {
-        left: 115px;
-        top: 244px;
+        left: 130px;
+        top: 285px;
       }
 
       &.Madhya.Pradesh {
-        left: 206px;
-        top: 330px;
+        left: 230px;
+        top: 365px;
       }
 
       &.Odisha {
-        left: 348px;
-        top: 385px;
+        left: 360px;
+        top: 420px;
       }
 
       &.Chandigarh {
-        width: 20px;
-        height: 20px;
-        left: 184px;
-        top: 150px;
+        left: 183px;
+        top: 200px;
       }
     }
   }
