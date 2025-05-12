@@ -21,6 +21,7 @@ const AboutUsPage = lazy(() => import("./components/AboutUs"));
 const TermsPage = lazy(() => import("./components/Terms"));
 const PrivacyPolicyPage = lazy(() => import("./components/Privacy"));
 const RefundPolicyPage = lazy(() => import("./components/RefundPolicy"));
+const ComingSoon = lazy(() => import("./components/ComingSoon"));
 
 const Fallback = () => {
   return (
@@ -94,6 +95,17 @@ function App() {
                 <RouteTemplate className="about-page-container w-100 h-100 position-relative">
                   <Suspense fallback={<Fallback />}>
                     <AboutUsPage />
+                  </Suspense>
+                </RouteTemplate>
+              }
+            />
+
+            <Route
+              path="/coming-soon"
+              element={
+                <RouteTemplate className="coming-soon-page-container w-100 h-100 position-relative">
+                  <Suspense fallback={<Fallback />}>
+                    <ComingSoon />
                   </Suspense>
                 </RouteTemplate>
               }

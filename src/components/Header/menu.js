@@ -1,9 +1,15 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { scrollToTop } from "../../helper";
+import AboutIcon from "../../assets/images/menu_about_icon.svg"
+import CabsIcon from "../../assets/images/menu_cabs_icon.svg"
+import HotelsIcon from "../../assets/images/menu_hotels_icon.svg"
+import PresenseIcon from "../../assets/images/menu_presebse_icon.svg"
+import ServicesIcon from "../../assets/images/menu_services_icon.svg"
+
 
 export default function MobileNavbar({ drawerClickHandler }) {
-  const NavigationListELement = ({ title, link, childern, onClick }) => {
+  const NavigationListELement = ({ title, link, childern, onClick, icon }) => {
     return (
       <li className="px-4 d-flex header-li position-relative ">
         <Link
@@ -14,7 +20,8 @@ export default function MobileNavbar({ drawerClickHandler }) {
             if (typeof onClick == "function") onClick();
           }}
         >
-          <div className="hd-content-wrapper">
+          <div className="hd-content-wrapper d-flex flex-row flex-lg-column align-items-center gap-lg-2 gap-4">
+            <img src={icon} alt={title}/>
             <span className="font-medium text-center">{title}</span>
           </div>
         </Link>
@@ -28,11 +35,11 @@ export default function MobileNavbar({ drawerClickHandler }) {
   return (
     <>
       <ul className="d-flex align-content-lg-center align-items-start flex-column flex-lg-row">
-        <NavigationListELement link="/" title="Home" onClick={scrollToTop} />
-        <NavigationListELement link="/#services" title="Services" />
-        <NavigationListELement link="/" onClick={scrollToTop} title="Book Meeting" />
-        <NavigationListELement link="/#presence" title="Presence" />
-        <NavigationListELement link="/about" onClick={scrollToTop} title="About us" />
+        <NavigationListELement link="/#services" title="Services" icon={ServicesIcon} />
+        <NavigationListELement link="/#presence" title="Presence" icon={PresenseIcon}/>
+        <NavigationListELement link="/coming-soon" onClick={scrollToTop} title="Hotels" icon={HotelsIcon} />
+        <NavigationListELement link="/coming-soon" onClick={scrollToTop} title="Cabs" icon={CabsIcon} />
+        <NavigationListELement link="/about" onClick={scrollToTop} title="About us" icon={AboutIcon}/>
       </ul>
       <a target="_blank" href="https://pmny.in/zIrYTtNgWD1d" className="btn-primary pay-btn rounded-pill px-4 py-1 text-decoration-none">Pay</a>
     </>
