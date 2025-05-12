@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import IndiaMap from "../../assets/images/map.svg";
+import Indiamap from "./Indiamap";
 
 const gstData = [
   {
@@ -166,10 +167,19 @@ const gstData = [
 
 const GSTDetails = () => {
   const [dialogContent, setDialogContent] = useState(gstData[0]);
-  console.log("dialogContent", dialogContent);
+  const [stateCode, setStateCode] = useState("30");
+  const ref = useRef();
+  const timeout = useRef();
 
   const handleHotspotClick = (data) => {
-    setDialogContent(data);
+    clearTimeout(timeout.current);
+    setStateCode(data.stateCode);
+    ref.current.classList.add("op-anim");
+
+    timeout.current = setTimeout(() => {
+      ref.current.classList.remove("op-anim");
+      setDialogContent(data);
+    }, 500);
   };
 
   return (
@@ -179,7 +189,8 @@ const GSTDetails = () => {
 
         <div className="d-lg-flex d-none justify-content-center gap-5">
           <div className="map-hotspots position-relative">
-            <img src={IndiaMap} className="w-100" />
+            <Indiamap stateCode={stateCode} />
+            {/* <img src={IndiaMap} className="w-100" /> */}
             {gstData.map((data) => {
               return (
                 <button
@@ -195,51 +206,72 @@ const GSTDetails = () => {
             })}
           </div>
 
-          <div className="state-data-container">
+          <div className="state-data-container" ref={ref}>
             {dialogContent != null && dialogContent && (
               <>
                 <h3 className="text-center font-24">{dialogContent.state}</h3>
-                <p className="font-20"><span className="font-bold">GSTIN: </span> {dialogContent.GSTIN}</p>
-                <p className="font-20"><span className="font-bold">Address:</span> <span className="text-uppercase">{dialogContent.address}</span></p>
-                <p className="font-20"><span className="font-bold">State Code:</span> {dialogContent.stateCode}</p>
+                <p className="font-20">
+                  <span className="font-bold">GSTIN: </span>{" "}
+                  {dialogContent.GSTIN}
+                </p>
+                <p className="font-20">
+                  <span className="font-bold">Address:</span>{" "}
+                  <span className="text-uppercase">
+                    {dialogContent.address}
+                  </span>
+                </p>
+                <p className="font-20">
+                  <span className="font-bold">State Code:</span>{" "}
+                  {dialogContent.stateCode}
+                </p>
               </>
             )}
           </div>
         </div>
         <div className="d-lg-none d-flex flex-column">
-          <img src={IndiaMap} alt="india gst map" />
-          <div class="accordion mb-5" id="gstStatesAccordion">
+        <Indiamap stateCode={stateCode} />
+
+          <div className="accordion mb-5" id="gstStatesAccordion">
             {gstData.map((data) => {
               return (
                 <div
-                  class="accordion-item mb-2"
+                  className="accordion-item mb-2"
                   key={`mobile-gst-data-${data.GSTIN}`}
                 >
                   <h3
-                    class="accordion-header"
+                    className="accordion-header"
                     id={`state-heading-${data.GSTIN}`}
                   >
                     <button
-                      class="accordion-button collapsed"
+                      className="accordion-button collapsed"
                       type="button"
                       data-bs-toggle="collapse"
                       data-bs-target={`#state-${data.GSTIN}`}
                       aria-expanded="false"
                       aria-controls="collapseOne"
+                      onClick={()=>setStateCode(data.stateCode)}
                     >
                       {data.state}
                     </button>
                   </h3>
                   <div
                     id={`state-${data.GSTIN}`}
-                    class="accordion-collapse collapse"
+                    className="accordion-collapse collapse"
                     aria-labelledby={`state-heading-${data.GSTIN}`}
                     data-bs-parent="#gstStatesAccordion"
                   >
-                    <div class="accordion-body">
-                      <p><span className="font-bold">GSTIN:</span> {data.GSTIN}</p>
-                      <p><span className="font-bold">Address:</span> <span className="text-uppercase">{data.address}</span></p>
-                      <p><span className="font-bold">State Code:</span> {data.stateCode}</p>
+                    <div className="accordion-body">
+                      <p>
+                        <span className="font-bold">GSTIN:</span> {data.GSTIN}
+                      </p>
+                      <p>
+                        <span className="font-bold">Address:</span>{" "}
+                        <span className="text-uppercase">{data.address}</span>
+                      </p>
+                      <p>
+                        <span className="font-bold">State Code:</span>{" "}
+                        {data.stateCode}
+                      </p>
                     </div>
                   </div>
                 </div>

@@ -1,13 +1,9 @@
 import React, { useRef, useState } from "react";
 
-export default function Index({data, setPopupData}) {
-    console.log("data", data);
-    
+export default function Index({ data, setPopupData }) {
   const [hovered, setIsHovered] = useState(false);
   const timerRef = useRef();
   const imgRef = useRef();
-
-  
 
   const onHoverHandle = () => {
     let index = 0;
@@ -21,13 +17,12 @@ export default function Index({data, setPopupData}) {
   };
 
   const onHoverLeaveHandle = () => {
-  console.log("timerRef.current", timerRef.current);
+    console.log("timerRef.current", timerRef.current);
 
     // clearInterval(timerRef.current);
     // imgRef.current.src = data.displayImg;
     setIsHovered(false);
-  console.log("timerRef.current", timerRef.current);
-
+    console.log("timerRef.current", timerRef.current);
   };
 
   return (
@@ -42,10 +37,22 @@ export default function Index({data, setPopupData}) {
         src={data.displayImg}
         alt=""
       />
-      <div className={`w-100 story-btn position-absolute top-0 h-100 flex-center flex-column gap-4 ${hovered? "visible": "invisible"}`}>
-        <div className="bg-primary position-absolute top-0 w-100 h-100" style={{ opacity: 0.7 }}></div>
-        <span className="text-white z-1 position-relative font-22">{data.city}</span>
-        <button className="btn-secondary z-1 position-relative text-decoration-none" onClick={() => setPopupData(data)}>
+      <div
+        className={`w-100 story-btn position-absolute top-0 h-100 flex-center flex-column gap-4 ${
+          hovered ? "visible" : "invisible"
+        }`}
+      >
+        <div
+          className="bg-primary position-absolute top-0 w-100 h-100"
+          style={{ opacity: 0.7 }}
+        ></div>
+        <span className="text-white z-1 position-relative font-22">
+          {data.city}
+        </span>
+        <button
+          className="btn-secondary z-1 position-relative text-decoration-none"
+          onClick={() => setPopupData(data)}
+        >
           Read More
         </button>
       </div>

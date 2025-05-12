@@ -8,12 +8,12 @@ export function FilterBtnIcon() {
       fill="none"
     >
       <g
-        class="a0"
+        className="a0"
         opacity="1"
         transform="translate(6,11.9984) translate(-0.207107,-3.53556)"
       >
         <rect
-          class="a1"
+          className="a1"
           width="2"
           height="6"
           rx="0.5"
@@ -22,7 +22,7 @@ export function FilterBtnIcon() {
           transform="translate(5.20711,3.53698) rotate(-90) translate(-1,-3)"
         ></rect>
         <rect
-          class="a2"
+          className="a2"
           width="2"
           height="5"
           rx="0.5"
@@ -31,7 +31,7 @@ export function FilterBtnIcon() {
           transform="translate(1.41421,3.53553) rotate(-135) translate(-1,-1)"
         ></rect>
         <rect
-          class="a3"
+          className="a3"
           width="2"
           height="5"
           rx="0.5"
@@ -41,13 +41,13 @@ export function FilterBtnIcon() {
         ></rect>
       </g>
       <g
-        class="a4"
+        className="a4"
         opacity="0"
         fill="none"
         transform="translate(18,11.9984) rotate(180) translate(-0.207107,-3.53556)"
       >
         <rect
-          class="a5"
+          className="a5"
           width="2"
           height="0"
           rx="0.5"
@@ -56,7 +56,7 @@ export function FilterBtnIcon() {
           transform="translate(5.20711,3.53698) rotate(-90) translate(-1,-3)"
         ></rect>
         <rect
-          class="a6"
+          className="a6"
           width="2"
           height="2"
           rx="0.5"
@@ -65,7 +65,7 @@ export function FilterBtnIcon() {
           transform="translate(1.41421,3.53553) rotate(-135) translate(-1,-1)"
         ></rect>
         <rect
-          class="a7"
+          className="a7"
           width="2"
           height="2"
           rx="0.5"
@@ -75,7 +75,7 @@ export function FilterBtnIcon() {
         ></rect>
       </g>
       <rect
-        class="a8"
+        className="a8"
         width="2"
         height="12"
         rx="0.5"

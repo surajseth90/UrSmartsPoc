@@ -110,7 +110,6 @@
 }
 
 section.our-stories {
-
   .card-prev-btn,
   .card-next-btn {
     color: white;
@@ -119,9 +118,7 @@ section.our-stories {
   .stories-wrapper {
     .story-img {
       height: 400px;
-    }
-    .w-100 {
-      width: calc(100% + 2px) !important;
+      border-radius: 26px;
     }
 
     .swiper-pagination {
@@ -203,6 +200,10 @@ section.gst-details-section {
     max-width: 620px;
     height: 720px;
 
+    path {
+      transition: 0.3s all;
+    }
+
     img {
       background-size: contain;
       background-repeat: no-repeat;
@@ -221,7 +222,6 @@ section.gst-details-section {
       &:hover {
         // box-shadow: 0 0 0 10px rgb(50, 41, 11), 0 0 0 11px var(--primary-yellow);
         outline: 6px solid white;
-
       }
 
       &.selected {
@@ -255,7 +255,7 @@ section.gst-details-section {
 
       &.Telangana {
         left: 244px;
-    top: 482px;
+        top: 482px;
       }
 
       &.Bihar {
@@ -276,7 +276,6 @@ section.gst-details-section {
       &.Himachal.Pradesh {
         left: 205px;
         top: 165px;
-    
       }
 
       &.Tamil.Nadu {
@@ -338,6 +337,18 @@ section.gst-details-section {
     height: max-content;
     padding: 40px 30px;
     border-radius: 30px;
+    p,
+    h3 {
+      opacity: 1;
+      transition: 0.3s all;
+    }
+
+    &.op-anim {
+      p,
+      h3 {
+        opacity: 0;
+      }
+    }
   }
 }
 
