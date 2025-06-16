@@ -1,0 +1,43 @@
+.login-page {
+  min-height: 100vh;
+
+  .login-left-container {
+    max-width: 560px;
+  }
+
+  .login-right-container {
+    background-color: var(--admin-primary-color);
+  }
+
+  h1 span {
+    color: var(--admin-primary-btn);
+  }
+
+  .form-container {
+    min-width: 354px;
+    max-width: 354px;
+  }
+
+  input {
+    border: 1px solid var(--admin-flow-grey-dark);
+    height: 44px;
+    border-radius: 4px;
+    padding: 0 10px;
+  }
+
+  .password-input-wrapper {
+    input {
+      padding-right: 35px !important;
+    }
+    button {
+      right: 10px;
+      transform: translateY(-50%);
+    }
+  }
+
+  .forgot-btn {
+    color: var(--admin-secondary-btn);
+    border: none;
+    background: none;
+  }
+}

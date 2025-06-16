@@ -6,8 +6,8 @@ function UnknownPage() {
   return (
     <div className="unknown-route-container">
       <div className="unknown-route-wrapper text-center">
-        <h1 className="text-orange">404</h1>
-        <p className="text-orange mt-2">PAGE NOT FOUND</p>
+        <h1 className="text-primary">404</h1>
+        <p className="text-primary mt-2">PAGE NOT FOUND</p>
         <button className="mt-4" onClick={() => navigate("/")}>
           Go To Home
         </button>

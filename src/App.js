@@ -15,6 +15,7 @@ import RouteTemplate from "./app/RouteTemplate";
 import ChatButton from "./components/ChatButton";
 import { BannerImgs } from "./data";
 import { Helmet } from "react-helmet";
+import AdminTemplate from "./Admin/AdminTemplate";
 
 const UnknownRoute = lazy(() => import("./app/UnknownRoute"));
 const AboutUsPage = lazy(() => import("./components/AboutUs"));
@@ -22,6 +23,11 @@ const TermsPage = lazy(() => import("./components/Terms"));
 const PrivacyPolicyPage = lazy(() => import("./components/Privacy"));
 const RefundPolicyPage = lazy(() => import("./components/RefundPolicy"));
 const ComingSoon = lazy(() => import("./components/ComingSoon"));
+
+// ------------------------------------------
+const AdminLogin = lazy(() => import("./Admin/Login"));
+const AdminDashboard = lazy(() => import("./Admin/Dashboard"));
+const Hotels = lazy(() => import("./Admin/Hotels"));
 
 const Fallback = () => {
   return (
@@ -143,6 +149,39 @@ function App() {
                 </RouteTemplate>
               }
             />
+
+            {/* =-----------------Admin----------------------------
+             */}
+            <Route
+              path="/admin/login"
+              element={
+                <Suspense fallback={<Fallback />}>
+                  <AdminLogin />
+                </Suspense>
+              }
+            />
+
+            <Route
+              path="/admin/dashboard"
+              element={
+                <AdminTemplate>
+                  <Suspense fallback={<Fallback />}>
+                    <AdminDashboard />
+                  </Suspense>
+                </AdminTemplate>
+              }
+            />
+
+            <Route
+              path="/admin/hotels"
+              element={
+                <AdminTemplate>
+                  <Suspense fallback={<Fallback />}>
+                    <Hotels />
+                  </Suspense>
+                </AdminTemplate>
+              }
+            />
           </Routes>
         </BrowserRouter>
       </ResponsiveWrapper>
@@ -179,7 +218,7 @@ function App() {
         </button>
       </div>
 
-      <ChatButton />
+      {!window.location.href.includes("admin") && <ChatButton />}
     </div>
   );
 }

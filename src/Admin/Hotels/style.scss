@@ -1,0 +1,31 @@
+.hotels-page {
+  .booking-top-wrapper {
+    border-bottom: 1px solid #e9e9e9;
+    margin-top: 35px;
+
+    .border-bottom {
+      border-color: #b4b4b4 !important;
+    }
+
+    button {
+      border-bottom: 2px solid transparent;
+      transition: all 0.3s;
+
+      &:hover,
+      &.selected {
+        color: var(--admin-primary-btn) !important;
+        border-bottom: 2px solid var(--admin-primary-btn);
+      }
+
+      &.selected {
+        font-weight: 700;
+      }
+    }
+  }
+
+  @media screen and (min-width: 992px) {
+    .search-wrapper {
+      max-width: 305px;
+    }
+  }
+}

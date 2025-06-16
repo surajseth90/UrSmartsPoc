@@ -1,0 +1,52 @@
+.admin-header {
+  background-color: var(--admin-primary-color);
+  height: var(--admin-header-height);
+
+  .header-bottom-line {
+    background: linear-gradient(
+      102.62deg,
+      rgba(137, 32, 254, 0) 10.31%,
+      rgba(249, 40, 198, 0.54) 49.65%,
+      #ff7e5b 93.66%
+    );
+    height: 4px;
+  }
+}
+
+.admin-navbar {
+  background-color: var(--admin-nav-bg);
+  max-width: 230px;
+
+  .nav-items {
+    background-color: transparent;
+    color: var(--admin-primary-color);
+    text-decoration: none;
+
+    &:hover {
+      background-color: var(--admin-nav-hover-bg);
+      color: var(--white);
+    }
+
+    &.selected {
+      background-color: var(--admin-primary-color);
+      color: var(--white);
+    }
+  }
+
+  @media screen and (max-width: 768px) {
+    max-width: 60px;
+
+    .nav-items span {
+      display: none;
+    }
+  }
+}
+
+.main-wrapper {
+  height: calc(100vh - var(--admin-header-height));
+  background-color: var(--admin-main-bg);
+
+  .main-top-container {
+    margin-top: 1rem;
+  }
+}
