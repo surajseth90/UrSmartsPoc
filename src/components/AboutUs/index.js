@@ -2,16 +2,12 @@ import "./style.scss";
 import Team_Bevan from "../../assets/images/Team_Bevan.png";
 import Team_Charu from "../../assets/images/Team_Charu.png";
 import Team_Pradeep from "../../assets/images/Team_Pradeep.png";
-import Team_Thaire from "../../assets/images/Team_Thaire.png";
 import Team_Rajesh from "../../assets/images/Team_Rajesh.png";
 import Team_Rishav from "../../assets/images/Team_Rishav.png";
 import Team_Afreen from "../../assets/images/Team_Afreen.png";
 import Team_Seema from "../../assets/images/Team_Seema.png";
-import Team_Zeeshan from "../../assets/images/Team_Zeeshan.png";
 import Team_Christina from "../../assets/images/Team_Christina.png";
 import Team_Pooja from "../../assets/images/Team_Pooja.png";
-import Team_Anjana from "../../assets/images/Team_Anjana.png";
-import Team_Razia from "../../assets/images/Team_Razia.png";
 import Team_Farha from "../../assets/images/Team_Farha.png";
 import ReadMore from "../../app/ReadMoreText";
 
@@ -44,14 +40,7 @@ Bevan has never been afraid to try on different hats. He started UrSmartSpoc wit
       title: "The Quota Crusher",
       img: Team_Pradeep,
       description: `The go-getter who smashes targets and makes things happen!`,
-    },
-    {
-      name: "THAIRE",
-      title: "The Adaptable",
-      description:
-        "Throw a curveball, and Thaire will hit it out of the park. Flexibility is his superpower!",
-      img: Team_Thaire,
-    },
+    }
   ];
 
   const strengthTeam = [
@@ -82,14 +71,6 @@ Bevan has never been afraid to try on different hats. He started UrSmartSpoc wit
       description:
         "The one you can always count on. Seema delivers, no matter what!",
       img: Team_Seema,
-    },
-
-    {
-      name: "ZEESHAN",
-      title: "The Dreamer",
-      description:
-        "Big ideas, bold visions—Zeeshan is always thinking beyond the horizon!",
-      img: Team_Zeeshan,
     },
 
     {
