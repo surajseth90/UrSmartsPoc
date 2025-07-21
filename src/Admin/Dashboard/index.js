@@ -1,4 +1,4 @@
-import { memo } from "react";
+import { memo, useEffect } from "react";
 import "./style.scss";
 
 function Dashboard() {
@@ -33,7 +33,6 @@ function Dashboard() {
           <p className="font-24 font-bold mt-2">₹10,000</p>
           <p className="admin-green-text mt-2">+10%</p>
         </div>
-
 
         <div className="dashoard-data bg-white p-4 rounded-3">
           <p className="font-14">Avg. Nights per Booking</p>

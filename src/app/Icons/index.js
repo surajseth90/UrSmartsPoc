@@ -253,3 +253,20 @@ export const SettingsIcon = () => {
     </svg>
   );
 };
+
+export const CloseIcon = ({color, width, height}) => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width={width || "23"}
+      height={height || "24"}
+      viewBox="0 0 23 24"
+      fill="none"
+    >
+      <path
+        d="M1.94417 23.2692L0 21.325L9.5275 11.7971L0 2.2692L1.94417 0.325035L11.4721 9.85254L21 0.325035L22.9442 2.2692L13.4167 11.7971L22.9442 21.325L21 23.2692L11.4721 13.7417L1.94417 23.2692Z"
+        fill={color || "currentColor"}
+      />
+    </svg>
+  );
+};

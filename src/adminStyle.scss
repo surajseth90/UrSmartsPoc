@@ -5,11 +5,11 @@
   --admin-flow-grey-dark: #89969f;
   --admin-secondary-btn: #6075dd;
   --admin-nav-bg: #edf0f4;
-  --admin-nav-hover-bg: #335B9F;
+  --admin-nav-hover-bg: #335b9f;
   --admin-blue-b30: #f0f2f5;
   --admin-main-bg: #f6f6f6;
-  --admin-green-text:#088738;
-
+  --admin-green-text: #088738;
+  --admin-form-label-text: #9696a0;
   --admin-header-height: 52px;
 }
 
@@ -27,9 +27,22 @@
 
 .admin-primary-btn {
   background: var(--admin-primary-btn);
+}
+
+.admin-primary-btn,
+.admin-secondary-btn,
+.admin-tert-btn {
   color: var(--white);
   border-radius: 8px;
   border: none;
   text-align: center;
-  padding: 12px;
+  padding: 6px 12px;
+}
+
+.admin-secondary-btn {
+  background: var(--admin-secondary-btn);
+}
+
+.admin-tertiary-btn {
+  color: var(--admin-primary-color) !important;
 }

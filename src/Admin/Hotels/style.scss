@@ -23,9 +23,60 @@
     }
   }
 
+  .form-control,
+  .form-select {
+    border-color: var(--admin-form-label-text);
+    &:disabled {
+      background-color: var(--admin-main-bg);
+    }
+  }
+
+  h4 {
+    font-size: 22px;
+  }
+
+  .divider {
+    background-color: var(--admin-form-label-text);
+  }
+  .occupation-container {
+    background-color: var(--admin-main-bg);
+  }
+
+  input,
+  select,
+  textarea,
+  input::placeholder,
+  textarea::placeholder {
+    color: var(--admin-form-label-text);
+  }
+
+  label {
+    font-size: 0.875rem;
+    color: var(--black);
+    &.form-label::after {
+      content: " *";
+      color: red;
+    }
+  }
+
+  .popup-outer-wrapper {
+    padding: 0;
+  }
+
   @media screen and (min-width: 992px) {
     .search-wrapper {
       max-width: 305px;
+    }
+
+    .popup-outer-wrapper {
+      padding: 1.5rem;
+    }
+  }
+
+  @media screen and (max-width: 576px) {
+    .new-inventory-popup {
+      height: 100%;
+      border-radius: 0;
     }
   }
 }
