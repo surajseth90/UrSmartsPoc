@@ -39,12 +39,13 @@ export default function AdminNavbar() {
 
   return (
     <nav className="admin-navbar w-100 p-2 d-flex flex-column">
-      {navItems.map((item) => {
+      {navItems.map((item, key) => {
         return (
           <Link
             className={`nav-items py-3 px-3 rounded-2 mb-3 ${
               selectedRoute == item.route ? "selected" : ""
             }`}
+            key={`nav-${key}`}
             
             to={`/admin/${item.route}`}
             onClick={()=>setSelectedRoute(item.route)}

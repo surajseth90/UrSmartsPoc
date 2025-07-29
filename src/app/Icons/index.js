@@ -125,16 +125,16 @@ export const DashboardIcon = () => {
       <path
         d="M6.389 2.13012L2.57109 5.28012C1.93359 5.80512 1.4165 6.92262 1.4165 7.77012V13.3276C1.4165 15.0676 2.75525 16.4926 4.39859 16.4926H12.6011C14.2444 16.4926 15.5832 15.0676 15.5832 13.3351V7.87512C15.5832 6.96762 15.0094 5.80512 14.3082 5.28762L9.93067 2.04012C8.939 1.30512 7.34525 1.34262 6.389 2.13012Z"
         stroke="currentColor"
-        stroke-width="1.5"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M8.5 13.4927V11.2427"
         stroke="currentColor"
-        stroke-width="1.5"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
     </svg>
   );
@@ -172,33 +172,33 @@ export const ReportsIcon = () => {
         <path
           d="M7.21704 7.89746H5.33996C4.89371 7.89746 4.53247 8.25868 4.53247 8.70493V12.3316H7.21704V7.89746V7.89746Z"
           stroke="currentColor"
-          stroke-width="1.2"
-          stroke-miterlimit="10"
-          stroke-linecap="round"
-          stroke-linejoin="round"
+          strokeWidth="1.2"
+          strokeMiterlimit="10"
+          strokeLinecap="round"
+          strokeLinejoin="round"
         />
         <path
           d="M9.09486 4.6748H8.01818C7.57193 4.6748 7.21069 5.03607 7.21069 5.48232V12.3248H9.89528V5.48232C9.89528 5.03607 9.54111 4.6748 9.09486 4.6748Z"
           stroke="currentColor"
-          stroke-width="1.2"
-          stroke-miterlimit="10"
-          stroke-linecap="round"
-          stroke-linejoin="round"
+          strokeWidth="1.2"
+          strokeMiterlimit="10"
+          strokeLinecap="round"
+          strokeLinejoin="round"
         />
         <path
           d="M11.7772 9.10156H9.90015V12.3245H12.5847V9.90907C12.5777 9.46282 12.2164 9.10156 11.7772 9.10156Z"
           stroke="currentColor"
-          stroke-width="1.2"
-          stroke-miterlimit="10"
-          stroke-linecap="round"
-          stroke-linejoin="round"
+          strokeWidth="1.2"
+          strokeMiterlimit="10"
+          strokeLinecap="round"
+          strokeLinejoin="round"
         />
         <path
           d="M6.4305 15.5837H10.6805C14.2222 15.5837 15.6388 14.167 15.6388 10.6253V6.37533C15.6388 2.83366 14.2222 1.41699 10.6805 1.41699H6.4305C2.88883 1.41699 1.47217 2.83366 1.47217 6.37533V10.6253C1.47217 14.167 2.88883 15.5837 6.4305 15.5837Z"
           stroke="currentColor"
-          stroke-width="1.2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
+          strokeWidth="1.2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
         />
       </g>
     </svg>
@@ -236,18 +236,18 @@ export const SettingsIcon = () => {
         <path
           d="M8.29352 11.3125C9.43857 11.3125 10.3668 10.3891 10.3668 9.25C10.3668 8.11091 9.43857 7.1875 8.29352 7.1875C7.14846 7.1875 6.22021 8.11091 6.22021 9.25C6.22021 10.3891 7.14846 11.3125 8.29352 11.3125Z"
           stroke="currentColor"
-          stroke-width="1.1875"
-          stroke-miterlimit="10"
-          stroke-linecap="round"
-          stroke-linejoin="round"
+          strokeWidth="1.1875"
+          strokeMiterlimit="10"
+          strokeLinecap="round"
+          strokeLinejoin="round"
         />
         <path
           d="M1.38232 9.85499V8.64499C1.38232 7.92999 1.96976 7.33874 2.69542 7.33874C3.94631 7.33874 4.45772 6.45874 3.82882 5.37936C3.46945 4.76061 3.68369 3.95624 4.31259 3.59874L5.5082 2.91811C6.05417 2.59499 6.75909 2.78749 7.08391 3.33061L7.15993 3.46124C7.78192 4.54061 8.80475 4.54061 9.43365 3.46124L9.50967 3.33061C9.83449 2.78749 10.5394 2.59499 11.0854 2.91811L12.281 3.59874C12.9099 3.95624 13.1241 4.76061 12.7648 5.37936C12.1359 6.45874 12.6473 7.33874 13.8982 7.33874C14.6169 7.33874 15.2113 7.92311 15.2113 8.64499V9.85499C15.2113 10.57 14.6238 11.1612 13.8982 11.1612C12.6473 11.1612 12.1359 12.0412 12.7648 13.1206C13.1241 13.7462 12.9099 14.5437 12.281 14.9012L11.0854 15.5819C10.5394 15.905 9.83449 15.7125 9.50967 15.1694L9.43365 15.0387C8.81166 13.9594 7.78883 13.9594 7.15993 15.0387L7.08391 15.1694C6.75909 15.7125 6.05417 15.905 5.5082 15.5819L4.31259 14.9012C3.68369 14.5437 3.46945 13.7394 3.82882 13.1206C4.45772 12.0412 3.94631 11.1612 2.69542 11.1612C1.96976 11.1612 1.38232 10.57 1.38232 9.85499Z"
           stroke="currentColor"
-          stroke-width="1.1875"
-          stroke-miterlimit="10"
-          stroke-linecap="round"
-          stroke-linejoin="round"
+          strokeWidth="1.1875"
+          strokeMiterlimit="10"
+          strokeLinecap="round"
+          strokeLinejoin="round"
         />
       </g>
     </svg>

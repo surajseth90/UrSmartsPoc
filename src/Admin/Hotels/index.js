@@ -1,33 +1,35 @@
-import React, { memo, useState } from "react";
+import React, { memo, useEffect, useState } from "react";
 import "./style.scss";
 import { SearchIcon } from "../../app/Icons";
+import BookingTable from "./BookingTable.js";
 
 const NewBookingForm = React.lazy(() => import("./NewBookingForm"));
-const InventoryForm = React.lazy(() => import("./AddNewInventoryForm"));
+const InventoryManagement = React.lazy(() =>
+  import("./InventoryManagement.js")
+);
 
 const dataTypeOptions = [
   {
     title: "All Bookings",
-    prop: "all-bookings",
+    prop: "ALL",
   },
   {
     title: "Completed",
-    prop: "completed",
+    prop: "COMPLETED",
   },
   {
     title: "Drafts",
-    prop: "drafts",
+    prop: "DRAFT",
   },
   {
     title: "Inventory Management",
-    prop: "inventory-management",
+    prop: "INVENTORY",
   },
 ];
 
 function Hotels() {
   const [dataType, setDataType] = useState(dataTypeOptions[0].prop);
   const [newBookingFormOpen, setNewBookingFormOpen] = useState(false);
-  const [inventoryFormOpen, setinventoryFormOpen] = useState(false);
 
   return (
     <div className="hotels-page">
@@ -51,6 +53,7 @@ function Hotels() {
                     dataType == btn.prop ? "selected" : ""
                   }`}
                   onClick={() => setDataType(btn.prop)}
+                  key={btn.title}
                 >
                   {btn.title}
                 </button>
@@ -67,6 +70,22 @@ function Hotels() {
               <SearchIcon />
             </span>
           </div>
+        </div>
+
+        <div className="booking-botto-wrapper">
+          {dataType !== "INVENTORY" ? (
+            <BookingTable status={dataType} />
+          ) : (
+            <React.Suspense
+              fallback={
+                <div className="bg-white h-100 justify-content-center align-items-center d-flex">
+                  <div className="loader"></div>
+                </div>
+              }
+            >
+              <InventoryManagement />
+            </React.Suspense>
+          )}
         </div>
       </div>
 
@@ -87,22 +106,6 @@ function Hotels() {
         </div>
       )}
 
-      {inventoryFormOpen && (
-        <div className="w-100 h-100 position-fixed top-0 start-0 popup-outer-wrapper">
-          <div className="overlay w-100 h-100"></div>
-          <div className="z-101 position-relative h-100 rounded-3 d-flex justify-content-between align-items-center">
-            <React.Suspense
-              fallback={
-                <div className="bg-white h-100 justify-content-center align-items-center d-flex">
-                  <div className="loader"></div>
-                </div>
-              }
-            >
-              <InventoryForm onClose={() => setinventoryFormOpen(false)} />
-            </React.Suspense>
-          </div>
-        </div>
-      )}
     </div>
   );
 }

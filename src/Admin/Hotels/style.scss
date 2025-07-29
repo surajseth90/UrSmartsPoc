@@ -59,6 +59,44 @@
     }
   }
 
+  .inventory-table {
+    a {
+      cursor: pointer;
+      background: #E0F5FF;
+      border-radius: 4px;
+    }
+  }
+
+  .booking-table-container {
+    table {
+      border: 1px solid #E9E9E9;
+      border-radius: 4px;
+    }
+    thead th {
+      background-color: #F6F8F9;
+      font-weight: 400;
+    }
+
+    tbody td {
+      background-color: #FFF;
+      font-weight: 400;
+    }
+
+    .booking-status-completed {
+      color: #848484;
+    }
+
+    
+    .booking-status-active {
+      color: #27AE60;
+    }
+
+    
+    .booking-status-draft {
+      color: #B84C2B;
+    }
+  }
+
   .popup-outer-wrapper {
     padding: 0;
   }

@@ -15,3 +15,14 @@ export const scrollToTop = () => {
     element.scrollIntoView({ behavior: "smooth" });
   }
 };
+
+export const generateHeader = (e, p) => {
+  let email = e || "admin@sys.com";
+  let password = p || "admin123";
+  const credentials = btoa(`${email}:${password}`); // btoa = base64 encode
+
+  return {
+    Authorization: `Basic ${credentials}`, // this is common for basic auth
+    "Content-Type": "application/json",
+  };
+};
