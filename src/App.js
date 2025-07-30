@@ -16,6 +16,7 @@ import ChatButton from "./components/ChatButton";
 import { BannerImgs } from "./data";
 import { Helmet } from "react-helmet";
 import AdminTemplate from "./Admin/AdminTemplate";
+import CustomerTemplate from "./Customer/CustomerTemplate";
 
 const UnknownRoute = lazy(() => import("./app/UnknownRoute"));
 const AboutUsPage = lazy(() => import("./components/AboutUs"));
@@ -28,6 +29,9 @@ const ComingSoon = lazy(() => import("./components/ComingSoon"));
 const AdminLogin = lazy(() => import("./Admin/Login"));
 const AdminDashboard = lazy(() => import("./Admin/Dashboard"));
 const Hotels = lazy(() => import("./Admin/Hotels"));
+
+const CustomerDashboard = lazy(() => import("./Customer/Dashboard"));
+const CustomerHotels = lazy(() => import("./Customer/Hotels"));
 
 const Fallback = () => {
   return (
@@ -182,6 +186,28 @@ function App() {
                 </AdminTemplate>
               }
             />
+
+            <Route
+              path="/customer/dashboard"
+              element={
+                <CustomerTemplate>
+                  <Suspense fallback={<Fallback />}>
+                    <CustomerDashboard />
+                  </Suspense>
+                </CustomerTemplate>
+              }
+            />
+
+            <Route
+              path="/customer/hotels"
+              element={
+                <CustomerTemplate>
+                  <Suspense fallback={<Fallback />}>
+                    <CustomerHotels />
+                  </Suspense>
+                </CustomerTemplate>
+              }
+            />
           </Routes>
         </BrowserRouter>
       </ResponsiveWrapper>
@@ -218,7 +244,8 @@ function App() {
         </button>
       </div>
 
-      {!window.location.href.includes("admin") && <ChatButton />}
+      {!window.location.href.includes("admin") &&
+        !window.location.href.includes("customer") && <ChatButton />}
     </div>
   );
 }

@@ -1,0 +1,120 @@
+.hotels-page {
+  .booking-top-wrapper {
+    border-bottom: 1px solid #e9e9e9;
+    margin-top: 35px;
+
+    .border-bottom {
+      border-color: #b4b4b4 !important;
+    }
+
+    button {
+      border-bottom: 2px solid transparent;
+      transition: all 0.3s;
+
+      &:hover,
+      &.selected {
+        color: var(--admin-primary-btn) !important;
+        border-bottom: 2px solid var(--admin-primary-btn);
+      }
+
+      &.selected {
+        font-weight: 700;
+      }
+    }
+  }
+
+  .form-control,
+  .form-select {
+    border-color: var(--admin-form-label-text);
+    &:disabled {
+      background-color: var(--admin-main-bg);
+    }
+  }
+
+  h4 {
+    font-size: 22px;
+  }
+
+  .divider {
+    background-color: var(--admin-form-label-text);
+  }
+  .occupation-container {
+    background-color: var(--admin-main-bg);
+  }
+
+  input,
+  select,
+  textarea,
+  input::placeholder,
+  textarea::placeholder {
+    color: var(--admin-form-label-text);
+  }
+
+  label {
+    font-size: 0.875rem;
+    color: var(--black);
+    &.form-label::after {
+      content: " *";
+      color: red;
+    }
+  }
+
+  .inventory-table {
+    a {
+      cursor: pointer;
+      background: #E0F5FF;
+      border-radius: 4px;
+    }
+  }
+
+  .booking-table-container {
+    table {
+      border: 1px solid #E9E9E9;
+      border-radius: 4px;
+    }
+    thead th {
+      background-color: #F6F8F9;
+      font-weight: 400;
+    }
+
+    tbody td {
+      background-color: #FFF;
+      font-weight: 400;
+    }
+
+    .booking-status-completed {
+      color: #848484;
+    }
+
+    
+    .booking-status-active {
+      color: #27AE60;
+    }
+
+    
+    .booking-status-draft {
+      color: #B84C2B;
+    }
+  }
+
+  .popup-outer-wrapper {
+    padding: 0;
+  }
+
+  @media screen and (min-width: 992px) {
+    .search-wrapper {
+      max-width: 305px;
+    }
+
+    .popup-outer-wrapper {
+      padding: 1.5rem;
+    }
+  }
+
+  @media screen and (max-width: 576px) {
+    .new-inventory-popup {
+      height: 100%;
+      border-radius: 0;
+    }
+  }
+}
