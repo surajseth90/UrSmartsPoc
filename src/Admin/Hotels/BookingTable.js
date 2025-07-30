@@ -1,12 +1,24 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { basePath } from "../../config";
 import EyeIcon from "../../assets/images/eye.svg";
 import DownloadIcon from "../../assets/images/download.svg";
 import EditIcon from "../../assets/images/edit.svg";
 import { generateHeader } from "../../helper";
+import DownloadableSnippet from "../../app/DownloadableSnippet/index";
+import { CloseIcon } from "../../app/Icons/index";
 
 const BookingTable = ({ status }) => {
   const [bookings, setBookings] = useState([]);
+  const [currentBooking, setCurrentBoking] = useState(null);
+  const [pdfModal, setPdfModal] = useState(null);
+  const voucherRef = useRef();
+
+  const handlePDFDownload = (data) => {
+    setCurrentBoking(data);
+    setTimeout(() => {
+      voucherRef.current.downloadPDF();
+    }, 100);
+  };
 
   useEffect(() => {
     getAllBookings();
@@ -20,9 +32,9 @@ const BookingTable = ({ status }) => {
         status: status,
       }).toString();
 
-      url = url + `?${params}`
+      url = url + `?${params}`;
     }
-        
+
     await fetch(url, {
       method: "GET",
       headers: generateHeader(),
@@ -91,13 +103,23 @@ const BookingTable = ({ status }) => {
                     </span>
                   </td>
                   <td className="admin-label-text font-14">
-                    <button className="px-2" title="view">
+                    <button
+                      className="px-2"
+                      title="view"
+                      onClick={() => setPdfModal(b)}
+                    >
                       <img src={EyeIcon} alt="View" />
                     </button>
                     <button className="px-2" title="Edit">
                       <img src={EditIcon} alt="Edit" />
                     </button>
-                    <button className="px-2" title="download">
+                    <button
+                      className="px-2"
+                      title="download"
+                      onClick={() => {
+                        handlePDFDownload(b);
+                      }}
+                    >
                       <img src={DownloadIcon} alt="download" />
                     </button>
                   </td>
@@ -113,6 +135,32 @@ const BookingTable = ({ status }) => {
           </tbody>
         </table>
       </div>
+
+      {pdfModal && (
+        <div className="w-100 h-100 position-fixed top-0 start-0 popup-outer-wrapper">
+          <div className="overlay w-100 h-100"></div>
+          <div className="z-101 w-max m-auto rounded-4 py-4 position-relative h-100 rounded-3 d-flex justify-content-center align-items-center">
+            <button
+              className="position-absolute end-0 admin-primary-btn"
+              onClick={() => setPdfModal(null)}
+              style={{ top: "24px" }}
+            >
+              <CloseIcon color={"#000"} width="14" />
+            </button>
+            <DownloadableSnippet data={pdfModal} />
+          </div>
+        </div>
+      )}
+
+      {bookings && currentBooking && (
+        <div style={{ position: "absolute", left: "-9999px", top: "-9999px" }}>
+          <DownloadableSnippet
+            ref={voucherRef}
+            data={currentBooking}
+            hideDownloadButton
+          />
+        </div>
+      )}
     </div>
   );
 };

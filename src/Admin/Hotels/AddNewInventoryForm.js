@@ -165,7 +165,7 @@ const InventoryForm = ({ onClose }) => {
               className={`form-control ${errors.url ? "is-invalid" : ""}`}
               value={formData.city}
               onChange={(e) => handleInputChange("city", e.target.value)}
-              placeholder="Choose City"
+              placeholder="City"
             />
 
             {errors.city && (

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { CloseIcon } from "../../app/Icons/index";
 import CalenderIcon from "../../assets/images/img_icon_calendar.svg";
 import WatchIcon from "../../assets/images/img_timeicon.svg";
-import { mobileNumberValidator } from "../../data";
+import { indianStatesAndUTs, mobileNumberValidator } from "../../data";
 
 const BookingForm = ({ onClose }) => {
   const [formData, setFormData] = useState({
@@ -28,11 +28,10 @@ const BookingForm = ({ onClose }) => {
   });
 
   const [errors, setErrors] = useState({});
+  const now = new Date();
 
   const options = {
     client: ["Client A", "Client B", "Client C"],
-    state: ["Maharashtra", "Karnataka", "Delhi"],
-    city: ["Mumbai", "Bangalore", "Delhi"],
     hotel: ["Taj", "Oberoi", "Leela"],
     meal: ["Breakfast Only", "Full Board"],
     occupation: ["Business", "Leisure"],
@@ -121,6 +120,8 @@ const BookingForm = ({ onClose }) => {
     onClose();
   };
 
+
+
   return (
     <div className="container p-4 bg-white h-100 overflow-auto rounded-3 hide-scrollbar">
       <div className="d-flex align-items-center justify-content-between mb-3">
@@ -132,15 +133,16 @@ const BookingForm = ({ onClose }) => {
 
       <div className="d-flex align-items-center gap-4 mb-4">
         <div className="d-flex align-items-center gap-3">
-          <img
-            src={CalenderIcon}
-            alt="Calendar"
-          />
-          <span className="admin-text-primary">29/05/1992</span>
+          <img src={CalenderIcon} alt="Calendar" />
+          <span className="admin-text-primary">
+            {now.toLocaleDateString("en-GB")}
+          </span>
         </div>
         <div className="d-flex align-items-center gap-3">
           <img src={WatchIcon} alt="Time" className="w-[18px] h-[18px]" />
-          <span className="admin-text-primary">09:25:34 AM</span>
+          <span className="admin-text-primary">
+            {now.toLocaleTimeString("en-US")}
+          </span>
         </div>
       </div>
 
@@ -200,8 +202,8 @@ const BookingForm = ({ onClose }) => {
               onChange={(e) => handleChange("state", e.target.value)}
             >
               <option value="">Select State</option>
-              {options.state.map((opt, idx) => (
-                <option key={idx}>{opt}</option>
+              {indianStatesAndUTs.map((opt, idx) => (
+                <option key={opt}>{opt}</option>
               ))}
             </select>
             {errors.state && (
@@ -211,16 +213,15 @@ const BookingForm = ({ onClose }) => {
 
           <div className="col-md-6">
             <label className="form-label">City</label>
-            <select
-              className={`form-select ${errors.city ? "is-invalid" : ""}`}
+
+            <input
+              type="text"
+              className={`form-control ${errors.sapId ? "is-invalid" : ""}`}
               value={formData.city}
               onChange={(e) => handleChange("city", e.target.value)}
-            >
-              <option value="">Select City</option>
-              {options.city.map((opt, idx) => (
-                <option key={idx}>{opt}</option>
-              ))}
-            </select>
+              placeholder="City"
+            />
+
             {errors.city && (
               <div className="invalid-feedback">{errors.city}</div>
             )}
@@ -410,7 +411,9 @@ const BookingForm = ({ onClose }) => {
               type="text"
               className={`form-control ${errors.contact ? "is-invalid" : ""}`}
               value={formData.contact}
-              onChange={(e) => handleChange("contact", mobileNumberValidator(e.target.value))}
+              onChange={(e) =>
+                handleChange("contact", mobileNumberValidator(e.target.value))
+              }
             />
             {errors.contact && (
               <div className="invalid-feedback">{errors.contact}</div>

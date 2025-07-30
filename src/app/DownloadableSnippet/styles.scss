@@ -1,0 +1,91 @@
+.confirmation-voucher-box {
+  background: #F6F8F9;
+  border-radius: 18px;
+  box-shadow: 0 6px 16px rgba(31, 90, 134, 0.1);
+  width: 520px;
+  font-family: "Segoe UI", Arial, "sans-serif";
+  color: #42526E;
+
+  ul {
+    list-style: disc;
+  }
+}
+.voucher-heading {
+  font-size: 40px;
+  font-weight: 700;
+  color: #172b4d;
+  font-family: Gloock;
+}
+
+.voucher-dot-sm {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  background: #263972;
+  border-radius: 3px;
+  margin-left: 6px;
+  vertical-align: middle;
+}
+.voucher-text {
+  font-size: 1.08rem;
+}
+.voucher-section-header {
+  font-size: 1.14rem;
+  color: #1f2c45;
+  margin-bottom: 4px;
+}
+.voucher-section {
+  background: #E0F5FF;
+  border-radius: 4px;
+  padding: 13px 15px 8px 15px;
+  margin-bottom: 24px;
+}
+.voucher-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 1rem;
+  margin-bottom: 5px;
+}
+.voucher-label {
+  color: #607d95;
+  font-weight: 500;
+}
+.voucher-value {
+  color: #233763;
+  font-weight: 500;
+}
+.voucher-info-text {
+  font-size: 0.97em;
+  color: #798c9a;
+}
+.voucher-phone {
+  color: #1855bf;
+  font-size: 0.97em;
+}
+.voucher-blue {
+  color: #1F3A93;
+  font-weight: 600;
+}
+.voucher-bold {
+  font-weight: 700;
+}
+.voucher-green {
+  color: #10751B;
+  font-weight: 400;
+  font-size: 14px;
+}
+.voucher-red {
+  color: #B84C2B;
+  font-weight: 400;
+  font-size: 14px;
+}
+@media (max-width: 600px) {
+  .confirmation-voucher-box {
+    width: 98vw;
+    padding: 0.5em;
+  }
+  .voucher-row {
+    flex-direction: column;
+    font-size: 0.99em;
+  }
+}
