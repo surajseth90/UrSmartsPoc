@@ -11,8 +11,8 @@ const InventoryManagement = () => {
   const [inventoryFormOpen, setinventoryFormOpen] = useState(false);
 
   useEffect(() => {
-    getAllBookings();
-  }, []);
+    if (!inventoryFormOpen) getAllBookings();
+  }, [inventoryFormOpen]);
 
   async function getAllBookings() {
     let url = `${basePath}/api/hotels/all`;
@@ -68,10 +68,7 @@ const InventoryManagement = () => {
 
                     {b.url && (
                       <div className="mt-2 mb-3">
-                        <a
-                          className="p-2"
-                          href={b.url}
-                        >
+                        <a className="p-2" href={b.url}>
                           Google Map Link
                         </a>
                       </div>
