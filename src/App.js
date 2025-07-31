@@ -17,6 +17,7 @@ import { BannerImgs } from "./data";
 import { Helmet } from "react-helmet";
 import AdminTemplate from "./Admin/AdminTemplate";
 import CustomerTemplate from "./Customer/CustomerTemplate";
+import ProtectedRoute from "./app/ProtectedRouting";
 
 const UnknownRoute = lazy(() => import("./app/UnknownRoute"));
 const AboutUsPage = lazy(() => import("./components/AboutUs"));
@@ -30,6 +31,7 @@ const AdminLogin = lazy(() => import("./Admin/Login"));
 const AdminDashboard = lazy(() => import("./Admin/Dashboard"));
 const Hotels = lazy(() => import("./Admin/Hotels"));
 
+const CustomerLogin = lazy(() => import("./Customer/Login"));
 const CustomerDashboard = lazy(() => import("./Customer/Dashboard"));
 const CustomerHotels = lazy(() => import("./Customer/Hotels"));
 
@@ -168,44 +170,61 @@ function App() {
             <Route
               path="/admin/dashboard"
               element={
-                <AdminTemplate>
-                  <Suspense fallback={<Fallback />}>
-                    <AdminDashboard />
-                  </Suspense>
-                </AdminTemplate>
+                <ProtectedRoute>
+                  <AdminTemplate>
+                    <Suspense fallback={<Fallback />}>
+                      <AdminDashboard />
+                    </Suspense>
+                  </AdminTemplate>
+                </ProtectedRoute>
               }
             />
 
             <Route
               path="/admin/hotels"
               element={
-                <AdminTemplate>
-                  <Suspense fallback={<Fallback />}>
-                    <Hotels />
-                  </Suspense>
-                </AdminTemplate>
+                <ProtectedRoute>
+                  <AdminTemplate>
+                    <Suspense fallback={<Fallback />}>
+                      <Hotels />
+                    </Suspense>
+                  </AdminTemplate>
+                </ProtectedRoute>
+              }
+            />
+
+            <Route
+              path="/customer/login"
+              element={
+                <Suspense fallback={<Fallback />}>
+                  <CustomerLogin />
+                </Suspense>
               }
             />
 
             <Route
               path="/customer/dashboard"
               element={
-                <CustomerTemplate>
-                  <Suspense fallback={<Fallback />}>
-                    <CustomerDashboard />
-                  </Suspense>
-                </CustomerTemplate>
+                <ProtectedRoute>
+                  <CustomerTemplate>
+                    <Suspense fallback={<Fallback />}>
+                      <CustomerDashboard />
+                    </Suspense>
+                  </CustomerTemplate>
+                </ProtectedRoute>
               }
             />
 
             <Route
               path="/customer/hotels"
               element={
-                <CustomerTemplate>
-                  <Suspense fallback={<Fallback />}>
-                    <CustomerHotels />
-                  </Suspense>
-                </CustomerTemplate>
+                <ProtectedRoute>
+                  <CustomerTemplate>
+                    <Suspense fallback={<Fallback />}>
+                      <CustomerHotels />
+                    </Suspense>
+                  </CustomerTemplate>
+                </ProtectedRoute>
               }
             />
           </Routes>

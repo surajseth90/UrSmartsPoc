@@ -1,9 +1,15 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { ProfileIcon } from "../../app/Icons";
 import HelpIcon from "../../assets/images/Icons/help.svg";
 import AlertIcon from "../../assets/images/Icons/notifications_unread.svg";
+import { removeCustomerToken } from "../../session";
+import { useDispatch } from "react-redux";
+import { setSnakeBarContent } from "../../action";
 
 export default function AdminHeader() {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
   return (
     <header className="admin-header">
       <div className="d-flex justify-content-between align-items-center py-2 px-4 ">
@@ -24,17 +30,40 @@ export default function AdminHeader() {
         </h1>
 
         <div className="d-flex gap-3">
-          <Link>
+          {/* <Link>
             <img src={HelpIcon} />
           </Link>
 
           <Link>
             <img src={AlertIcon} />
-          </Link>
+          </Link> */}
 
-          <Link>
-            <ProfileIcon />
-          </Link>
+          <div class="dropdown">
+            <button
+              class="dropdown-toggle"
+              type="button"
+              id="dropdownMenuButton"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+            >
+              <ProfileIcon />
+            </button>
+
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+              <li>
+                <button
+                  class="dropdown-item"
+                  onClick={() => {
+                    removeCustomerToken();
+                    navigate("/customer/login");
+                    dispatch(setSnakeBarContent("Logged Out!"));
+                  }}
+                >
+                  Logout
+                </button>
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
       <div className="header-bottom-line w-100"></div>

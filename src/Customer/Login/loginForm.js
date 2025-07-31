@@ -1,10 +1,22 @@
 import React, { useState } from "react";
-import { useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { EyeOpened, EyeClosed } from "../../app/Icons";
+import { setCustomerToken } from "../../session";
+import { generateCredentials } from "../../helper";
+import { useDispatch } from "react-redux";
+import { setSnakeBarContent } from "../../action";
 
 export default function LoginForm() {
   const [searchParams, setSearchParams] = useSearchParams();
   const [passwordType, setPasswordType] = useState("password");
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+  });
+  const [isLoading, setIsLoading] = useState(false);
+
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const updatePasswordVisibility = () => {
     if (passwordType == "password") setPasswordType("text");
@@ -12,7 +24,25 @@ export default function LoginForm() {
   };
   const submitHandler = (e) => {
     e.preventDefault();
+    setIsLoading(true);
+
+    if (
+      formData.email == "Kapoor.Dhande@Relianceada.Com" &&
+      formData.password == "client123"
+    ) {
+      let token = generateCredentials(formData.email, formData.password);
+      setCustomerToken(token);
+      navigate("/customer/dashboard");
+    } else {
+      dispatch(setSnakeBarContent("Invalid credentials"));
+    }
+    setIsLoading(false);
   };
+
+  const handleChange = (field, value) => {
+    setFormData((prev) => ({ ...prev, [field]: value }));
+  };
+
   return (
     <form
       action="submit"
@@ -23,7 +53,13 @@ export default function LoginForm() {
         <label htmlFor="admin-email" className="admin-label-text">
           Email
         </label>
-        <input type="text" id="admin-email" name="email" />
+        <input
+          type="text"
+          id="admin-email"
+          name="email"
+          value={formData.email}
+          onChange={(e) => handleChange("email", e.target.value)}
+        />
       </div>
       <div className="input-container w-100 d-flex flex-column mt-3">
         <label htmlFor="admin-password" className="admin-label-text">
@@ -35,6 +71,8 @@ export default function LoginForm() {
             id="amin-password"
             name="password"
             className="w-100"
+            value={formData.password}
+            onChange={(e) => handleChange("password", e.target.value)}
           />
           <button
             className="position-absolute top-50"
@@ -58,8 +96,15 @@ export default function LoginForm() {
         </button>
       </div>
 
-      <button className="admin-primary-btn w-100 mt-3" type="submit">
-        Sign in
+      <button
+        className={`admin-primary-btn w-100 mt-3 d-flex justify-content-center`}
+        type="submit"
+      >
+        {isLoading ? (
+          <div className="btn-loader-white"></div>
+        ) : (
+          <span> Sign in</span>
+        )}
       </button>
     </form>
   );

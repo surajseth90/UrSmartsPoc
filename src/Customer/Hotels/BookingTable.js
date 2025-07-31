@@ -29,7 +29,7 @@ const BookingTable = () => {
 
     await fetch(url, {
       method: "GET",
-      headers: generateHeader("Kapoor.Dhande@Relianceada.Com", "client123"),
+      headers: generateHeader(),
     })
       .then((res) => {
         return res.json();

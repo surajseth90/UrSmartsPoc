@@ -1,11 +1,14 @@
 import React, { useEffect } from "react";
 import { Navigate } from "react-router-dom";
-import { isAuthenticated } from "../../session";
+import { isCustomerAuthenticated, isAdminAuthenticated } from "../../session";
 import { useDispatch } from "react-redux";
 import { setSnakeBarContent } from "../../action";
 
 const ProtectedRoute = ({ children }) => {
-  const isLoggedIn = isAuthenticated();
+  const isCustomer =  window.location.href.includes("customer");
+  const isLoggedIn = isCustomer
+    ? isCustomerAuthenticated()
+    : isAdminAuthenticated();
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -15,7 +18,7 @@ const ProtectedRoute = ({ children }) => {
   }, []);
 
   if (!isLoggedIn) {
-    return <Navigate to="/" replace={true} />;
+    return <Navigate to={isCustomer? "/customer/login": "/admin/login"} replace={true} />;
   } else {
     return children;
   }

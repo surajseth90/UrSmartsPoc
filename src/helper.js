@@ -1,3 +1,5 @@
+import { getAdminToken, getCustomerToken } from "./session";
+
 export function debounce(func, delay, timeoutId) {
   return (...args) => {
     if (timeoutId) {
@@ -16,13 +18,16 @@ export const scrollToTop = () => {
   }
 };
 
-export const generateHeader = (e, p) => {
-  let email = e || "admin@sys.com";
-  let password = p || "admin123";
-  const credentials = btoa(`${email}:${password}`); // btoa = base64 encode
+export const generateCredentials = (email, password) => {
+  return btoa(`${email}:${password}`);
+};
 
+export const generateHeader = () => {
+  let credentials = window.location.href.includes("customer")
+    ? getCustomerToken()
+    : getAdminToken();
   return {
-    Authorization: `Basic ${credentials}`, // this is common for basic auth
+    Authorization: `Basic ${credentials}`,
     "Content-Type": "application/json",
   };
 };
