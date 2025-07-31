@@ -7,51 +7,51 @@ import Logo from "../../assets/images/logo.svg";
 
 // Forward ref so parent can trigger download
 const ConfirmationVoucher = forwardRef(
-  ({ data, hideDownloadButton = false }, ref) => {
+  ({ onEnd, data, hideDownloadButton = false }, ref) => {
     const voucherRef = useRef();
 
     console.log("data", data);
-    
+
     // Expose download function to parent
     useImperativeHandle(ref, () => ({
       downloadPDF,
     }));
 
     const downloadPDF = async () => {
-        const element = voucherRef.current;
-      
-        const canvas = await html2canvas(element, {
-          useCORS: true,
-          scale: 3,
-        });
-      
-        const imgData = canvas.toDataURL("image/png");
-        const pdf = new jsPDF("p", "mm", "a4");
-        const pdfWidth = pdf.internal.pageSize.getWidth();
-        const imgProps = pdf.getImageProperties(imgData);
-        const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
-      
-        let heightLeft = pdfHeight;
-        let position = 0;
-      
+      const element = voucherRef.current;
+
+      const canvas = await html2canvas(element, {
+        useCORS: true,
+        scale: 3,
+      });
+
+      const imgData = canvas.toDataURL("image/png");
+      const pdf = new jsPDF("p", "mm", "a4");
+      const pdfWidth = pdf.internal.pageSize.getWidth();
+      const imgProps = pdf.getImageProperties(imgData);
+      const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+
+      let heightLeft = pdfHeight;
+      let position = 0;
+
+      pdf.addImage(imgData, "PNG", 0, position, pdfWidth, pdfHeight);
+      heightLeft -= pdf.internal.pageSize.getHeight();
+
+      while (heightLeft > 0) {
+        position -= pdf.internal.pageSize.getHeight();
+        pdf.addPage();
         pdf.addImage(imgData, "PNG", 0, position, pdfWidth, pdfHeight);
         heightLeft -= pdf.internal.pageSize.getHeight();
-      
-        while (heightLeft > 0) {
-          position -= pdf.internal.pageSize.getHeight();
-          pdf.addPage();
-          pdf.addImage(imgData, "PNG", 0, position, pdfWidth, pdfHeight);
-          heightLeft -= pdf.internal.pageSize.getHeight();
-        }
-      
-        pdf.save("confirmation-voucher.pdf");
-      };
-      
+      }
+
+      pdf.save("confirmation-voucher.pdf");
+      onEnd && onEnd();
+    };
 
     return (
       <div
         className="d-flex flex-column overflow-auto align-items-center py-5 h-100"
-        style={{ background: "#f8f9fb"}}
+        style={{ background: "#f8f9fb" }}
       >
         <div ref={voucherRef} className="confirmation-voucher-box p-4">
           {/* Header/logo */}

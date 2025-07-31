@@ -3,6 +3,7 @@ import { basePath } from "../../config";
 import EyeIcon from "../../assets/images/eye.svg";
 import EditIcon from "../../assets/images/edit.svg";
 import { generateHeader } from "../../helper";
+import { CloseIcon, LeftArrowIcon } from "../../app/Icons/index";
 
 const InventoryForm = React.lazy(() => import("./AddNewInventoryForm"));
 
@@ -11,12 +12,20 @@ const InventoryManagement = () => {
   const [inventoryFormOpen, setinventoryFormOpen] = useState(false);
   const [currentInventory, setCurrentInventory] = useState(null);
   const [showMode, setShowMode] = useState(false);
+  const [totalPages, setTotalPages] = useState(0);
+  const [currentPage, setCurrentPage] = useState(1);
+
   useEffect(() => {
     if (!inventoryFormOpen) getAllBookings();
-  }, [inventoryFormOpen]);
+  }, [inventoryFormOpen, currentPage]);
 
   async function getAllBookings() {
-    let url = `${basePath}/api/hotels/all`;
+    let params = new URLSearchParams({
+      page: currentPage - 1,
+      size: 20,
+    }).toString();
+
+    let url = `${basePath}/api/hotels/all?${params}`;
 
     await fetch(url, {
       method: "GET",
@@ -26,6 +35,7 @@ const InventoryManagement = () => {
         return res.json();
       })
       .then((res) => {
+        setTotalPages(res.totalPages);
         setBookings(res.content);
         console.log("res", res);
       })
@@ -124,6 +134,38 @@ const InventoryManagement = () => {
             )}
           </tbody>
         </table>
+
+        <div
+          className={`pagination py-2 pb-4 w-100 d-flex justify-content-between ${
+            totalPages == 0 ? "d-none" : ""
+          }`}
+        >
+          <p>
+            Page {currentPage} of {totalPages}
+          </p>
+          <div className="d-flex gap-4">
+            <button
+              className="d-flex align-items-center"
+              title="back"
+              disabled={currentPage == 1}
+              onClick={() => {
+                if (currentPage != 1) setCurrentPage(currentPage - 1);
+              }}
+            >
+              <LeftArrowIcon />
+            </button>
+            <button
+              title="next"
+              disabled={currentPage == totalPages}
+              className="right-arrow d-flex align-items-center"
+              onClick={() => {
+                if (currentPage != totalPages) setCurrentPage(currentPage + 1);
+              }}
+            >
+              <LeftArrowIcon />
+            </button>
+          </div>
+        </div>
       </div>
 
       {inventoryFormOpen && (

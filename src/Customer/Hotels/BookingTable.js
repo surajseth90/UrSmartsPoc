@@ -5,13 +5,15 @@ import DownloadIcon from "../../assets/images/download.svg";
 import EditIcon from "../../assets/images/edit.svg";
 import { generateHeader } from "../../helper";
 import DownloadableSnippet from "../../app/DownloadableSnippet/index";
-import { CloseIcon } from "../../app/Icons/index";
+import { CloseIcon, LeftArrowIcon } from "../../app/Icons/index";
 
 const BookingTable = () => {
   const [bookings, setBookings] = useState([]);
   const [currentBooking, setCurrentBoking] = useState(null);
   const [pdfModal, setPdfModal] = useState(null);
   const voucherRef = useRef();
+  const [totalPages, setTotalPages] = useState(0);
+  const [currentPage, setCurrentPage] = useState(1);
 
   const handlePDFDownload = (data) => {
     setCurrentBoking(data);
@@ -22,10 +24,15 @@ const BookingTable = () => {
 
   useEffect(() => {
     getAllBookings();
-  }, []);
+  }, [currentPage]);
 
   async function getAllBookings() {
-    let url = `${basePath}/api/bookings/userBookings`;
+    let params = new URLSearchParams({
+      page: currentPage - 1,
+      size: 20,
+    }).toString();
+
+    let url = `${basePath}/api/bookings/userBookings?${params}`;
 
     await fetch(url, {
       method: "GET",
@@ -35,6 +42,7 @@ const BookingTable = () => {
         return res.json();
       })
       .then((res) => {
+        setTotalPages(res.totalPages);
         setBookings(res.content);
         console.log("res", res);
       })
@@ -129,6 +137,37 @@ const BookingTable = () => {
             )}
           </tbody>
         </table>
+        <div
+          className={`pagination py-2 pb-4 w-100 d-flex justify-content-between ${
+            totalPages == 0 ? "d-none" : ""
+          }`}
+        >
+          <p>
+            Page {currentPage} of {totalPages}
+          </p>
+          <div className="d-flex gap-4">
+            <button
+              className="d-flex align-items-center"
+              title="back"
+              disabled={currentPage == 1}
+              onClick={() => {
+                if (currentPage != 1) setCurrentPage(currentPage - 1);
+              }}
+            >
+              <LeftArrowIcon />
+            </button>
+            <button
+              title="next"
+              disabled={currentPage == totalPages}
+              className="right-arrow d-flex align-items-center"
+              onClick={() => {
+                if (currentPage != totalPages) setCurrentPage(currentPage + 1);
+              }}
+            >
+              <LeftArrowIcon />
+            </button>
+          </div>
+        </div>
       </div>
 
       {pdfModal && (
