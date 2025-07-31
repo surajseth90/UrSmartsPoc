@@ -29,13 +29,17 @@ const BookingTable = () => {
 
     await fetch(url, {
       method: "GET",
-      headers: generateHeader("Kapoor.Dhande@Relianceada.Com","client123")})
+      headers: generateHeader("Kapoor.Dhande@Relianceada.Com", "client123"),
+    })
       .then((res) => {
         return res.json();
       })
       .then((res) => {
         setBookings(res.content);
         console.log("res", res);
+      })
+      .catch((err) => {
+        console.log("err", err);
       });
   }
 
@@ -132,7 +136,8 @@ const BookingTable = () => {
           <div className="overlay w-100 h-100"></div>
           <div className="z-101 w-max m-auto rounded-4 py-4 position-relative h-100 rounded-3 d-flex justify-content-center align-items-center">
             <button
-              className="position-absolute end-0 admin-primary-btn"
+              className="position-absolute end-0 px-3 py-2"
+              title="close"
               onClick={() => setPdfModal(null)}
               style={{ top: "24px" }}
             >

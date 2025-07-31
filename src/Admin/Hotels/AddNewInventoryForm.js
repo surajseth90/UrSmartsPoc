@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { CloseIcon } from "../../app/Icons/index";
 import { basePath } from "../../config";
 import { generateHeader } from "../../helper";
@@ -6,7 +6,7 @@ import { indianStatesAndUTs, mobileNumberValidator } from "../../data";
 import { useDispatch } from "react-redux";
 import { setSnakeBarContent } from "../../action";
 
-const InventoryForm = ({ onClose }) => {
+const InventoryForm = ({ onClose, currentInventory, disableAll }) => {
   const [formData, setFormData] = useState({
     name: "",
     address: "",
@@ -21,9 +21,32 @@ const InventoryForm = ({ onClose }) => {
   });
 
   const [errors, setErrors] = useState({});
+  const [isLoading, setIsLoading] = useState(false);
   const dispatch = useDispatch();
 
   const occupancyOptions = ["Single", "Double", "Suite"];
+
+  useEffect(() => {
+    if (currentInventory) {
+      const updatedData = Object.fromEntries(
+        Object.entries(currentInventory).filter(
+          ([key, value]) =>
+            key in formData && value !== null && value !== undefined
+        )
+      );
+      if (currentInventory?.rooms[0]?.price) {
+        updatedData.price = currentInventory.rooms[0].price;
+      }
+      if (currentInventory?.rooms[0]?.roomType) {
+        updatedData.occupancyType = currentInventory.rooms[0].roomType;
+      }
+
+      setFormData((prev) => ({
+        ...prev,
+        ...updatedData,
+      }));
+    }
+  }, [currentInventory]);
 
   const handleInputChange = (field, value) => {
     setFormData({ ...formData, [field]: value });
@@ -47,6 +70,7 @@ const InventoryForm = ({ onClose }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (validate()) {
+      setIsLoading(true);
       let url = `${basePath}/api/hotels`;
       const body = {
         name: formData.name,
@@ -65,8 +89,17 @@ const InventoryForm = ({ onClose }) => {
         ],
       };
 
+      let isUpdating =
+        currentInventory &&
+        currentInventory != null &&
+        currentInventory != undefined;
+      if (isUpdating) {
+        url = `${basePath}/api/hotels/${currentInventory.hotelId}`;
+        body.hotelId = currentInventory.hotelId;
+      }
+
       await fetch(url, {
-        method: "POST",
+        method: isUpdating ? "PUT" : "POST",
         headers: generateHeader(),
         body: JSON.stringify(body),
       })
@@ -75,11 +108,19 @@ const InventoryForm = ({ onClose }) => {
         })
         .then((res) => {
           console.log("res", res);
+
+          let msg = isUpdating
+            ? "Inventory Updated Successfully!"
+            : "Inventory Added Successfully!";
+          dispatch(setSnakeBarContent(msg));
           onClose();
         })
         .catch((err) => {
-          dispatch(setSnakeBarContent("Inventory Added Successfully!"))
+          dispatch(setSnakeBarContent("Something went wrong"));
           console.log("err", err);
+        })
+        .finally(() => {
+          setIsLoading(false);
         });
     }
   };
@@ -90,7 +131,9 @@ const InventoryForm = ({ onClose }) => {
       style={{ maxWidth: "500px", maxHeight: "100%" }}
     >
       <div className="d-flex align-items-center justify-content-between mb-3">
-        <h4 className="text-black">Add New Inventory</h4>
+        <h4 className="text-black">
+          {disableAll ? "View Inventory" : "Add New Inventory"}
+        </h4>
         <button onClick={onClose} title="close">
           <CloseIcon color={"#9696A0"} width="14" />
         </button>
@@ -100,6 +143,7 @@ const InventoryForm = ({ onClose }) => {
         <div className="mb-3">
           <label className="form-label">Hotel Name</label>
           <input
+            disabled={disableAll}
             type="text"
             className={`form-control ${errors.name ? "is-invalid" : ""}`}
             value={formData.name}
@@ -113,6 +157,7 @@ const InventoryForm = ({ onClose }) => {
         <div className="mb-3">
           <label className="form-label">Address</label>
           <input
+            disabled={disableAll}
             type="text"
             className={`form-control ${errors.address ? "is-invalid" : ""}`}
             value={formData.address}
@@ -128,6 +173,7 @@ const InventoryForm = ({ onClose }) => {
         <div className="mb-3">
           <label className="form-label">Google Map (URL)</label>
           <input
+            disabled={disableAll}
             type="url"
             className={`form-control ${errors.url ? "is-invalid" : ""}`}
             value={formData.url}
@@ -143,6 +189,7 @@ const InventoryForm = ({ onClose }) => {
             <label className="form-label">State</label>
             <select
               className={`form-select ${errors.state ? "is-invalid" : ""}`}
+              disabled={disableAll}
               value={formData.state}
               onChange={(e) => handleInputChange("state", e.target.value)}
             >
@@ -166,6 +213,7 @@ const InventoryForm = ({ onClose }) => {
               value={formData.city}
               onChange={(e) => handleInputChange("city", e.target.value)}
               placeholder="City"
+              disabled={disableAll}
             />
 
             {errors.city && (
@@ -183,6 +231,7 @@ const InventoryForm = ({ onClose }) => {
               className={`form-control ${
                 errors.phoneNumber ? "is-invalid" : ""
               }`}
+              disabled={disableAll}
               value={formData.phoneNumber}
               onChange={(e) =>
                 handleInputChange(
@@ -204,6 +253,7 @@ const InventoryForm = ({ onClose }) => {
               value={formData.email}
               onChange={(e) => handleInputChange("email", e.target.value)}
               placeholder="Enter Email-ID"
+              disabled={disableAll}
             />
             {errors.email && (
               <div className="invalid-feedback">{errors.email}</div>
@@ -218,6 +268,7 @@ const InventoryForm = ({ onClose }) => {
             className={`form-select ${
               errors.occupancyType ? "is-invalid" : ""
             }`}
+            disabled={disableAll}
             value={formData.occupancyType}
             onChange={(e) => handleInputChange("occupancyType", e.target.value)}
           >
@@ -238,6 +289,7 @@ const InventoryForm = ({ onClose }) => {
           <div className="col-md-6">
             <label className="form-label">Price (₹)</label>
             <input
+              disabled={disableAll}
               type="number"
               className={`form-control ${errors.price ? "is-invalid" : ""}`}
               value={formData.price}
@@ -251,6 +303,7 @@ const InventoryForm = ({ onClose }) => {
           <div className="col-md-6">
             <label className="form-label">GST No.</label>
             <input
+              disabled={disableAll}
               type="text"
               className={`form-control ${errors.gstin ? "is-invalid" : ""}`}
               value={formData.gstin}
@@ -272,8 +325,17 @@ const InventoryForm = ({ onClose }) => {
           >
             Cancel
           </button>
-          <button type="submit" className="admin-primary-btn">
-            Save
+          <button
+            type="submit"
+            className={`admin-primary-btn ${isLoading ? "px-4" : ""} ${
+              disableAll ? "d-none" : ""
+            }`}
+          >
+            {isLoading ? (
+              <div className="btn-loader-white"></div>
+            ) : (
+              <span>Save</span>
+            )}
           </button>
         </div>
       </form>

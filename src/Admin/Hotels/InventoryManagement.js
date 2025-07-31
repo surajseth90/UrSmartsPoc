@@ -9,7 +9,8 @@ const InventoryForm = React.lazy(() => import("./AddNewInventoryForm"));
 const InventoryManagement = () => {
   const [bookings, setBookings] = useState([]);
   const [inventoryFormOpen, setinventoryFormOpen] = useState(false);
-
+  const [currentInventory, setCurrentInventory] = useState(null);
+  const [showMode, setShowMode] = useState(false);
   useEffect(() => {
     if (!inventoryFormOpen) getAllBookings();
   }, [inventoryFormOpen]);
@@ -27,6 +28,9 @@ const InventoryManagement = () => {
       .then((res) => {
         setBookings(res.content);
         console.log("res", res);
+      })
+      .catch((err) => {
+        console.log("err", err);
       });
   }
 
@@ -55,8 +59,8 @@ const InventoryManagement = () => {
           </thead>
           <tbody>
             {bookings && bookings?.length ? (
-              bookings.map((b) => (
-                <tr key={b.bookingId}>
+              bookings.map((b, key) => (
+                <tr key={`${b.bookingId}-${key}`}>
                   <td className="admin-label-text font-14">
                     <p className="font-bold mb-2">{b.name}</p>
                     <p className="mb-2" style={{ maxWidth: "300px" }}>
@@ -77,18 +81,35 @@ const InventoryManagement = () => {
                   <td className="admin-label-text font-14">{b.email}</td>
                   <td className="admin-label-text font-14">{b.phoneNumber}</td>
                   <td className="admin-label-text font-14">
-                    {b.rooms.occupancy}
+                    {b.rooms[0]?.roomType}
                   </td>
-                  <td className="admin-label-text font-14">{b.rooms.price}</td>
+                  <td className="admin-label-text font-14">
+                    {b.rooms[0]?.price}
+                  </td>
                   <td className="admin-label-text font-14">
                     <p>{b.gstin}</p>
                   </td>
 
                   <td className="admin-label-text font-14">
-                    <button className="px-2" title="view">
+                    <button
+                      className="px-2"
+                      title="view"
+                      onClick={() => {
+                        setShowMode(true);
+                        setCurrentInventory(b);
+                        setinventoryFormOpen(true);
+                      }}
+                    >
                       <img src={EyeIcon} alt="View" />
                     </button>
-                    <button className="px-2" title="Edit">
+                    <button
+                      className="px-2"
+                      title="Edit"
+                      onClick={() => {
+                        setCurrentInventory(b);
+                        setinventoryFormOpen(true);
+                      }}
+                    >
                       <img src={EditIcon} alt="Edit" />
                     </button>
                   </td>
@@ -111,12 +132,23 @@ const InventoryManagement = () => {
           <div className="z-101 position-relative h-100 rounded-3 d-flex justify-content-between align-items-center">
             <React.Suspense
               fallback={
-                <div className="bg-white h-100 justify-content-center align-items-center d-flex">
+                <div
+                  className="bg-white m-auto h-100 justify-content-center align-items-center d-flex"
+                  style={{ minWidth: "300px" }}
+                >
                   <div className="loader"></div>
                 </div>
               }
             >
-              <InventoryForm onClose={() => setinventoryFormOpen(false)} />
+              <InventoryForm
+                currentInventory={currentInventory}
+                disableAll={showMode}
+                onClose={() => {
+                  setCurrentInventory(null);
+                  setinventoryFormOpen(false);
+                  setShowMode(false);
+                }}
+              />
             </React.Suspense>
           </div>
         </div>
