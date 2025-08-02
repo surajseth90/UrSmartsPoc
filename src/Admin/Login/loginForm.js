@@ -4,7 +4,7 @@ import { EyeOpened, EyeClosed } from "../../app/Icons";
 import { generateCredentials } from "../../helper";
 import { setAdminToken } from "../../session";
 import { useDispatch } from "react-redux";
-import { setSnakeBarContent } from "../../action";
+import { setAdminDetails, setSnakeBarContent } from "../../action";
 
 export default function LoginForm() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -28,6 +28,10 @@ export default function LoginForm() {
     setIsLoading(true);
     if (formData.email == "admin@sys.com" && formData.password == "admin123") {
       let token = generateCredentials(formData.email, formData.password);
+      let userData = {
+        email: formData.email
+      }
+      dispatch(setAdminDetails(userData))
       setAdminToken(token);
       navigate("/admin/dashboard");
     } else {

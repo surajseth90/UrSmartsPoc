@@ -1,9 +1,7 @@
-import React, { memo, useEffect, useState } from "react";
+import React, { memo,  useState } from "react";
 import "./style.scss";
 import { SearchIcon } from "../../app/Icons";
 import BookingTable from "./BookingTable.js";
-
-const NewBookingForm = React.lazy(() => import("./NewBookingForm"));
 
 const dataTypeOptions = [
   {
@@ -14,18 +12,11 @@ const dataTypeOptions = [
 
 function Hotels() {
   const [dataType, setDataType] = useState(dataTypeOptions[0].prop);
-  const [newBookingFormOpen, setNewBookingFormOpen] = useState(false);
 
   return (
     <div className="hotels-page">
       <div className="main-top-container d-flex align-items-center justify-content-between">
         <h2 className="mb-0 font-24 admin-text-primary">Bookings</h2>
-        <button
-          className="admin-primary-btn"
-          onClick={() => setNewBookingFormOpen(true)}
-        >
-          Create Booking
-        </button>
       </div>
 
       <div className="booking-data-container">
@@ -61,23 +52,6 @@ function Hotels() {
           {dataType == "HOTELS" && <BookingTable />}
         </div>
       </div>
-
-      {newBookingFormOpen && (
-        <div className="w-100 h-100 position-fixed top-0 start-0 popup-outer-wrapper">
-          <div className="overlay w-100 h-100"></div>
-          <div className="z-101 position-relative h-100 rounded-3">
-            <React.Suspense
-              fallback={
-                <div className="bg-white h-100 justify-content-center align-items-center d-flex">
-                  <div className="loader"></div>
-                </div>
-              }
-            >
-              <NewBookingForm onClose={() => setNewBookingFormOpen(false)} />
-            </React.Suspense>
-          </div>
-        </div>
-      )}
     </div>
   );
 }

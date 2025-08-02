@@ -7,7 +7,7 @@ import { generateHeader } from "../../helper";
 import DownloadableSnippet from "../../app/DownloadableSnippet/index";
 import { CloseIcon, LeftArrowIcon } from "../../app/Icons/index";
 
-const BookingTable = ({ status }) => {
+const BookingTable = ({ status, setEditableBooking }) => {
   const [bookings, setBookings] = useState([]);
   const [currentBooking, setCurrentBoking] = useState(null);
   const [pdfModal, setPdfModal] = useState(null);
@@ -93,23 +93,23 @@ const BookingTable = ({ status }) => {
             {bookings && bookings?.length ? (
               <>
                 {bookings.map((b) => (
-                  <tr key={b.bookingId}>
+                  <tr key={b?.bookingId}>
                     <td className="admin-label-text font-14">
-                      {b.bookingPerson.userId}
+                      {b?.bookingPerson?.userId}
                     </td>
-                    <td className="admin-label-text font-14">{b.tripId}</td>
+                    <td className="admin-label-text font-14">{b?.tripId}</td>
                     <td className="admin-label-text font-14">
-                      {b.bookingPerson?.name}
-                    </td>
-                    <td className="admin-label-text font-14">
-                      {b.hotel?.name}
+                      {b?.bookingPerson?.name}
                     </td>
                     <td className="admin-label-text font-14">
-                      <p>{b.hotel?.state}</p>
-                      {b.hotel?.city}{" "}
+                      {b?.hotel?.name}
                     </td>
                     <td className="admin-label-text font-14">
-                      {new Date(b.bookingDate).toLocaleDateString("en-IN", {
+                      <p>{b?.hotel?.state}</p>
+                      {b?.hotel?.city}{" "}
+                    </td>
+                    <td className="admin-label-text font-14">
+                      {new Date(b?.bookingDate).toLocaleDateString("en-IN", {
                         day: "2-digit",
                         month: "short",
                         year: "numeric",
@@ -117,9 +117,9 @@ const BookingTable = ({ status }) => {
                     </td>
                     <td className="admin-label-text font-14">
                       <span
-                        className={`booking-status-${b.status?.toLowerCase()}`}
+                        className={`booking-status-${b?.status?.toLowerCase()}`}
                       >
-                        {capitalizeFirstLetter(b.status)}
+                        {capitalizeFirstLetter(b?.status)}
                       </span>
                     </td>
                     <td className="admin-label-text font-14">
@@ -130,7 +130,11 @@ const BookingTable = ({ status }) => {
                       >
                         <img src={EyeIcon} alt="View" />
                       </button>
-                      <button className="px-2" title="Edit">
+                      <button
+                        className="px-2"
+                        title="Edit"
+                        onClick={() => setEditableBooking(b)}
+                      >
                         <img src={EditIcon} alt="Edit" />
                       </button>
                       <button

@@ -49,3 +49,7 @@ export const setUserAddresses = (data) => {
 export const setTopProfessionals = (data) => {
   return { type: "SET_TOP_PROFESSIONALS", payload: data };
 };
+
+export const setAdminDetails= (data) => {
+  return { type: "SET_ADMIN_DETAILS", payload: data };
+};

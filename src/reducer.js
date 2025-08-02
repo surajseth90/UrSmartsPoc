@@ -14,6 +14,7 @@ const initialState = {
   userProfile: {},
   userAddresses: [],
   topProfessionals: [],
+  adminDetails: {},
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -94,6 +95,12 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         topProfessionals: action.payload,
+      };
+
+    case "SET_ADMIN_DETAILS":
+      return {
+        ...state,
+        adminDetails: action.payload,
       };
 
     default:

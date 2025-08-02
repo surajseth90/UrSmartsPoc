@@ -6,7 +6,6 @@ import BottomHeaderSliderImage5 from "./assets/images/HomepageBanner/sou-e-as.we
 import BottomHeaderSliderImage6 from "./assets/images/HomepageBanner/swiss.webp";
 import BottomHeaderSliderImage7 from "./assets/images/HomepageBanner/thai.webp";
 
-
 export const BannerImgs = [
   BottomHeaderSliderImage1,
   BottomHeaderSliderImage2,
@@ -61,6 +60,21 @@ export const indianStatesAndUTs = [
   "Tripura",
   "Uttar Pradesh",
   "Uttarakhand",
-  "West Bengal"
+  "West Bengal",
 ];
 
+export const MealPlans = {
+  BI: "Breakfast included",
+  AI: "All meals included",
+  BLI: "Breakfast & lunch included",
+  BDI: "Breakfast & dinner included",
+};
+
+export const roomType = ["Single", "Double ", "Triple", "8 pax", "4 Pax"];
+
+export const mealInclusionOptions = [
+  { label: "Breakfast included", value: "BI" },
+  { label: "All meals included", value: "AI" },
+  { label: "Breakfast & lunch included", value: "BLI" },
+  { label: "Breakfast & dinner included", value: "BDI" },
+];

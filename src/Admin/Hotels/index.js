@@ -30,6 +30,11 @@ const dataTypeOptions = [
 function Hotels() {
   const [dataType, setDataType] = useState(dataTypeOptions[0].prop);
   const [newBookingFormOpen, setNewBookingFormOpen] = useState(false);
+  const [editableBooking, setEditableBooking] = useState(null);
+
+  useEffect(() => {
+    if (editableBooking != null) setNewBookingFormOpen(true);
+  }, [editableBooking]);
 
   return (
     <div className="hotels-page">
@@ -74,7 +79,10 @@ function Hotels() {
 
         <div className="booking-botto-wrapper">
           {dataType !== "INVENTORY" ? (
-            <BookingTable status={dataType} />
+            <BookingTable
+              status={dataType}
+              setEditableBooking={setEditableBooking}
+            />
           ) : (
             <React.Suspense
               fallback={
@@ -100,12 +108,17 @@ function Hotels() {
                 </div>
               }
             >
-              <NewBookingForm onClose={() => setNewBookingFormOpen(false)} />
+              <NewBookingForm
+                onClose={() => {
+                  setNewBookingFormOpen(false);
+                  setEditableBooking(null);
+                }}
+                editableBooking={editableBooking}
+              />
             </React.Suspense>
           </div>
         </div>
       )}
-
     </div>
   );
 }

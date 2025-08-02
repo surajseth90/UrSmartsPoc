@@ -113,9 +113,6 @@ const BookingTable = () => {
                     >
                       <img src={EyeIcon} alt="View" />
                     </button>
-                    <button className="px-2" title="Edit">
-                      <img src={EditIcon} alt="Edit" />
-                    </button>
                     <button
                       className="px-2"
                       title="download"

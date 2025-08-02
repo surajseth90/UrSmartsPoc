@@ -1,42 +1,134 @@
-import React, { useState } from "react";
-import { CloseIcon } from "../../app/Icons/index";
+import React, { useEffect, useState } from "react";
+import { CloseIcon, LeftArrowIcon } from "../../app/Icons/index";
 import CalenderIcon from "../../assets/images/img_icon_calendar.svg";
 import WatchIcon from "../../assets/images/img_timeicon.svg";
-import { indianStatesAndUTs, mobileNumberValidator } from "../../data";
+import { mealInclusionOptions, roomType } from "../../data";
+import { basePath } from "../../config";
+import { generateHeader } from "../../helper";
+import SearchableDropdown from "../../app/SearchDropdown";
+import { useDispatch, useSelector } from "react-redux";
+import { setSnakeBarContent } from "../../action";
 
-const BookingForm = ({ onClose }) => {
+const BookingForm = ({ onClose, editableBooking }) => {
+  console.log("editableBooking", editableBooking);
+
   const [formData, setFormData] = useState({
-    selectedClient: "",
+    client: "",
     tripId: "",
-    sapId: "",
-    state: "",
-    city: "",
-    hotel: "",
     checkInDate: "",
     checkOutDate: "",
-    guestName: "",
-    numberOfNights: "",
-    numberOfRooms: "",
-    mealType: "",
-    occupationDetails: [{ occupationType: "", price: "" }],
-    employeeId: "EMPX212",
-    contact: "",
-    emailId: "",
-    companyGstNumber: "",
-    clientGstNumber: "",
+    mealPlan: "",
     remarks: "",
+    occupancyDetails: [{ roomType: "", price: "" }],
+    numberOfRooms: 1,
   });
 
-  const [errors, setErrors] = useState({});
-  const now = new Date();
+  const [adminDetails] = useSelector((state) => [state.adminDetails]);
 
-  const options = {
-    client: ["Client A", "Client B", "Client C"],
-    hotel: ["Taj", "Oberoi", "Leela"],
-    meal: ["Breakfast Only", "Full Board"],
-    occupation: ["Business", "Leisure"],
-    companyGst: ["27AABCU9603R1ZX", "29AABCU9603R1ZY"],
-    clientGst: ["27BBCDE1234F1GH", "29BBCDE1234F1GI"],
+  const [errors, setErrors] = useState({});
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const [selectedCompany, setSelectedCompany] = useState(
+    editableBooking != null ? editableBooking.company : {}
+  );
+
+  const [employeesArr, setEmployeesArr] = useState([]);
+  const [selectedEmployee, setSelectedEmployee] = useState(
+    editableBooking != null ? editableBooking.employee : {}
+  );
+
+  const [hotelsArr, setHotelsArr] = useState([]);
+  const [selectedHotel, setSelectedHotel] = useState(
+    editableBooking != null ? editableBooking.hotel : {}
+  );
+
+  const [statesArr, setStatesArr] = useState([]);
+  const [citiesArr, setCitiesArr] = useState([]);
+
+  const [clientsArr, setClientsArr] = useState([]);
+  const [isInProgress, setIsInProgress] = useState(false);
+
+  const now = new Date();
+  const headers = generateHeader();
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    const urls = [
+      `${basePath}/api/companies/all`,
+      `${basePath}/api/hotels/states`,
+    ];
+
+    // Make parallel GET requests
+    Promise.all(
+      urls.map((url) =>
+        fetch(url, {
+          method: "GET",
+          headers: headers,
+        }).then((res) => res.json())
+      )
+    )
+      .then(([clients, states]) => {
+        setClientsArr(clients);
+        setStatesArr(states);
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+      });
+  }, []);
+
+  const getCities = async (val) => {
+    let params = new URLSearchParams({
+      state: val,
+    });
+    const url = `${basePath}/api/hotels/cities?${params}`;
+    await fetch(url, {
+      method: "GET",
+      headers: headers,
+    })
+      .then((res) => res.json())
+      .then((res) => {
+        setCitiesArr(res);
+      })
+      .catch((Err) => console.log("Err", Err));
+  };
+
+  const getHotels = async (val) => {
+    if (!formData?.state) {
+      dispatch(setSnakeBarContent("Please select state and city!"));
+      return;
+    }
+    let params = new URLSearchParams({
+      state: formData.state,
+      city: val,
+    });
+    const url = `${basePath}/api/hotels/search?${params}`;
+    await fetch(url, {
+      method: "GET",
+      headers: headers,
+    })
+      .then((res) => res.json())
+      .then((res) => {
+        setHotelsArr(res);
+      })
+      .catch((Err) => console.log("Err", Err));
+  };
+
+  const handleClientChange = async (e) => {
+    let val = JSON.parse(e.target.value);
+    setSelectedCompany(val);
+
+    const url = `${basePath}/api/employees/company/${val.companyId}`;
+
+    await fetch(url, {
+      method: "GET",
+      headers: headers,
+    })
+      .then((res) => res.json())
+      .then((res) => {
+        setEmployeesArr(res);
+      })
+      .catch((Err) => console.log("Err", Err));
   };
 
   const handleChange = (field, value) => {
@@ -44,13 +136,38 @@ const BookingForm = ({ onClose }) => {
     setErrors((prev) => ({ ...prev, [field]: "" }));
   };
 
-  const handleOccupationChange = (index, field, value) => {
-    const updated = [...formData.occupationDetails];
+  const handleNestedChange = (parent, field, value) => {
+    setFormData((prev) => ({
+      ...prev,
+      [parent]: {
+        ...prev[parent],
+        [field]: value,
+      },
+    }));
+    setErrors((prev) => ({ ...prev, [`${parent}_${field}`]: "" }));
+  };
+
+  const handleDeepNestedChange = (parent, child, field, value) => {
+    setFormData((prev) => ({
+      ...prev,
+      [parent]: {
+        ...prev[parent],
+        [child]: {
+          ...prev[parent][child],
+          [field]: value,
+        },
+      },
+    }));
+    setErrors((prev) => ({ ...prev, [`${parent}_${child}_${field}`]: "" }));
+  };
+
+  const handleOccupationCancy = (index, field, value) => {
+    const updated = [...formData.occupancyDetails];
     updated[index][field] = value;
-    setFormData((prev) => ({ ...prev, occupationDetails: updated }));
+    setFormData((prev) => ({ ...prev, occupancyDetails: updated }));
     setErrors((prev) => {
       const newErrors = { ...prev };
-      delete newErrors[`occupationType_${index}`];
+      delete newErrors[`roomType_${index}`];
       delete newErrors[`price_${index}`];
       return newErrors;
     });
@@ -59,68 +176,134 @@ const BookingForm = ({ onClose }) => {
   const handleAddMore = () => {
     setFormData((prev) => ({
       ...prev,
-      occupationDetails: [
-        ...prev.occupationDetails,
-        { occupationType: "", price: "" },
-      ],
+      occupancyDetails: [...prev.occupancyDetails, { roomType: "", price: "" }],
     }));
   };
 
   const validate = () => {
-    const requiredFields = [
-      "selectedClient",
-      "tripId",
-      "sapId",
-      "state",
-      "city",
-      "hotel",
-      "checkInDate",
-      "checkOutDate",
-      "guestName",
-      "numberOfNights",
-      "numberOfRooms",
-      "mealType",
-      "contact",
-      "emailId",
-      "companyGstNumber",
-      "clientGstNumber",
-    ];
     const newErrors = {};
-
-    requiredFields.forEach((field) => {
-      if (!formData[field]) newErrors[field] = "This field is required";
-    });
-
-    if (formData.emailId && !/\S+@\S+\.\S+/.test(formData.emailId)) {
-      newErrors.emailId = "Invalid email address";
+    if (!selectedCompany?.name) {
+      dispatch(setSnakeBarContent("Please Select Client!"));
+      return false;
     }
 
-    formData.occupationDetails.forEach((item, index) => {
-      if (!item.occupationType)
-        newErrors[`occupationType_${index}`] = "Required";
-      if (!item.price) newErrors[`price_${index}`] = "Required";
-    });
+    if (!selectedEmployee?.name) {
+      dispatch(setSnakeBarContent("Please Select Guest!"));
+      return false;
+    }
 
-    setErrors(newErrors);
+    if (!selectedHotel?.name) {
+      dispatch(setSnakeBarContent("Please Select Hotel!"));
+      return false;
+    }
+
+    if (formData.checkInDate.length == 0) {
+      dispatch(setSnakeBarContent("Please Select Check-in Date!"));
+      return false;
+    }
+
+    if (formData.checkOutDate.length == 0) {
+      dispatch(setSnakeBarContent("Please Select Check-out Date!"));
+      return false;
+    }
+
+    // // Validate top-level fields
+    // if (!formData.checkInDate) newErrors.checkInDate = "This field is required";
+    // if (!formData.checkOutDate)
+    //   newErrors.checkOutDate = "This field is required";
+    // if (!formData.noOfNights) newErrors.noOfNights = "This field is required";
+    // if (!formData.numberOfRooms)
+    //   newErrors.numberOfRooms = "This field is required";
+
+    // // Validate employee fields
+    // if (!formData.employee.name)
+    //   newErrors.employee_name = "This field is required";
+    // if (!formData.employee.email) {
+    //   newErrors.employee_email = "This field is required";
+    // } else if (!/\S+@\S+\.\S+/.test(formData.employee.email)) {
+    //   newErrors.employee_email = "Invalid email address";
+    // }
+
+    // // Validate hotel fields
+    // if (!formData.hotel.name) newErrors.hotel_name = "This field is required";
+    // if (!formData.hotel.city) newErrors.hotel_city = "This field is required";
+    // if (!formData.hotel.state) newErrors.hotel_state = "This field is required";
+
+    // // Validate booking person fields
+    // if (!formData.bookingPerson.name)
+    //   newErrors.bookingPerson_name = "This field is required";
+    // if (!formData.bookingPerson.email) {
+    //   newErrors.bookingPerson_email = "This field is required";
+    // } else if (!/\S+@\S+\.\S+/.test(formData.bookingPerson.email)) {
+    //   newErrors.bookingPerson_email = "Invalid email address";
+    // }
+    // if (!formData.bookingPerson.company.gstin)
+    //   newErrors.bookingPerson_company_gstin = "This field is required";
+
+    // // Validate company fields
+    // if (!formData.company.gstin)
+    //   newErrors.company_gstin = "This field is required";
+
+    // // Validate occupancy details
+    // formData.occupancyDetails.forEach((item, index) => {
+    //   if (!item.roomType) newErrors[`roomType_${index}`] = "Required";
+    //   if (!item.price) newErrors[`price_${index}`] = "Required";
+    // });
+
+    // setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e, status) => {
     e.preventDefault();
     if (validate()) {
-      console.log("Form Data Submitted:", formData);
-      alert("Booking Created Successfully!");
-    } else {
-      alert("Please fix the errors before submitting.");
+      setIsInProgress(true);
+      let hotelData = {
+        ...selectedHotel,
+        rooms: formData.occupancyDetails,
+      };
+      let body = {
+        tripId: formData?.tripId ?? "",
+        employee: selectedEmployee,
+        company: selectedCompany,
+        hotel: hotelData,
+        checkInDate: formData.checkInDate,
+        checkOutDate: formData.checkOutDate,
+        mealPlan: formData.mealPlan,
+        remarks: formData.remarks,
+        requestedBy: adminDetails,
+        status: status || "COMPLETED",
+      };
+
+      const url = `${basePath}/api/bookings`;
+      let msg = "";
+
+      await fetch(url, {
+        method: "POST",
+        headers: headers,
+        body: JSON.stringify(body),
+      })
+        .then((res) => res.json())
+        .then((res) => {
+          setEmployeesArr(res);
+          msg = "Booking Created Successfully";
+        })
+        .catch((Err) => {
+          console.log("Err", Err);
+          msg = "Something went wrong!";
+        })
+        .finally(() => {
+          setIsInProgress(false);
+          handleCloseForm();
+          dispatch(setSnakeBarContent(msg));
+        });
     }
   };
 
   const handleCloseForm = () => {
-    setFormData({ ...formData, remarks: "" });
+    // setFormData({});
     onClose();
   };
-
-
 
   return (
     <div className="container p-4 bg-white h-100 overflow-auto rounded-3 hide-scrollbar">
@@ -147,29 +330,78 @@ const BookingForm = ({ onClose }) => {
       </div>
 
       <div className="w-100 mb-4 divider" style={{ height: "1px" }}></div>
-      <form onSubmit={handleSubmit}>
+      <form>
         <div className="row g-3">
-          <div className="col-md-6">
+          <div className={`col-md-6 ${currentPage == 2 ? "d-none" : ""}`}>
             <label className="form-label">Select Client</label>
-            <select
-              className={`form-select ${
-                errors.selectedClient ? "is-invalid" : ""
-              }`}
-              value={formData.selectedClient}
-              onChange={(e) => handleChange("selectedClient", e.target.value)}
-            >
+            <select className={`form-select`} onChange={handleClientChange}>
               <option value="">Select Client</option>
-              {options.client.map((opt, idx) => (
-                <option key={idx}>{opt}</option>
+              {clientsArr.map((opt, idx) => (
+                <option value={JSON.stringify(opt)} key={idx}>
+                  {opt.name}
+                </option>
               ))}
             </select>
-            {errors.selectedClient && (
-              <div className="invalid-feedback">{errors.selectedClient}</div>
-            )}
           </div>
 
-          <div className="col-md-6">
-            <label className="form-label">Trip ID</label>
+          <div className={`col-md-6 ${currentPage == 2 ? "d-none" : ""}`}>
+            <label className="form-label">Client GST</label>
+            <input
+              type="text"
+              className="form-control"
+              value={selectedCompany?.gstin}
+              disabled
+            />
+          </div>
+
+          <div className={`col-md-4 ${currentPage == 2 ? "d-none" : ""}`}>
+            <label className="form-label">Guest Email</label>
+            <SearchableDropdown
+              options={employeesArr || []}
+              searchKey="email"
+              onSelect={(item) => setSelectedEmployee(item)}
+              onNoOptionFound={(term) => console.log("No match for:", term)}
+              placeholder="Guest Email"
+            />
+          </div>
+
+          <div className={`col-md-4 ${currentPage == 2 ? "d-none" : ""}`}>
+            <label className="form-label">Guest ID</label>
+            <SearchableDropdown
+              options={employeesArr || []}
+              searchKey="employeeId"
+              onSelect={(item) => setSelectedEmployee(item)}
+              onNoOptionFound={(term) => console.log("No match for:", term)}
+              placeholder="Guest ID"
+              disabled={selectedEmployee?.employeeId != null}
+              defaultValue={selectedEmployee?.employeeId || ""}
+            />
+          </div>
+
+          <div className={`col-md-4 ${currentPage == 2 ? "d-none" : ""}`}>
+            <label className="mb-2">Guest Name</label>
+            <input
+              type="text"
+              className={`form-control`}
+              value={selectedEmployee?.name}
+              disabled
+            />
+          </div>
+
+          <div className={`col-md-6 ${currentPage == 2 ? "d-none" : ""}`}>
+            <label className="mb-2">SAP ID</label>
+            <SearchableDropdown
+              options={employeesArr || []}
+              searchKey="sapId"
+              onSelect={(item) => setSelectedEmployee(item)}
+              onNoOptionFound={(term) => console.log("No match for:", term)}
+              disabled={selectedEmployee?.sapId != null}
+              defaultValue={selectedEmployee?.sapId || ""}
+            />
+          </div>
+
+          <div className={`col-md-6 ${currentPage == 2 ? "d-none" : ""}`}>
+            <label className="mb-2">Trip ID</label>
             <input
               type="text"
               className={`form-control ${errors.tripId ? "is-invalid" : ""}`}
@@ -181,28 +413,18 @@ const BookingForm = ({ onClose }) => {
             )}
           </div>
 
-          <div className="col-md-6">
-            <label className="form-label">SAP ID</label>
-            <input
-              type="text"
-              className={`form-control ${errors.sapId ? "is-invalid" : ""}`}
-              value={formData.sapId}
-              onChange={(e) => handleChange("sapId", e.target.value)}
-            />
-            {errors.sapId && (
-              <div className="invalid-feedback">{errors.sapId}</div>
-            )}
-          </div>
-
-          <div className="col-md-6">
+          <div className={`col-md-6 ${currentPage === 1 ? "d-none" : ""}`}>
             <label className="form-label">State</label>
             <select
               className={`form-select ${errors.state ? "is-invalid" : ""}`}
               value={formData.state}
-              onChange={(e) => handleChange("state", e.target.value)}
+              onChange={(e) => {
+                getCities(e.target.value);
+                handleChange("state", e.target.value);
+              }}
             >
               <option value="">Select State</option>
-              {indianStatesAndUTs.map((opt, idx) => (
+              {statesArr.map((opt, idx) => (
                 <option key={opt}>{opt}</option>
               ))}
             </select>
@@ -211,32 +433,46 @@ const BookingForm = ({ onClose }) => {
             )}
           </div>
 
-          <div className="col-md-6">
+          <div className={`col-md-6 ${currentPage === 1 ? "d-none" : ""}`}>
             <label className="form-label">City</label>
-
-            <input
-              type="text"
-              className={`form-control ${errors.sapId ? "is-invalid" : ""}`}
+            <select
+              className={`form-select ${errors.city ? "is-invalid" : ""}`}
               value={formData.city}
-              onChange={(e) => handleChange("city", e.target.value)}
-              placeholder="City"
-            />
-
+              onChange={(e) => {
+                let val = e.target.value;
+                handleChange("city", val);
+                getHotels(val);
+              }}
+            >
+              <option value="">Select City</option>
+              {citiesArr.map((opt, idx) => (
+                <option key={opt}>{opt}</option>
+              ))}
+            </select>
             {errors.city && (
               <div className="invalid-feedback">{errors.city}</div>
             )}
           </div>
 
-          <div className="col-md-6">
+          <div className={`col-md-6 ${currentPage === 1 ? "d-none" : ""}`}>
             <label className="form-label">Hotel</label>
             <select
               className={`form-select ${errors.hotel ? "is-invalid" : ""}`}
-              value={formData.hotel}
-              onChange={(e) => handleChange("hotel", e.target.value)}
+              onChange={(e) => {
+                let val = JSON.parse(e.target.value);
+                setSelectedHotel(val);
+                handleChange("hotel", val.name);
+              }}
             >
               <option value="">Select Hotel</option>
-              {options.hotel.map((opt, idx) => (
-                <option key={idx}>{opt}</option>
+              {hotelsArr.map((opt, idx) => (
+                <option
+                  data-value={JSON.stringify(opt)}
+                  value={JSON.stringify(opt)}
+                  key={idx}
+                >
+                  {opt.name}
+                </option>
               ))}
             </select>
             {errors.hotel && (
@@ -244,7 +480,7 @@ const BookingForm = ({ onClose }) => {
             )}
           </div>
 
-          <div className="col-md-6">
+          <div className={`col-md-6 ${currentPage === 1 ? "d-none" : ""}`}>
             <label className="form-label">Check-In Date</label>
             <input
               type="date"
@@ -259,7 +495,7 @@ const BookingForm = ({ onClose }) => {
             )}
           </div>
 
-          <div className="col-md-6">
+          <div className={`col-md-6 ${currentPage === 1 ? "d-none" : ""}`}>
             <label className="form-label">Check-Out Date</label>
             <input
               type="date"
@@ -274,92 +510,51 @@ const BookingForm = ({ onClose }) => {
             )}
           </div>
 
-          <div className="col-md-6">
-            <label className="form-label">Guest Name</label>
-            <input
-              type="text"
-              className={`form-control ${errors.guestName ? "is-invalid" : ""}`}
-              value={formData.guestName}
-              onChange={(e) => handleChange("guestName", e.target.value)}
-            />
-            {errors.guestName && (
-              <div className="invalid-feedback">{errors.guestName}</div>
-            )}
-          </div>
-
-          <div className="col-md-6">
-            <label className="form-label">Number of Nights </label>
-            <input
-              type="number"
-              className={`form-control ${
-                errors.numberOfNights ? "is-invalid" : ""
-              }`}
-              value={formData.numberOfNights}
-              onChange={(e) => handleChange("numberOfNights", e.target.value)}
-            />
-            {errors.numberOfNights && (
-              <div className="invalid-feedback">{errors.numberOfNights}</div>
-            )}
-          </div>
-
-          <div className="col-md-6">
-            <label className="form-label">Number of Rooms </label>
-            <input
-              type="number"
-              className={`form-control ${
-                errors.numberOfRooms ? "is-invalid" : ""
-              }`}
-              value={formData.numberOfRooms}
-              onChange={(e) => handleChange("numberOfRooms", e.target.value)}
-            />
-            {errors.numberOfRooms && (
-              <div className="invalid-feedback">{errors.numberOfRooms}</div>
-            )}
-          </div>
-
-          <div className="col-md-6">
+          <div className={`col-md-6 ${currentPage === 1 ? "d-none" : ""}`}>
             <label className="form-label">Meal Type </label>
             <select
-              className={`form-select ${errors.mealType ? "is-invalid" : ""}`}
-              value={formData.mealType}
-              onChange={(e) => handleChange("mealType", e.target.value)}
+              className={`form-select ${errors.mealPlan ? "is-invalid" : ""}`}
+              value={formData.mealPlan}
+              onChange={(e) => handleChange("mealPlan", e.target.value)}
             >
               <option value="">Select Meal Type</option>
-              {options.meal.map((opt, idx) => (
-                <option key={idx}>{opt}</option>
+              {mealInclusionOptions.map((opt, idx) => (
+                <option key={idx} value={opt.value}>
+                  {opt.label}
+                </option>
               ))}
             </select>
-            {errors.mealType && (
-              <div className="invalid-feedback">{errors.mealType}</div>
+            {errors.mealPlan && (
+              <div className="invalid-feedback">{errors.mealPlan}</div>
             )}
           </div>
 
-          <div className="col-12 occupation-container p-3">
-            <label className="form-label">Occupation Type & Price</label>
-            {formData.occupationDetails.map((item, index) => (
+          <div
+            className={`col-12 occupancy-container p-3 ${
+              currentPage === 1 ? "d-none" : ""
+            }`}
+          >
+            <label className="form-label">Occupancy Type & Price</label>
+            {formData.occupancyDetails.map((item, index) => (
               <div key={index} className="row g-2 mb-2">
                 <div className="col-md-6">
                   <select
                     className={`form-select ${
-                      errors[`occupationType_${index}`] ? "is-invalid" : ""
+                      errors[`roomType_${index}`] ? "is-invalid" : ""
                     }`}
-                    value={item.occupationType}
+                    value={item.roomType}
                     onChange={(e) =>
-                      handleOccupationChange(
-                        index,
-                        "occupationType",
-                        e.target.value
-                      )
+                      handleOccupationCancy(index, "roomType", e.target.value)
                     }
                   >
-                    <option value="">Select Occupation</option>
-                    {options.occupation.map((opt, idx) => (
+                    <option value="">Select Occupancy</option>
+                    {roomType.map((opt, idx) => (
                       <option key={idx}>{opt}</option>
                     ))}
                   </select>
-                  {errors[`occupationType_${index}`] && (
+                  {errors[`roomType_${index}`] && (
                     <div className="invalid-feedback">
-                      {errors[`occupationType_${index}`]}
+                      {errors[`roomType_${index}`]}
                     </div>
                   )}
                 </div>
@@ -372,7 +567,7 @@ const BookingForm = ({ onClose }) => {
                     }`}
                     value={item.price}
                     onChange={(e) =>
-                      handleOccupationChange(index, "price", e.target.value)
+                      handleOccupationCancy(index, "price", e.target.value)
                     }
                   />
                   {errors[`price_${index}`] && (
@@ -389,89 +584,14 @@ const BookingForm = ({ onClose }) => {
                 type="button"
                 className="admin-secondary-btn mt-4"
                 onClick={handleAddMore}
+                disabled={isInProgress}
               >
                 Add More
               </button>
             </div>
           </div>
 
-          <div className="col-md-4">
-            <label className="form-label">Employee ID</label>
-            <input
-              type="text"
-              className="form-control"
-              value={formData.employeeId}
-              disabled
-            />
-          </div>
-
-          <div className="col-md-4">
-            <label className="form-label">Contact</label>
-            <input
-              type="text"
-              className={`form-control ${errors.contact ? "is-invalid" : ""}`}
-              value={formData.contact}
-              onChange={(e) =>
-                handleChange("contact", mobileNumberValidator(e.target.value))
-              }
-            />
-            {errors.contact && (
-              <div className="invalid-feedback">{errors.contact}</div>
-            )}
-          </div>
-
-          <div className="col-md-4">
-            <label className="form-label">Email</label>
-            <input
-              type="email"
-              className={`form-control ${errors.emailId ? "is-invalid" : ""}`}
-              value={formData.emailId}
-              onChange={(e) => handleChange("emailId", e.target.value)}
-            />
-            {errors.emailId && (
-              <div className="invalid-feedback">{errors.emailId}</div>
-            )}
-          </div>
-
-          <div className="col-md-6">
-            <label className="form-label">Company GST</label>
-            <select
-              className={`form-select ${
-                errors.companyGstNumber ? "is-invalid" : ""
-              }`}
-              value={formData.companyGstNumber}
-              onChange={(e) => handleChange("companyGstNumber", e.target.value)}
-            >
-              <option value="">Select Company GST</option>
-              {options.companyGst.map((opt, idx) => (
-                <option key={idx}>{opt}</option>
-              ))}
-            </select>
-            {errors.companyGstNumber && (
-              <div className="invalid-feedback">{errors.companyGstNumber}</div>
-            )}
-          </div>
-
-          <div className="col-md-6">
-            <label className="form-label">Client GST</label>
-            <select
-              className={`form-select ${
-                errors.clientGstNumber ? "is-invalid" : ""
-              }`}
-              value={formData.clientGstNumber}
-              onChange={(e) => handleChange("clientGstNumber", e.target.value)}
-            >
-              <option value="">Select Client GST</option>
-              {options.clientGst.map((opt, idx) => (
-                <option key={idx}>{opt}</option>
-              ))}
-            </select>
-            {errors.clientGstNumber && (
-              <div className="invalid-feedback">{errors.clientGstNumber}</div>
-            )}
-          </div>
-
-          <div className="col-12">
+          <div className={`col-12 ${currentPage === 1 ? "d-none" : ""}`}>
             <label>Remarks</label>
             <textarea
               className="form-control"
@@ -482,22 +602,65 @@ const BookingForm = ({ onClose }) => {
           </div>
         </div>
 
-        <div className="mt-4 d-flex justify-content-between">
-          <button
-            type="button"
-            className="admin-tertiary-btn"
-            onClick={handleCloseForm}
-          >
-            Discard Booking
-          </button>
-          <div>
-            <button type="submit" className="admin-secondary-btn me-4">
-              Save as Draft
+        <div
+          className={`mt-4 d-flex ${
+            currentPage == 1 ? "justify-content-end" : "justify-content-between"
+          }`}
+        >
+          {currentPage == 1 ? (
+            <button
+              title="next"
+              className={`admin-secondary-btn`}
+              onClick={() => {
+                setCurrentPage(2);
+              }}
+              disabled={isInProgress}
+            >
+              Next
             </button>
-            <button type="submit" className="admin-primary-btn">
-              Book Now
-            </button>
-          </div>
+          ) : (
+            <>
+              <div>
+                <button
+                  title="next"
+                  className={`admin-secondary-btn me-2`}
+                  onClick={() => {
+                    setCurrentPage(1);
+                  }}
+                  disabled={isInProgress}
+                >
+                  Back
+                </button>
+                <button
+                  type="button"
+                  className="admin-tertiary-btn"
+                  onClick={handleCloseForm}
+                  disabled={isInProgress}
+                >
+                  Discard Booking
+                </button>
+              </div>
+
+              <div>
+                <button
+                  disabled={isInProgress}
+                  type="submit"
+                  className="admin-secondary-btn me-4"
+                  onClick={(e) => handleSubmit(e, "DRAFT")}
+                >
+                  Save as Draft
+                </button>
+                <button
+                  disabled={isInProgress}
+                  type="submit"
+                  className="admin-primary-btn"
+                  onClick={handleSubmit}
+                >
+                  Book Now
+                </button>
+              </div>
+            </>
+          )}
         </div>
       </form>
     </div>
