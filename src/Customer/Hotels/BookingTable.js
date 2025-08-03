@@ -14,6 +14,7 @@ const BookingTable = () => {
   const voucherRef = useRef();
   const [totalPages, setTotalPages] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
+  const [isRelianceClient, setIsRelianceClient] = useState(false);
 
   const handlePDFDownload = (data) => {
     setCurrentBoking(data);
@@ -42,6 +43,8 @@ const BookingTable = () => {
         return res.json();
       })
       .then((res) => {
+        let isReliance = res?.content[0]?.company?.name == "RELIANCE";
+        setIsRelianceClient(isReliance);
         setTotalPages(res.totalPages);
         setBookings(res.content);
         console.log("res", res);
@@ -65,7 +68,7 @@ const BookingTable = () => {
           <thead className="table-light">
             <tr>
               <th className="font-14 py-3">Client-Partner</th>
-              <th className="font-14 py-3">Trip ID</th>
+              {isRelianceClient && <th className="font-14 py-3">Trip ID</th>}
               <th className="font-14 py-3">Guest Name</th>
               <th className="font-14 py-3">Hotel Name</th>
               <th className="font-14 py-3">State & City</th>
@@ -82,7 +85,9 @@ const BookingTable = () => {
                   <td className="admin-label-text font-14">
                     {b.bookingPerson.userId}
                   </td>
-                  <td className="admin-label-text font-14">{b.tripId}</td>
+                  {isRelianceClient && (
+                    <td className="admin-label-text font-14">{b.tripId}</td>
+                  )}
                   <td className="admin-label-text font-14">
                     {b.bookingPerson?.name}
                   </td>

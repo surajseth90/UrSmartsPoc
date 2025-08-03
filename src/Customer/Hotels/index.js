@@ -5,8 +5,8 @@ import BookingTable from "./BookingTable.js";
 
 const dataTypeOptions = [
   {
-    title: "Hotels",
-    prop: "HOTELS",
+    title: "Bookings",
+    prop: "BOOKINGS",
   },
 ];
 
@@ -49,7 +49,7 @@ function Hotels() {
         </div>
 
         <div className="booking-botto-wrapper">
-          {dataType == "HOTELS" && <BookingTable />}
+          {dataType == "BOOKINGS" && <BookingTable />}
         </div>
       </div>
     </div>
