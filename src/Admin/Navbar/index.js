@@ -6,7 +6,7 @@ import {
   ReportsIcon,
   SettingsIcon,
 } from "../../app/Icons";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const navItems = [
   {
@@ -37,6 +37,15 @@ const navItems = [
 export default function AdminNavbar() {
   const [selectedRoute, setSelectedRoute] = useState("dashboard");
 
+  useEffect(() => {
+    let url = window.location.pathname;
+    navItems.forEach((nav) => {
+      if (url.includes(nav.route)) {
+        setSelectedRoute(nav.route);
+      }
+    });
+  }, []);
+
   return (
     <nav className="admin-navbar w-100 p-2 d-flex flex-column">
       {navItems.map((item, key) => {
@@ -46,9 +55,8 @@ export default function AdminNavbar() {
               selectedRoute == item.route ? "selected" : ""
             }`}
             key={`nav-${key}`}
-            
             to={`/admin/${item.route}`}
-            onClick={()=>setSelectedRoute(item.route)}
+            onClick={() => setSelectedRoute(item.route)}
           >
             {item.icon}
             <span className="ms-3 text-capitalize">{item.route}</span>

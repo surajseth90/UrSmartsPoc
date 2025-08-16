@@ -1,7 +1,33 @@
-import { memo, useEffect } from "react";
+import { memo, useEffect, useState } from "react";
 import "./style.scss";
+import { basePath } from "../../config";
+import { generateHeader } from "../../helper";
 
 function Dashboard() {
+  const [dashboardData, setDashboardData] = useState([]);
+  useEffect(() => {
+    getData();
+  }, []);
+
+  async function getData() {
+    let url = `${basePath}/dashboard/tiles`;
+
+    await fetch(url, {
+      method: "GET",
+      headers: generateHeader(),
+    })
+      .then((res) => {
+        return res.json();
+      })
+      .then((res) => {
+   
+        console.log("res", res);
+      })
+      .catch((err) => {
+        console.log("err", err);
+      });
+  }
+
   return (
     <div className="dashboard-page">
       <div className="main-top-container">

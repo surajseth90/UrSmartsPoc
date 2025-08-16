@@ -1,0 +1,141 @@
+.dashboard-container {
+  padding: 20px;
+  padding-left: 0;
+}
+
+.filters-section {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  margin-bottom: 20px;
+  border-radius: 8px;
+  font-size: 14px;
+
+  .filter-group {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    label {
+      font-weight: 500;
+      color: #172b4d;
+    }
+
+    select,
+    input {
+      padding: 4px 12px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      background: white;
+      color: #172b4d;
+      min-width: 150px;
+
+      &:disabled {
+        background: #f9f9f9;
+      }
+    }
+  }
+
+  .loading-small {
+    padding: 8px 12px;
+    font-size: 14px;
+    color: #466cad;
+  }
+}
+
+.charts-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+  gap: 20px;
+}
+
+.chart-card {
+  background: white;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.08);
+
+  h3 {
+    margin-top: 0;
+    margin-bottom: 15px;
+    color: #172b4d;
+    font-size: 16px;
+    text-align: center;
+    font-weight: 600;
+  }
+}
+
+.loading-indicator {
+  text-align: center;
+  padding: 40px;
+  font-size: 18px;
+  color: #466cad;
+  grid-column: 1 / -1;
+}
+
+.price-chart-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.price-stats {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 20px;
+  width: 100%;
+
+  .stat-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: #f8f9fa;
+    padding: 12px 18px;
+    border-radius: 6px;
+    min-width: 120px;
+    border: 1px solid #e0e7ff;
+  }
+
+  .stat-label {
+    font-size: 12px;
+    color: #466cad;
+    font-weight: 500;
+  }
+
+  .stat-value {
+    font-weight: 600;
+    font-size: 16px;
+    margin-top: 5px;
+    color: #172b4d;
+  }
+}
+
+.no-data {
+  text-align: center;
+  padding: 40px 0;
+  color: #466cad;
+  font-style: italic;
+  font-size: 16px;
+}
+
+// Recharts custom styles
+.recharts-cartesian-axis-tick-value {
+  fill: #172b4d;
+  font-size: 12px;
+}
+
+.recharts-legend-item-text {
+  color: #172b4d !important;
+}
+
+.recharts-tooltip-item-name,
+.recharts-tooltip-item-value,
+.recharts-tooltip-item-separator {
+  color: white !important;
+}
+
+.unit-sell-prices .recharts-bar-rectangles .recharts-label {
+  display: none;
+}
