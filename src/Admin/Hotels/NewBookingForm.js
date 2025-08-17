@@ -14,6 +14,7 @@ const BookingForm = ({ onClose, editableBooking }) => {
 
   const [formData, setFormData] = useState({
     client: "",
+    gstin: "",
     tripId: "",
     checkInDate: "",
     checkOutDate: "",
@@ -22,6 +23,8 @@ const BookingForm = ({ onClose, editableBooking }) => {
     occupancyDetails: [{ roomType: "", price: "" }],
     numberOfRooms: 1,
   });
+
+  console.log("formData", formData);
 
   const [adminDetails] = useSelector((state) => [state.adminDetails]);
 
@@ -45,6 +48,8 @@ const BookingForm = ({ onClose, editableBooking }) => {
   const [statesArr, setStatesArr] = useState([]);
   const [citiesArr, setCitiesArr] = useState([]);
 
+  const [companiesNameArr, setCompaniesNameArr] = useState([]);
+
   const [clientsArr, setClientsArr] = useState([]);
   const [isInProgress, setIsInProgress] = useState(false);
 
@@ -55,7 +60,7 @@ const BookingForm = ({ onClose, editableBooking }) => {
 
   useEffect(() => {
     const urls = [
-      `${basePath}/api/companies/all`,
+      `${basePath}/api/companies/distinct`,
       `${basePath}/api/hotels/states`,
     ];
 
@@ -69,7 +74,7 @@ const BookingForm = ({ onClose, editableBooking }) => {
       )
     )
       .then(([clients, states]) => {
-        setClientsArr(clients);
+        setCompaniesNameArr(clients);
         setStatesArr(states);
       })
       .catch((error) => {
@@ -115,7 +120,24 @@ const BookingForm = ({ onClose, editableBooking }) => {
   };
 
   const handleClientChange = async (e) => {
+    let val = e.target.value;
+    const url = `${basePath}/api/companies/gstin?name=${val}`;
+
+    await fetch(url, {
+      method: "GET",
+      headers: headers,
+    })
+      .then((res) => res.json())
+      .then((res) => {
+        setClientsArr(res);
+      })
+      .catch((Err) => console.log("Err", Err));
+    handleChange("client", val);
+  };
+
+  const handleGSTChange = async (e) => {
     let val = JSON.parse(e.target.value);
+    handleChange("gstin", val.gstin)
     setSelectedCompany(val);
 
     const url = `${basePath}/api/employees/company/${val.companyId}`;
@@ -336,22 +358,23 @@ const BookingForm = ({ onClose, editableBooking }) => {
             <label className="form-label">Select Client</label>
             <select className={`form-select`} onChange={handleClientChange}>
               <option value="">Select Client</option>
-              {clientsArr.map((opt, idx) => (
-                <option value={JSON.stringify(opt)} key={idx}>
-                  {opt.name}
-                </option>
+              {companiesNameArr.map((opt, idx) => (
+                <option key={idx}>{opt}</option>
               ))}
             </select>
           </div>
 
           <div className={`col-md-6 ${currentPage == 2 ? "d-none" : ""}`}>
             <label className="form-label">Client GST</label>
-            <input
-              type="text"
-              className="form-control"
-              value={selectedCompany?.gstin}
-              disabled
-            />
+            <select
+              className={`form-select`}
+              onChange={handleGSTChange}
+            >
+              <option value="">Select Client GST</option>
+              {clientsArr.map((opt, idx) => (
+                <option key={`${opt.gstin}-${idx}`} value={JSON.stringify(opt)}>{opt.gstin}</option>
+              ))}
+            </select>
           </div>
 
           <div className={`col-md-4 ${currentPage == 2 ? "d-none" : ""}`}>
