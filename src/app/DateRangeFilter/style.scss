@@ -1,14 +1,9 @@
-.date-range-display {
-    padding: 2px 12px;
-    border: 1px solid #ccc;
-    border-radius: 6px;
-    background-color: white;
-    cursor: pointer;
-    font-size: 14px;
-    min-width: 170px;
+.date-range-picker {
+  position: relative;
+
+  .form-group-container {
+    background-color: #fff;
+    border-radius: 4px;
+    padding: 8px 16px;
   }
-  
-  .date-range-display:hover {
-    border-color: #999;
-  }
-  
+}
