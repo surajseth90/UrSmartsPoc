@@ -27,8 +27,8 @@ export default function LoginForm() {
     setIsLoading(true);
 
     if (
-      formData.email == "test@sys.com" &&
-      formData.password == "admin123"
+      (formData.email == "test@sys.com" || formData.email == "RELADMIN1") &&
+     (formData.password == "admin123" || formData.password == "Ursmsp123#")
     ) {
       let token = generateCredentials(formData.email, formData.password);
       setCustomerToken(token);

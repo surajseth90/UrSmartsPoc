@@ -259,6 +259,10 @@ select {
   }
 }
 
+button:disabled {
+  opacity: 0.4;
+}
+
 .text-btn-primary {
   color: var(--bs-orange);
 }
@@ -352,7 +356,6 @@ select {
   z-index: 101;
 }
 
-
 .z-1 {
   z-index: 1;
 }
@@ -421,7 +424,6 @@ select {
     transform: rotate(180deg);
   }
 }
-
 
 @media (max-width: 576px) {
   .d-xs-flex {

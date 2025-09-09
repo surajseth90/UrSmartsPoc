@@ -6,8 +6,18 @@ import DateRangeFilter from "../../app/DateRangeFilter";
 import Charts from "../Charts";
 
 function Dashboard() {
-  const [startDate, setStartDate] = useState("");
-  const [endDate, setEndDate] = useState("");
+  // Get today's date
+  const today = new Date();
+
+  // Get 15 days before today
+  const fifteenDaysAgo = new Date();
+  fifteenDaysAgo.setDate(today.getDate() - 15);
+
+  // Format as YYYY-MM-DD (optional, for date inputs)
+  const formatDate = (date) => date.toISOString().split('T')[0];
+
+  const [startDate, setStartDate] = useState(formatDate(fifteenDaysAgo));
+  const [endDate, setEndDate] = useState(formatDate(today));
   const [data, setData] = useState(null);
   const timerRef = useRef(null);
 
@@ -62,6 +72,7 @@ function Dashboard() {
         </div>
         <div>
           <DateRangeFilter
+            containerClasses="mt-5"
             startDate={startDate}
             setStartDate={setStartDate}
             endDate={endDate}

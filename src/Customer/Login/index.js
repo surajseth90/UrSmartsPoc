@@ -29,7 +29,7 @@ function Login() {
       <section className="login-right-container w-md-50 w-xl-40 w-100 h-100 p-4 flex-center">
         <div className="d-flex flex-column align-items-center">
           <h1 className="font-24 text-white text-center">
-            Admin <span>Pro</span>
+            Client <span>Pro</span>
           </h1>
           {isForgotPassword ? (
             <Suspense fallback={<div className="loader"></div>}>

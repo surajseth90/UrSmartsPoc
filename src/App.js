@@ -30,10 +30,11 @@ const ComingSoon = lazy(() => import("./components/ComingSoon"));
 const AdminLogin = lazy(() => import("./Admin/Login"));
 const AdminDashboard = lazy(() => import("./Admin/Dashboard"));
 const Hotels = lazy(() => import("./Admin/Hotels"));
-const AdminReports = lazy(() => import("./Admin/Charts"));
+const AdminReports = lazy(() => import("./Admin/Reports"));
+
 
 const CustomerLogin = lazy(() => import("./Customer/Login"));
-const CustomerDashboard = lazy(() => import("./Customer/Dashboard"));
+// const CustomerDashboard = lazy(() => import("./Customer/Dashboard"));
 const CustomerHotels = lazy(() => import("./Customer/Hotels"));
 
 const Fallback = () => {
@@ -207,6 +208,19 @@ function App() {
               }
             />
 
+               <Route
+              path="/customer/reports"
+              element={
+                <ProtectedRoute>
+                  <AdminTemplate>
+                    <Suspense fallback={<Fallback />}>
+                      <AdminReports />
+                    </Suspense>
+                  </AdminTemplate>
+                </ProtectedRoute>
+              }
+            />
+
             <Route
               path="/customer/login"
               element={
@@ -222,7 +236,7 @@ function App() {
                 <ProtectedRoute>
                   <CustomerTemplate>
                     <Suspense fallback={<Fallback />}>
-                      <CustomerDashboard />
+                      <AdminDashboard />
                     </Suspense>
                   </CustomerTemplate>
                 </ProtectedRoute>

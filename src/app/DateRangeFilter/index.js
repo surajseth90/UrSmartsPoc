@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./style.scss";
 
 const DateRangePicker = (props) => {
-  const { startDate, setStartDate, endDate, setEndDate, onChange } = props;
+  const { startDate, setStartDate, endDate, setEndDate, onChange, containerClasses } = props;
 
   const [startDateError, setStartDateError] = useState("");
   const [endDateError, setEndDateError] = useState("");
@@ -39,7 +39,7 @@ const DateRangePicker = (props) => {
   };
 
   return (
-    <div className="date-range-picker container mt-5">
+    <div className={`date-range-picker container ${containerClasses}`}>
       <div className="d-flex form-group-container gap-4">
         <div className="form-group">
           <input
