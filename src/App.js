@@ -31,6 +31,7 @@ const AdminLogin = lazy(() => import("./Admin/Login"));
 const AdminDashboard = lazy(() => import("./Admin/Dashboard"));
 const Hotels = lazy(() => import("./Admin/Hotels"));
 const AdminReports = lazy(() => import("./Admin/Reports"));
+const CustomerReports = lazy(() => import("./Customer/Reports"));
 
 
 const CustomerLogin = lazy(() => import("./Customer/Login"));
@@ -214,7 +215,7 @@ function App() {
                 <ProtectedRoute>
                   <AdminTemplate>
                     <Suspense fallback={<Fallback />}>
-                      <AdminReports />
+                      <CustomerReports />
                     </Suspense>
                   </AdminTemplate>
                 </ProtectedRoute>
