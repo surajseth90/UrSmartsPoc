@@ -419,12 +419,6 @@ button:disabled {
   -ms-overflow-style: none;
 }
 
-.pagination {
-  .right-arrow {
-    transform: rotate(180deg);
-  }
-}
-
 @media (max-width: 576px) {
   .d-xs-flex {
     display: flex;

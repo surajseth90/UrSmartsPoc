@@ -213,11 +213,11 @@ function App() {
               path="/customer/reports"
               element={
                 <ProtectedRoute>
-                  <AdminTemplate>
+                  <CustomerTemplate>
                     <Suspense fallback={<Fallback />}>
                       <CustomerReports />
                     </Suspense>
-                  </AdminTemplate>
+                  </CustomerTemplate>
                 </ProtectedRoute>
               }
             />

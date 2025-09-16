@@ -1,10 +1,9 @@
 import React, { useEffect, useRef, useState } from "react";
 import { basePath } from "../../config";
-import EyeIcon from "../../assets/images/eye.svg";
 import DownloadIcon from "../../assets/images/download.svg";
 import { generateHeader } from "../../helper";
-import { LeftArrowIcon } from "../../app/Icons/index";
 import DateRangeFilter from "../../app/DateRangeFilter";
+import Pagination from "../../app/Pagination";
 
 const Reports = ({ status, setEditableBooking }) => {
     const today = new Date();
@@ -73,10 +72,7 @@ const Reports = ({ status, setEditableBooking }) => {
             getReports();
             timerRef.current = null;
         }, 2000);
-        getReports();
     }, [currentPage])
-
-
 
     async function getReports(formattedStart, formattedEnd) {
         setDataLoader(true);
@@ -98,7 +94,7 @@ const Reports = ({ status, setEditableBooking }) => {
             .then((res) => {
                 let p = parseInt(res.total / res.size) + 1
                 setTotalPages(p);
-                setData(res.rows);
+                setData(res.data);
                 console.log("res", res);
             })
             .catch((err) => {
@@ -201,36 +197,11 @@ const Reports = ({ status, setEditableBooking }) => {
                         )}
                     </tbody>
                 </table>
-                <div
-                    className={`pagination py-2 pb-4 w-100 d-flex justify-content-between ${totalPages == 0 ? "d-none" : ""
-                        }`}
-                >
-                    <p>
-                        Page {currentPage} of {totalPages}
-                    </p>
-                    <div className="d-flex gap-4">
-                        <button
-                            className="d-flex align-items-center"
-                            title="back"
-                            disabled={currentPage == 1}
-                            onClick={() => {
-                                if (currentPage != 1) setCurrentPage(currentPage - 1);
-                            }}
-                        >
-                            <LeftArrowIcon />
-                        </button>
-                        <button
-                            title="next"
-                            disabled={currentPage == totalPages}
-                            className="right-arrow d-flex align-items-center"
-                            onClick={() => {
-                                if (currentPage != totalPages) setCurrentPage(currentPage + 1);
-                            }}
-                        >
-                            <LeftArrowIcon />
-                        </button>
-                    </div>
-                </div>
+                {data && data?.length > 0 && <Pagination
+                    currentPage={currentPage}
+                    setCurrentPage={setCurrentPage}
+                    totalPages={totalPages}
+                />}
             </div>}
         </div>
     );

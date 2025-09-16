@@ -222,9 +222,9 @@ const Dashboard = () => {
         const unitPriceData =
           Array.isArray(unitPriceRes) && unitPriceRes.length > 0
             ? unitPriceRes[0].unitSellPrices.map((price, index) => ({
-                name: `Price ${index + 1}`,
-                price,
-              }))
+              name: `Price ${index + 1}`,
+              price,
+            }))
             : [];
 
         // Process early check-in data
@@ -326,7 +326,9 @@ const Dashboard = () => {
 
       {/* Charts Section */}
       {loadingCharts ? (
-        <div className="loading-indicator">Loading dashboard data...</div>
+        <main className="full-page">
+          <div className="loader"></div>
+        </main>
       ) : (
         <div className="charts-grid">
           {/* Travel Spend Over Time */}
@@ -499,7 +501,7 @@ const Dashboard = () => {
                           key={`cell-${index}`}
                           fill={
                             COLORS.chartColors[
-                              index % COLORS.chartColors.length
+                            index % COLORS.chartColors.length
                             ]
                           }
                         />
