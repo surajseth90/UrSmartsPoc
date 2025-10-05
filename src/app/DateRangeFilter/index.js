@@ -29,6 +29,9 @@ const DateRangePicker = (props) => {
         setStartDateError("Start date cannot be after end date");
       } else if (end > today) {
         setEndDateError("End date cannot be in the future");
+      } else {
+        onChange && onChange(start, end)
+        setEndDateError("");
       }
     }
 
@@ -38,7 +41,7 @@ const DateRangePicker = (props) => {
   };
 
   return (
-    <div className={`date-range-picker container ${containerClasses}`}>
+    <div className={`date-range-picker ${containerClasses}`}>
       <div className="d-flex form-group-container gap-3">
         <div className="form-group">
           <input
@@ -64,18 +67,6 @@ const DateRangePicker = (props) => {
 
           {endDateError && <div className="text-danger">{endDateError}</div>}
         </div>
-
-        <button
-          onClick={() => {
-            const start = new Date(startDate);
-            const end = new Date(endDate);
-            onChange(start, end)
-          }}
-          title="Search"
-          className="search-btn"
-        >
-          <SearchIcon />
-        </button>
       </div>
     </div>
   );
