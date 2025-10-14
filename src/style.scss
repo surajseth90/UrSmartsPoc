@@ -38,7 +38,7 @@ body,
 }
 
 :root {
-  --bs-orange: #1f3a93;
+  --bs-orange: #b22020;
   --grey: #caccce;
   --grey-light: #e5e5e5;
   --bg-color: #f8f8f8;
@@ -46,7 +46,7 @@ body,
   --primary-yellow: rgba(248, 204, 53, 1);
   --white: #fff;
   --black: #000;
-  --primary-color: #1f3a93;
+  --primary-color: #b22020;
 }
 
 body {
@@ -208,7 +208,11 @@ select {
 }
 
 .bg-primary {
-  background: var(--primary-color) !important;
+  background: linear-gradient(180deg, #b22020 0%, #ff7575 100%) !important;
+}
+
+.bg-secondary {
+  background: #fdf8f0;
 }
 
 .text-primary {
@@ -323,6 +327,11 @@ button:disabled {
 
 .font-30 {
   font-size: 1.875rem !important;
+}
+
+.font-alice {
+  font-family: "Alice", serif;
+  font-style: normal;
 }
 
 .line-height-0 {

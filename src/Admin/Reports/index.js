@@ -6,7 +6,7 @@ import { generateHeader } from "../../helper";
 import DateRangeFilter from "../../app/DateRangeFilter";
 import Pagination from "../../app/Pagination";
 
-const Reports = ({ status, setEditableBooking }) => {
+const Reports = () => {
     const today = new Date();
     const fifteenDaysAgo = new Date();
     fifteenDaysAgo.setDate(today.getDate() - 15);
@@ -18,9 +18,28 @@ const Reports = ({ status, setEditableBooking }) => {
     const [data, setData] = useState(null);
     const [totalPages, setTotalPages] = useState(0);
     const [currentPage, setCurrentPage] = useState(1);
-    const [downloadLoading, setDownloadLoading] = useState(false)
+    const [downloadLoading, setDownloadLoading] = useState(false);
+    const [comapaniesList, setComapaniesList] = useState([]);
+    const [selectedCompany, setSelectedCompany] = useState('');
 
     const timerRef = useRef();
+
+    useEffect(() => {
+        const fetchCompanies = async () => {
+            try {
+                const response = await fetch(`${basePath}/api/companies/distinct`, {
+                    method: "GET",
+                    headers: generateHeader(),
+                });
+                const companies = await response.json();
+                setComapaniesList(companies);
+
+            } catch (error) {
+                console.error("Error fetching states:", error);
+            }
+        };
+        fetchCompanies();
+    }, []);
 
     const downloadExcelFile = async () => {
         setDownloadLoading(true);
@@ -29,7 +48,8 @@ const Reports = ({ status, setEditableBooking }) => {
                 page: currentPage - 1,
                 size: 100,
                 startDate: startDate,
-                endDate: endDate
+                endDate: endDate,
+                companyName: selectedCompany
             }).toString();
 
             let apiUurl = `${basePath}/booking-export/excel?${params}`;
@@ -66,6 +86,7 @@ const Reports = ({ status, setEditableBooking }) => {
     };
 
     useEffect(() => {
+        if (totalPages == 0) return
         if (timerRef.current != null) {
             clearTimeout(timerRef.current);
         }
@@ -81,7 +102,8 @@ const Reports = ({ status, setEditableBooking }) => {
             page: currentPage - 1,
             size: 100,
             startDate: formattedStart || startDate,
-            endDate: formattedEnd || endDate
+            endDate: formattedEnd || endDate,
+            companyName: selectedCompany
         }).toString();
 
         let url = `${basePath}/booking-export/data?${params}`;
@@ -95,7 +117,7 @@ const Reports = ({ status, setEditableBooking }) => {
             .then((res) => {
                 let p = parseInt(res.total / res.size) + 1
                 setTotalPages(p);
-                setData(res.rows);
+                setData(res.data);
                 console.log("res", res);
             })
             .catch((err) => {
@@ -124,27 +146,54 @@ const Reports = ({ status, setEditableBooking }) => {
         <div className="booking-table-container mt-4">
             <div className="main-top-container d-flex justify-content-between">
                 <h2 className="font-30">Reports</h2>
-                <DateRangeFilter
-                    containerClasses="m-0 w-max pe-0"
-                    startDate={startDate}
-                    setStartDate={setStartDate}
-                    endDate={endDate}
-                    setEndDate={setEndDate}
-                    onChange={handleDateChange}
-                />
-                <button className={`admin-primary-btn ${downloadLoading ? "px-4" : ""}`}
-                    onClick={downloadExcelFile}
-                    disabled={dataLoader || !data?.length > 0}>
-                    {downloadLoading ? (
+                <div className="gap-3 d-flex">
+                    <DateRangeFilter
+                        containerClasses="m-0 w-max pe-0"
+                        startDate={startDate}
+                        setStartDate={setStartDate}
+                        endDate={endDate}
+                        setEndDate={setEndDate}
+                    // onChange={handleDateChange}
+                    />
+
+                    <select
+                        className="px-3 rounded-3 py-2"
+                        value={selectedCompany}
+                        style={{ height: "40px" }}
+                        onChange={(e) => setSelectedCompany(e.target.value)}
+                    >
+                        <option value="">Select Company</option>
+                        {comapaniesList && comapaniesList.length > 0 && comapaniesList.map((company, key) => {
+                            return <option key={`company-${key}`}>{company}</option>
+                        })}
+                    </select>
+
+                    <button
+                        className={`admin-primary-btn ${dataLoader ? "px-4" : ""}`}
+                        disabled={dataLoader}
+                        onClick={() => getReports()}
+                    >{dataLoader ? (
                         <div className="btn-loader-white"></div>
                     ) : (
                         <>
-                            <img src={DownloadIcon} alt="download" />
-                            <span>Download</span>
+                            <span>Search</span>
                         </>
-                    )}
+                    )}</button>
+                    <button className={`admin-primary-btn ${downloadLoading ? "px-4" : ""}`}
+                        onClick={downloadExcelFile}
+                        disabled={dataLoader || !data?.length > 0}>
+                        {downloadLoading ? (
+                            <div className="btn-loader-white"></div>
+                        ) : (
+                            <>
+                                <img src={DownloadIcon} alt="download" />
+                                <span>Download</span>
+                            </>
+                        )}
 
-                </button>
+                    </button>
+                </div>
+
             </div>
 
             {dataLoader ? <main className="full-page">

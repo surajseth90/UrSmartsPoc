@@ -185,7 +185,7 @@ const GSTDetails = () => {
   return (
     <section className="gst-details-section bg">
       <div className="container">
-        <h2 className="text-center">GST DETAILS</h2>
+        <h2 className="h3-heading">GST DETAILS</h2>
 
         <div className="d-lg-flex d-none justify-content-center gap-5">
           <div className="map-hotspots position-relative">

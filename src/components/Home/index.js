@@ -9,7 +9,8 @@ import GSTDetails from "./GSTDetails.js";
 import ContentSection from "./ContentSection.js";
 import TopBanner from "./TopBanner.js";
 import { useLocation } from "react-router-dom";
-
+import SectionWrapper from "./SectionWrapper.js"; // adjust path
+import EasySupport from "./EasySupport.js"
 export default function Home() {
   const location = useLocation();
 
@@ -24,14 +25,35 @@ export default function Home() {
 
   return (
     <>
-      <div className="home-page-wrapper">
-        <TopBanner />
-        <ContentSection />
-        <OurServicesSection />
-        <OurStories />
-        <Testimonial />
-        <GSTDetails />
-        <GlobalPresence />
+      <div className="home-page-wrapper bg">
+        <SectionWrapper>
+          <TopBanner />
+        </SectionWrapper>
+        {/* <ContentSection /> */}
+        <SectionWrapper>
+          <OurServicesSection />
+        </SectionWrapper>
+
+        <SectionWrapper>
+          <OurStories />
+        </SectionWrapper>
+
+         <SectionWrapper>
+          <EasySupport />
+        </SectionWrapper>
+
+        <SectionWrapper>
+          <Testimonial />
+        </SectionWrapper>
+
+        <SectionWrapper>
+          <GSTDetails />
+        </SectionWrapper>
+
+        <SectionWrapper>
+          <GlobalPresence />
+        </SectionWrapper>
+
       </div>
     </>
   );

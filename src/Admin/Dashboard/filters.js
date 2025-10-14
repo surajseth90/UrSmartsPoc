@@ -26,9 +26,11 @@ const DashboardFilters = ({ onSearch, isLoading = false }) => {
 
     const [statesList, setStatesList] = useState([]);
     const [citiesList, setCitiesList] = useState([]);
+    const [comapaniesList, setComapaniesList] = useState([]);
     const [loadingStates, setLoadingStates] = useState(true);
     const [loadingCities, setLoadingCities] = useState(false);
     const [selectedStates, setSelectedStates] = useState(new Set());
+    const [selectedCompanies, setSelectedCompanies] = useState(new Set());
 
     const [selectedCities, setSelectedCities] = useState(new Set());
     const hasSetDefaultRef = useRef(false);
@@ -55,6 +57,23 @@ const DashboardFilters = ({ onSearch, isLoading = false }) => {
             }
         };
         fetchStates();
+    }, []);
+
+    useEffect(() => {
+        const fetchCompanies = async () => {
+            try {
+                const response = await fetch(`${basePath}/api/companies/distinct`, {
+                    method: "GET",
+                    headers: generateHeader(),
+                });
+                const companies = await response.json();
+                setComapaniesList(companies);
+
+            } catch (error) {
+                console.error("Error fetching states:", error);
+            }
+        };
+        fetchCompanies();
     }, []);
 
     // Fetch cities when state changes
@@ -172,6 +191,15 @@ const DashboardFilters = ({ onSearch, isLoading = false }) => {
                     setEndDate={setEndDate}
                 // onChange={handleDateChange}
                 />
+
+                <div className="filter-group">
+                    <MultiSelectDropdown
+                        items={comapaniesList}
+                        selectedItems={selectedCompanies}
+                        setSelectedItems={setSelectedCompanies}
+                        label="Select Company"
+                    />
+                </div>
             </div>
 
             <div className="d-flex align-items-center gap-2">
@@ -180,7 +208,7 @@ const DashboardFilters = ({ onSearch, isLoading = false }) => {
                     disabled={isLoading}
                     onClick={() => {
                         let sapId = filters.sapId.trim();
-                        onSearch && onSearch({ startDate, endDate, states: Array.from(selectedStates), cities: Array.from(selectedCities), sapId })
+                        onSearch && onSearch({ startDate, endDate, states: Array.from(selectedStates), cities: Array.from(selectedCities), sapId, comapanies: Array.from(selectedCompanies) })
                     }}>Search</button>
 
                 <button

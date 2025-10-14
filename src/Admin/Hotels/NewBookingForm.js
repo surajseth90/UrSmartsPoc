@@ -10,8 +10,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { setSnakeBarContent } from "../../action";
 
 const BookingForm = ({ onClose, editableBooking }) => {
-  console.log("editableBooking", editableBooking);
-
   const [formData, setFormData] = useState({
     client: "",
     gstin: "",
@@ -24,7 +22,36 @@ const BookingForm = ({ onClose, editableBooking }) => {
     numberOfRooms: 1,
   });
 
-  console.log("formData", formData);
+  const [earlyCheckinData, setEarlyCheckinData] = useState({
+    price: "",
+    time: "",
+    tax: ""
+  });
+
+  const [lateCheckoutData, setLateCheckoutData] = useState({
+    price: "",
+    time: "",
+    tax: ""
+  });
+
+  const [extraBedData, setExtraBedData] = useState({
+    age: "",
+    price: "",
+    tax: ""
+  });
+
+  const [liquorData, setLiquorData] = useState({
+    serviceCharge: "",
+    price: "",
+    gst: ""
+  });
+  
+  const [extrasState, setExtrasState] = useState({
+    earlyCheckin: false,
+    lateCheckout: false,
+    extraAdult: false,
+    liquor: false,
+  });
 
   const [adminDetails] = useSelector((state) => [state.adminDetails]);
 
@@ -158,6 +185,22 @@ const BookingForm = ({ onClose, editableBooking }) => {
     setErrors((prev) => ({ ...prev, [field]: "" }));
   };
 
+  const handleEarlyCheckInChange = (field, value) => {
+    setEarlyCheckinData((prev) => ({ ...prev, [field]: value }));
+  };
+
+  const handleLateCheckoutChange = (field, value) => {
+    setLateCheckoutData((prev) => ({ ...prev, [field]: value }));
+  };
+
+  const handleExtraBedChange = (field, value) => {
+    setExtraBedData((prev) => ({ ...prev, [field]: value }));
+  };
+
+    const handleLiquorChange = (field, value) => {
+    setLiquorData((prev) => ({ ...prev, [field]: value }));
+  };
+
   const handleNestedChange = (parent, field, value) => {
     setFormData((prev) => ({
       ...prev,
@@ -229,50 +272,6 @@ const BookingForm = ({ onClose, editableBooking }) => {
       return false;
     }
 
-    // // Validate top-level fields
-    // if (!formData.checkInDate) newErrors.checkInDate = "This field is required";
-    // if (!formData.checkOutDate)
-    //   newErrors.checkOutDate = "This field is required";
-    // if (!formData.noOfNights) newErrors.noOfNights = "This field is required";
-    // if (!formData.numberOfRooms)
-    //   newErrors.numberOfRooms = "This field is required";
-
-    // // Validate employee fields
-    // if (!formData.employee.name)
-    //   newErrors.employee_name = "This field is required";
-    // if (!formData.employee.email) {
-    //   newErrors.employee_email = "This field is required";
-    // } else if (!/\S+@\S+\.\S+/.test(formData.employee.email)) {
-    //   newErrors.employee_email = "Invalid email address";
-    // }
-
-    // // Validate hotel fields
-    // if (!formData.hotel.name) newErrors.hotel_name = "This field is required";
-    // if (!formData.hotel.city) newErrors.hotel_city = "This field is required";
-    // if (!formData.hotel.state) newErrors.hotel_state = "This field is required";
-
-    // // Validate booking person fields
-    // if (!formData.bookingPerson.name)
-    //   newErrors.bookingPerson_name = "This field is required";
-    // if (!formData.bookingPerson.email) {
-    //   newErrors.bookingPerson_email = "This field is required";
-    // } else if (!/\S+@\S+\.\S+/.test(formData.bookingPerson.email)) {
-    //   newErrors.bookingPerson_email = "Invalid email address";
-    // }
-    // if (!formData.bookingPerson.company.gstin)
-    //   newErrors.bookingPerson_company_gstin = "This field is required";
-
-    // // Validate company fields
-    // if (!formData.company.gstin)
-    //   newErrors.company_gstin = "This field is required";
-
-    // // Validate occupancy details
-    // formData.occupancyDetails.forEach((item, index) => {
-    //   if (!item.roomType) newErrors[`roomType_${index}`] = "Required";
-    //   if (!item.price) newErrors[`price_${index}`] = "Required";
-    // });
-
-    // setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
 
@@ -296,6 +295,42 @@ const BookingForm = ({ onClose, editableBooking }) => {
         requestedBy: adminDetails,
         status: status || "COMPLETED",
       };
+
+      if(extrasState?.earlyCheckin) {
+        body = {
+          ...body,
+          earlyCheckin : {
+            ...earlyCheckinData
+          }
+        }
+      }
+
+      if(extrasState?.lateCheckout) {
+        body = {
+          ...body,
+          lateCheckout : {
+            ...lateCheckoutData
+          }
+        }
+      }
+
+      if(extrasState?.extraAdult) {
+        body = {
+          ...body,
+          extraBed : {
+            ...extraBedData
+          }
+        }
+      }
+
+      if(extrasState?.liquor) {
+        body = {
+          ...body,
+          liquor : {
+            ...liquorData
+          }
+        }
+      }
 
       const url = `${basePath}/api/bookings`;
       let msg = "";
@@ -325,6 +360,11 @@ const BookingForm = ({ onClose, editableBooking }) => {
   const handleCloseForm = () => {
     // setFormData({});
     onClose();
+  };
+
+  const handleCheckboxChange = (e) => {
+    const { name, checked } = e.target;
+    setExtrasState((prev) => ({ ...prev, [name]: checked }));
   };
 
   return (
@@ -507,9 +547,8 @@ const BookingForm = ({ onClose, editableBooking }) => {
             <label className="form-label">Check-In Date</label>
             <input
               type="date"
-              className={`form-control ${
-                errors.checkInDate ? "is-invalid" : ""
-              }`}
+              className={`form-control ${errors.checkInDate ? "is-invalid" : ""
+                }`}
               value={formData.checkInDate}
               onChange={(e) => handleChange("checkInDate", e.target.value)}
             />
@@ -522,9 +561,8 @@ const BookingForm = ({ onClose, editableBooking }) => {
             <label className="form-label">Check-Out Date</label>
             <input
               type="date"
-              className={`form-control ${
-                errors.checkOutDate ? "is-invalid" : ""
-              }`}
+              className={`form-control ${errors.checkOutDate ? "is-invalid" : ""
+                }`}
               value={formData.checkOutDate}
               onChange={(e) => handleChange("checkOutDate", e.target.value)}
             />
@@ -553,18 +591,16 @@ const BookingForm = ({ onClose, editableBooking }) => {
           </div>
 
           <div
-            className={`col-12 occupancy-container p-3 ${
-              currentPage === 1 ? "d-none" : ""
-            }`}
+            className={`col-12 occupancy-container p-3 ${currentPage === 1 ? "d-none" : ""
+              }`}
           >
             <label className="form-label">Occupancy Type & Price</label>
             {formData.occupancyDetails.map((item, index) => (
               <div key={index} className="row g-2 mb-2">
                 <div className="col-md-6">
                   <select
-                    className={`form-select ${
-                      errors[`roomType_${index}`] ? "is-invalid" : ""
-                    }`}
+                    className={`form-select ${errors[`roomType_${index}`] ? "is-invalid" : ""
+                      }`}
                     value={item.roomType}
                     onChange={(e) =>
                       handleOccupationCancy(index, "roomType", e.target.value)
@@ -585,9 +621,8 @@ const BookingForm = ({ onClose, editableBooking }) => {
                   <input
                     type="number"
                     placeholder="Price"
-                    className={`form-control ${
-                      errors[`price_${index}`] ? "is-invalid" : ""
-                    }`}
+                    className={`form-control ${errors[`price_${index}`] ? "is-invalid" : ""
+                      }`}
                     value={item.price}
                     onChange={(e) =>
                       handleOccupationCancy(index, "price", e.target.value)
@@ -614,6 +649,247 @@ const BookingForm = ({ onClose, editableBooking }) => {
             </div>
           </div>
 
+          <div
+            className={`col-12 occupancy-container p-3 ${currentPage === 1 ? "d-none" : ""
+              }`}
+          >
+            <div className="d-flex justify-content-between">
+
+              <div className="gap-3 d-flex align-items-center">
+                <input
+                  type="checkbox"
+                  name="earlyCheckin"
+                  id="earlyCheckin"
+                  checked={extrasState.earlyCheckin}
+                  onChange={handleCheckboxChange}
+                />
+                <label htmlFor="earlyCheckin">
+                  Early Check-in
+                </label>
+              </div>
+              <div className="gap-3 d-flex align-items-center">
+                <input
+                  type="checkbox"
+                  name="extraAdult"
+                  id="extraAdult"
+                  checked={extrasState.extraAdult}
+                  onChange={handleCheckboxChange}
+                />{' '}
+
+                <label htmlFor="extraAdult">
+                  Extra Adult
+
+                </label>
+              </div>
+              <div className="gap-3 d-flex align-items-center">
+                <input
+                  type="checkbox"
+                  name="liquor"
+                  id="liquor"
+                  checked={extrasState.liquor}
+                  onChange={handleCheckboxChange}
+                />
+                <label htmlFor="liquor">
+                  Liquor
+                </label>
+              </div>
+              <div className="gap-3 d-flex align-items-center">
+                <input
+                  type="checkbox"
+                  name="lateCheckout"
+                  id="lateCheckout"
+                  checked={extrasState.lateCheckout}
+                  onChange={handleCheckboxChange}
+                />{' '}
+                <label htmlFor="lateCheckout">
+                  Late Check-out
+                </label>
+              </div>
+            </div>
+
+            {extrasState.earlyCheckin &&
+              <>
+                <h5 className="font-18 mt-4 mb-2 ps-2">Early Checkin</h5>
+                <div className="w-100 d-flex">
+                  <div className={`col-md-4 px-2 ${currentPage == 1 ? "d-none" : ""}`}>
+                    <label className="mb-2">Time</label>
+                    <input
+                      type="text"
+                      className={`form-control`}
+                      value={earlyCheckinData?.time}
+                      onChange={(e) => handleEarlyCheckInChange("time", e.target.value)}
+                    />
+                  </div>
+
+                  <div className={`col-md-4 px-2 ${currentPage == 1 ? "d-none" : ""}`}>
+                    <label className="mb-2">Price</label>
+                    <input
+                      type="text"
+                      className={`form-control`}
+                      value={earlyCheckinData?.price}
+                      onChange={(e) => handleEarlyCheckInChange("price", e.target.value)}
+                    />
+                  </div>
+
+                  <div className={`col-md-4 px-2 ${currentPage == 1 ? "d-none" : ""}`}>
+                    <label className="mb-2">Tax Levied</label>
+                    <select
+                      className={`form-select`}
+                      value={earlyCheckinData?.tax}
+                      onChange={(e) => handleEarlyCheckInChange("tax", e.target.value)}
+
+                    >
+                      <option value="">Select Tax Levied</option>
+                      <option value="7.5">7.5</option>
+                      <option value="12">12</option>
+                      <option value="18">18</option>
+                    </select>
+                  </div>
+                </div>
+              </>
+            }
+
+            {extrasState.lateCheckout &&
+              <>
+                <h5 className="font-18 mt-4 mb-2 ps-2">Late Checkout</h5>
+                <div className="w-100 d-flex">
+                  <div className={`col-md-4 px-2 ${currentPage == 1 ? "d-none" : ""}`}>
+                    <label className="mb-2">Time</label>
+                    <input
+                      type="text"
+                      className={`form-control`}
+                      value={lateCheckoutData?.time}
+                      onChange={(e) => handleLateCheckoutChange("time", e.target.value)}
+                    />
+                  </div>
+
+                  <div className={`col-md-4 px-2 ${currentPage == 1 ? "d-none" : ""}`}>
+                    <label className="mb-2">Price</label>
+                    <input
+                      type="text"
+                      className={`form-control`}
+                      value={lateCheckoutData?.price}
+                      onChange={(e) => handleLateCheckoutChange("price", e.target.value)}
+                    />
+                  </div>
+
+                  <div className={`col-md-4 px-2 ${currentPage == 1 ? "d-none" : ""}`}>
+                    <label className="mb-2">Tax Levied</label>
+                    <select
+                      className={`form-select`}
+                      value={lateCheckoutData?.tax}
+                      onChange={(e) => handleLateCheckoutChange("tax", e.target.value)}
+
+                    >
+                      <option value="">Select Tax Levied</option>
+                      <option value="7.5">7.5</option>
+                      <option value="12">12</option>
+                      <option value="18">18</option>
+                    </select>
+                  </div>
+                </div>
+              </>
+            }
+
+            {extrasState.extraAdult &&
+              <>
+                <h5 className="font-18 mt-4 mb-2 ps-2">Extras Adult/Bed</h5>
+                <div className="w-100 d-flex">
+                  <div className={`col-md-4 px-2 ${currentPage == 1 ? "d-none" : ""}`}>
+                    <label className="mb-2">User Age</label>
+                    <select
+                      className={`form-select`}
+                      value={extraBedData?.age}
+                      onChange={(e) => handleExtraBedChange("age", e.target.value)}
+
+                    >
+                      <option value="">Select Age</option>
+                      {Array.from(Array(101).keys()).map((item) => {
+                        return (
+                          <option value={item} key={`age-${item}`}>{item}</option>
+                        )
+                      })}
+                    </select>
+                  </div>
+
+                  <div className={`col-md-4 px-2 ${currentPage == 1 ? "d-none" : ""}`}>
+                    <label className="mb-2">Price</label>
+                    <input
+                      type="text"
+                      className={`form-control`}
+                      value={extraBedData?.price}
+                      onChange={(e) => handleExtraBedChange("price", e.target.value)}
+                    />
+                  </div>
+
+                  <div className={`col-md-4 px-2 ${currentPage == 1 ? "d-none" : ""}`}>
+                    <label className="mb-2">Tax Levied</label>
+                    <select
+                      className={`form-select`}
+                      value={extraBedData?.tax}
+                      onChange={(e) => handleExtraBedChange("tax", e.target.value)}
+
+                    >
+                      <option value="">Select Tax Levied</option>
+                      <option value="0">0</option>
+                      <option value="18">18</option>
+                    </select>
+                  </div>
+                </div>
+              </>
+            }
+
+            {extrasState.liquor &&
+              <>
+                <h5 className="font-18 mt-4 mb-2 ps-2">Liquor</h5>
+                <div className="w-100 d-flex">
+                  <div className={`col-md-4 px-2 ${currentPage == 1 ? "d-none" : ""}`}>
+                    <label className="mb-2">Price</label>
+                    <input
+                      type="text"
+                      className={`form-control`}
+                      value={liquorData?.price}
+                      onChange={(e) => handleLiquorChange("price", e.target.value)}
+                    />
+                  </div>
+
+                  <div className={`col-md-4 px-2 ${currentPage == 1 ? "d-none" : ""}`}>
+                    <label className="mb-2">Service Charge</label>
+                    <select
+                      className={`form-select`}
+                      value={liquorData?.serviceCharge}
+                      onChange={(e) => handleLiquorChange("serviceCharge", e.target.value)}
+
+                    >
+                      <option value="">Select Service Charge</option>
+                      <option value="2">2</option>
+                      <option value="3">3</option>
+                      <option value="5">5</option>
+                      <option value="8">8</option>
+                      <option value="10">10</option>
+                      <option value="12">12</option>
+                      <option value="15">15</option>
+                      <option value="20">20</option>
+                    </select>
+                  </div>
+
+                  <div className={`col-md-4 px-2 ${currentPage == 1 ? "d-none" : ""}`}>
+                    <label className="mb-2">GST</label>
+                    <select
+                      className={`form-select`}
+                      value={liquorData?.gst}
+                      onChange={(e) => handleLiquorChange("gst", e.target.value)}
+
+                    >
+                      <option value="">Select GST</option>
+                      <option value="18">18</option>
+                    </select>
+                  </div>
+                </div>
+              </>
+            }
+          </div>
+
           <div className={`col-12 ${currentPage === 1 ? "d-none" : ""}`}>
             <label>Remarks</label>
             <textarea
@@ -626,9 +902,8 @@ const BookingForm = ({ onClose, editableBooking }) => {
         </div>
 
         <div
-          className={`mt-4 d-flex ${
-            currentPage == 1 ? "justify-content-end" : "justify-content-between"
-          }`}
+          className={`mt-4 d-flex ${currentPage == 1 ? "justify-content-end" : "justify-content-between"
+            }`}
         >
           {currentPage == 1 ? (
             <button

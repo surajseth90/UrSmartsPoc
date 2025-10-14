@@ -16,7 +16,7 @@ const BrandCarousel = () => {
   return (
     <section id="presence" className="brand-carousel overflow-hidden position-relative w-100">
       <div className="container">
-        <h3 className="text-center" style={{ marginBottom: "80px" }}>
+        <h3 className="h3-heading" style={{ marginBottom: "80px" }}>
           GLOBAL PRESENCE
         </h3>
       </div>

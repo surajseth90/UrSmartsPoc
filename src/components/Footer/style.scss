@@ -3,10 +3,10 @@
   min-height: 265px;
 
   .container {
-    padding: 40px 10px;
+    padding: 20px 10px;
 
     @media screen and (min-width: 992px) {
-      padding: 40px 80px;
+      padding: 20px 80px;
     }
   }
 
@@ -39,7 +39,6 @@
     border-radius: 60px;
     border: 1px solid black;
     font-weight: 800;
-    margin-top: 40px;
   }
 
   .footer-bottom {
@@ -47,5 +46,16 @@
     padding: 20px;
     font-size: 12px;
     font-weight: 500;
+  }
+
+  .footer-bottom-top {
+    @media screen and (max-width: 576px) {
+      flex-direction: column;
+      justify-content: center;
+
+      .footer-social-links {
+        justify-content: center;
+      }
+    }
   }
 }

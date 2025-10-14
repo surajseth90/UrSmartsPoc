@@ -23,13 +23,14 @@ export default function Index({ data, setPopupData }) {
     // imgRef.current.src = data.displayImg;
     setIsHovered(false);
     console.log("timerRef.current", timerRef.current);
+
   };
 
   return (
     <div
       className="d-flex flex-column position-relative img-flash-card-wrapper"
-      onMouseOver={onHoverHandle}
-      onMouseLeave={onHoverLeaveHandle}
+      // onMouseOver={onHoverHandle}
+      // onMouseLeave={onHoverLeaveHandle}
     >
       <img
         ref={imgRef}
@@ -38,22 +39,23 @@ export default function Index({ data, setPopupData }) {
         alt=""
       />
       <div
-        className={`w-100 story-btn position-absolute top-0 h-100 flex-center flex-column gap-4 ${
-          hovered ? "visible" : "invisible"
-        }`}
+        className={`w-100 story-btn bottom-0 position-absolute flex-column gap-3 d-none visible ${hovered ? "visible" : ""
+          }`}
       >
-        <div
+        {/* <div
           className="bg-primary position-absolute top-0 w-100 h-100"
           style={{ opacity: 0.7 }}
-        ></div>
-        <span className="text-white z-1 position-relative font-22">
+        ></div> */}
+        <h3 className="text-white z-1 position-relative font-alice">
           {data.city}
-        </span>
+        </h3>
+
+        <p className="text-white">{data?.popupDesc}</p>
         <button
-          className="btn-secondary z-1 position-relative text-decoration-none"
+          className="font-alice text-white z-1 position-relative text-decoration-none"
           onClick={() => setPopupData(data)}
         >
-          Read More
+          Explore
         </button>
       </div>
     </div>

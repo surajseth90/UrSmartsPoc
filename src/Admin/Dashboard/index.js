@@ -24,7 +24,8 @@ function Dashboard() {
     selectedEnd,
     states,
     cities,
-    clientIds
+    clientIds,
+    comapanies
   ) {
     setDashboardLoading(true);
     setData(null);
@@ -55,6 +56,16 @@ function Dashboard() {
       cities.forEach(city => params.append("cities", city));
     }
 
+    // Add comapanies
+    if (Array.isArray(comapanies)) {
+      comapanies.forEach(comapany => params.append("comapanies", comapany));
+    }
+
+    console.log("params", params);
+    console.log("Final URL:", url.toString());
+
+    console.log("params.toString()", params.toString());
+
     // Final URL with query params
     url.search = params.toString();
 
@@ -74,55 +85,55 @@ function Dashboard() {
   }
 
 
-  const onSearch = ({ startDate, endDate, states, cities, sapId }) => {
+  const onSearch = ({ startDate, endDate, states, cities, sapId, comapanies }) => {
     if (timerRef.current != null) {
       clearTimeout(timerRef.current);
     }
     // timerRef.current = setTimeout(() => {
-    fetchFilteredData(startDate, endDate, states, cities, sapId);
-    chartsRef.current.fetchChartData(startDate, endDate, states, cities, sapId);
+    fetchFilteredData(startDate, endDate, states, cities, sapId, comapanies);
+    chartsRef.current.fetchChartData(startDate, endDate, states, cities, sapId, comapanies);
     // }, 2000);
   }
-const downloadPdf = async () => {
-  // Hide all elements with the 'no-print' class
-  const elementsToHide = document.querySelectorAll('.no-print');
-  elementsToHide.forEach(el => el.style.display = 'none');
+  const downloadPdf = async () => {
+    // Hide all elements with the 'no-print' class
+    const elementsToHide = document.querySelectorAll('.no-print');
+    elementsToHide.forEach(el => el.style.display = 'none');
 
-  const input = divRef.current;
+    const input = divRef.current;
 
-  const canvas = await html2canvas(input, {
-    scale: 2,
-    useCORS: true,
-    scrollY: -window.scrollY
-  });
+    const canvas = await html2canvas(input, {
+      scale: 2,
+      useCORS: true,
+      scrollY: -window.scrollY
+    });
 
-  const imgData = canvas.toDataURL('image/png');
-  const pdf = new jsPDF('p', 'mm', 'a4');
-  const pageWidth = pdf.internal.pageSize.getWidth();
-  const pageHeight = pdf.internal.pageSize.getHeight();
+    const imgData = canvas.toDataURL('image/png');
+    const pdf = new jsPDF('p', 'mm', 'a4');
+    const pageWidth = pdf.internal.pageSize.getWidth();
+    const pageHeight = pdf.internal.pageSize.getHeight();
 
-  const imgProps = pdf.getImageProperties(imgData);
-  const imgWidth = pageWidth;
-  const imgHeight = (imgProps.height * imgWidth) / imgProps.width;
+    const imgProps = pdf.getImageProperties(imgData);
+    const imgWidth = pageWidth;
+    const imgHeight = (imgProps.height * imgWidth) / imgProps.width;
 
-  let heightLeft = imgHeight;
-  let position = 0;
+    let heightLeft = imgHeight;
+    let position = 0;
 
-  pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
-  heightLeft -= pageHeight;
-
-  while (heightLeft > 0) {
-    position = heightLeft - imgHeight;
-    pdf.addPage();
     pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
     heightLeft -= pageHeight;
-  }
 
-  pdf.save('multi-page-content.pdf');
+    while (heightLeft > 0) {
+      position = heightLeft - imgHeight;
+      pdf.addPage();
+      pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+      heightLeft -= pageHeight;
+    }
 
-  // Show the elements again
-  elementsToHide.forEach(el => el.style.display = '');
-};
+    pdf.save('multi-page-content.pdf');
+
+    // Show the elements again
+    elementsToHide.forEach(el => el.style.display = '');
+  };
 
 
   return (
