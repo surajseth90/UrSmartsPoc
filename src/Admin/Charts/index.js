@@ -66,16 +66,18 @@ const COLORS = {
 // Helper function to process early check-in times
 const processCheckinTimes = (data) => {
   const checkoutCountMap = {};
+
   data.forEach(cityData => {
     cityData.earlyCheckInTimes.forEach(time => {
       checkoutCountMap[time] = (checkoutCountMap[time] || 0) + 1;
     });
   });
 
-  return Object.keys(checkoutCountMap).map(time => ({
-    time,
-    count: checkoutCountMap[time],
-  }));
+  return Object.keys(checkoutCountMap)
+    .map(time => ({
+      time,
+      count: checkoutCountMap[time],
+    })).sort((a, b) => b.count - a.count);
 };
 
 const processCheckoutTimes = (data) => {
@@ -89,8 +91,28 @@ const processCheckoutTimes = (data) => {
   return Object.keys(checkoutCountMap).map(time => ({
     time,
     count: checkoutCountMap[time],
-  }));
+  })).sort((a, b) => b.count - a.count);
 };
+
+const processOccupancyData = (data) => {
+  // Step 1: Sort descending by noOfNights
+  const sortedData = [...data].sort((a, b) => b.noOfNights - a.noOfNights);
+
+  // Step 2: If more than 6, keep top 6 and club rest into "Other"
+  if (sortedData.length > 6) {
+    const topSix = sortedData.slice(0, 6);
+    const others = sortedData.slice(6);
+
+    const othersTotal = others.reduce((sum, item) => sum + item.noOfNights, 0);
+    return [
+      ...topSix,
+      { occupancyType: "Other", noOfNights: othersTotal },
+    ];
+  }
+
+  return sortedData;
+};
+
 
 const Charts = forwardRef((props, ref) => {
   const { loadingCharts, setLoadingCharts, downloadPdf } = props;
@@ -161,9 +183,9 @@ const Charts = forwardRef((props, ref) => {
         ? processCheckoutTimes(lateCheckoutsRes) : [];
 
       setChartData({
-        spendByState: sortedArr(spendStateRes, "totalSellCost"),
-        spendByCity: sortedArr(spendCityRes, "totalSellCost"),
-        nightsByOccupancy: sortedArr(occupancyRes , "noOfNights"),
+        spendByState: processChartData(spendStateRes, "state"),
+        spendByCity: processChartData(spendCityRes, "city"),
+        nightsByOccupancy: processOccupancyData(occupancyRes),
         earlyCheckins: earlyCheckinsData,
         spendByMealPlan: sortedArr(mealPlanRes, "totalSellCost"),
         lateCheckouts: lateCheckoutData,
@@ -178,6 +200,22 @@ const Charts = forwardRef((props, ref) => {
   function sortedArr(arr, key) {
     return arr.sort((a, b) => b[key] - a[key]);
   }
+
+  function processChartData(data, type) {
+    let limit = 19;
+    const sortedData = [...data].sort((a, b) => b.totalSellCost - a.totalSellCost);
+
+    if (sortedData.length <= limit) return sortedData;
+    const topData = sortedData.slice(0, limit);
+    const remaining = sortedData.slice(limit);
+
+    const othersTotal = remaining.reduce((sum, item) => sum + item.totalSellCost, 0);
+    return [
+      ...topData,
+      { [type]: "Others", totalSellCost: othersTotal },
+    ];
+  }
+
 
   return (
     <div className="dashboard-container">
@@ -302,7 +340,7 @@ const Charts = forwardRef((props, ref) => {
                     <Pie
                       data={chartData.spendByMealPlan}
                       dataKey="totalSellCost"
-                      nameKey="plan"
+                      nameKey="mealPlan"
                       outerRadius={100}
                     >
                       {chartData.spendByMealPlan.map((entry, index) => (
@@ -360,7 +398,10 @@ const Charts = forwardRef((props, ref) => {
             {chartData.earlyCheckins.length > 0 && (
               <ChartCard title="Early Check-ins">
                 <ResponsiveContainer width="100%" height={300}>
-                  <BarChart data={chartData.earlyCheckins}>
+                  <BarChart data={chartData.earlyCheckins}
+                    barSize={15}
+
+                  >
                     <CartesianGrid strokeDasharray="3 3" />
                     <XAxis dataKey="time" />
                     <YAxis />
@@ -385,7 +426,10 @@ const Charts = forwardRef((props, ref) => {
             {/* Bar – Late Check-outs */}
             {chartData.lateCheckouts.length > 0 && (
               <ChartCard title="Late Check-outs">
-                <ResponsiveContainer width="100%" height={300}>
+                <ResponsiveContainer width="100%" height={300}
+
+                  barSize={15}
+                >
                   <BarChart data={chartData.lateCheckouts}>
                     <CartesianGrid strokeDasharray="3 3" />
                     <XAxis dataKey="time" />
