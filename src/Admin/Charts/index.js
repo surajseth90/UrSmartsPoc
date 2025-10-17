@@ -22,7 +22,45 @@ const COLORS = {
   primary: "#172B4D",
   secondary: "#466CAD",
   accent: "#ABCAFF",
-  chartColors: ["#172B4D", "#466CAD", "#ABCAFF", "#5E7BAE", "#3A558C"],
+  chartColors: [
+    // 🌈 Rainbow base hues
+    "#FF0000", // Red
+    "#FF7F00", // Orange
+    "#FFFF00", // Yellow
+    "#00FF00", // Green
+    "#0000FF", // Blue
+    "#4B0082", // Indigo
+    "#8B00FF", // Violet
+
+    // 🌤️ Extended shades (similar tones)
+    "#FF4C4C", // Light Red
+    "#FFA64D", // Light Orange
+    "#FFF14D", // Soft Yellow
+    "#80FF80", // Light Green
+    "#66B2FF", // Sky Blue
+    "#9F7FFF", // Soft Purple
+    "#FF66CC", // Pinkish Magenta
+
+    // 🌺 Midtone variants
+    "#E60026", // Crimson Red
+    "#FF9A00", // Amber
+    "#E6E600", // Golden Yellow
+    "#33CC33", // Emerald
+    "#0073E6", // Medium Blue
+    "#9933FF", // Vivid Violet
+    "#FF33A6", // Fuchsia
+
+    // 🌊 Cool and deep tones
+    "#00CCCC", // Cyan
+    "#33FFCC", // Aqua Mint
+    "#99FF66", // Lime
+    "#FFFF99", // Pale Yellow
+    "#FFB3E6", // Pastel Pink
+    "#B366FF", // Lavender
+    "#6666FF", // Periwinkle
+    "#00B3B3", // Teal
+    "#FF6F61", // Coral
+  ],
 };
 
 // Helper function to process early check-in times
@@ -123,11 +161,11 @@ const Charts = forwardRef((props, ref) => {
         ? processCheckoutTimes(lateCheckoutsRes) : [];
 
       setChartData({
-        spendByState: spendStateRes,
-        spendByCity: spendCityRes,
-        nightsByOccupancy: occupancyRes,
+        spendByState: sortedArr(spendStateRes, "totalSellCost"),
+        spendByCity: sortedArr(spendCityRes, "totalSellCost"),
+        nightsByOccupancy: sortedArr(occupancyRes , "noOfNights"),
         earlyCheckins: earlyCheckinsData,
-        spendByMealPlan: mealPlanRes,
+        spendByMealPlan: sortedArr(mealPlanRes, "totalSellCost"),
         lateCheckouts: lateCheckoutData,
       });
     } catch (error) {
@@ -136,6 +174,10 @@ const Charts = forwardRef((props, ref) => {
       setLoadingCharts(false);
     }
   };
+
+  function sortedArr(arr, key) {
+    return arr.sort((a, b) => b[key] - a[key]);
+  }
 
   return (
     <div className="dashboard-container">
@@ -159,62 +201,97 @@ const Charts = forwardRef((props, ref) => {
             {chartData.spendByState.length > 0 && (
               <ChartCard title="Spend by State">
                 <ResponsiveContainer width="100%" height={350}>
-                  <PieChart>
-                    <Pie
-                      data={chartData.spendByState}
-                      dataKey="totalSellCost"
-                      nameKey="state"
-                      outerRadius={100}
-                    >
-                      {chartData.spendByState.map((entry, index) => (
-                        <Cell
-                          key={`state-pie-${index}`}
-                          fill={COLORS.chartColors[index % COLORS.chartColors.length]}
-                        />
-                      ))}
-                    </Pie>
+                  <BarChart
+                    data={chartData.spendByState}
+                    margin={{ top: 20, right: 30, left: 0, bottom: 50 }}
+                    barSize={15}
+                  >
+                    <CartesianGrid strokeDasharray="3 3" />
+
+                    <XAxis
+                      dataKey="state"
+                      angle={-45}
+                      textAnchor="end"
+                      interval={0}
+                      height={100}
+                    />
+
+                    <YAxis
+                      tickFormatter={(value) => `₹${(value / 1000).toFixed(0)}k`}
+
+                    />
 
                     <Tooltip
-                      formatter={(value, name, props) => [`₹${value.toLocaleString()}`, props?.payload?.state]}
+                      formatter={(value, name, props) => [
+                        `₹${value.toLocaleString()}`,
+                        props?.payload?.state,
+                      ]}
                       contentStyle={{
                         backgroundColor: COLORS.primary,
                         color: "#fff",
-                      }} />
-                    <Legend />
-                  </PieChart>
+                      }}
+                    />
+
+                    {/* <Legend /> */}
+
+                    <Bar dataKey="totalSellCost">
+                      {chartData.spendByState.map((entry, index) => (
+                        <Cell
+                          key={`state-bar-${index}`}
+                          fill={COLORS.chartColors[index % COLORS.chartColors.length]}
+                        />
+                      ))}
+                    </Bar>
+                  </BarChart>
                 </ResponsiveContainer>
               </ChartCard>
+
             )}
 
             {/* Pie – Spend by City */}
             {chartData.spendByCity.length > 0 && (
               <ChartCard title="Spend by City">
                 <ResponsiveContainer width="100%" height={350}>
-                  <PieChart>
-                    <Pie
-                      data={chartData.spendByCity}
-                      dataKey="totalSellCost"
-                      nameKey="city"
-                      outerRadius={100}
-                    >
-                      {chartData.spendByCity.map((entry, index) => (
-                        <Cell
-                          key={`city-pie-${index}`}
-                          fill={COLORS.chartColors[index % COLORS.chartColors.length]}
-                        />
-                      ))}
-                    </Pie>
+                  <BarChart
+                    data={chartData.spendByCity}
+                    margin={{ top: 20, right: 30, left: 0, bottom: 50 }}
+                    barSize={15}
+
+                  >
+                    <CartesianGrid strokeDasharray="3 3" />
+                    <XAxis
+                      dataKey="city"
+                      angle={-45}
+                      textAnchor="end"
+                      interval={0}
+                      height={80}
+                    />
+                    <YAxis
+                      tickFormatter={(value) => `₹${(value / 1000).toFixed(0)}k`}
+                    />
                     <Tooltip
-                      formatter={(value, name, props) => [`₹${value.toLocaleString()}`, props?.payload?.city]}
+                      formatter={(value, name, props) => [
+                        `₹${value.toLocaleString()}`,
+                        props?.payload?.city,
+                      ]}
                       contentStyle={{
                         backgroundColor: COLORS.primary,
                         color: "#fff",
                       }}
                     />
-                    <Legend />
-                  </PieChart>
+                    {/* <Legend /> */}
+                    <Bar dataKey="totalSellCost" fill={COLORS.chartColors[0]}>
+                      {chartData.spendByCity.map((entry, index) => (
+                        <Cell
+                          key={`city-bar-${index}`}
+                          fill={COLORS.chartColors[index % COLORS.chartColors.length]}
+                        />
+                      ))}
+                    </Bar>
+                  </BarChart>
                 </ResponsiveContainer>
               </ChartCard>
+
             )}
 
             {/* Pie – Spend by Meal Plan */}

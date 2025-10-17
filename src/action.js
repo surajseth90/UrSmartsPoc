@@ -53,3 +53,8 @@ export const setTopProfessionals = (data) => {
 export const setAdminDetails= (data) => {
   return { type: "SET_ADMIN_DETAILS", payload: data };
 };
+
+export const setDashboardFilters = (filters) => ({
+  type: "SET_DASHBOARD_FILTERS",
+  payload: filters,
+});

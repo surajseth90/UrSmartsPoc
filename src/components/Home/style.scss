@@ -180,7 +180,9 @@
 
 section.easy-support-container {
   .container {
-    padding: 50px 0 0 64px;
+    @media screen and (min-width: 768px) {
+      padding: 50px 0 0 64px;    
+    }
     border-radius: 25px;
 
     .easy-support-banner {
@@ -192,12 +194,20 @@ section.easy-support-container {
 section.our-stories {
   .card-prev-btn,
   .card-next-btn {
-    color: white;
+
+  }
+
+  .navigation {
+    justify-content: end;
   }
 
   .stories-wrapper {
     .story-img {
       height: 400px;
+    }
+
+    .swiper {
+      padding-bottom: 60px;
     }
 
     .swiper-slide-active {
@@ -254,6 +264,7 @@ section.our-stories {
 
   .container div {
     gap: 20px;
+    width: 100%;
 
     span {
       font-size: 1.25rem;

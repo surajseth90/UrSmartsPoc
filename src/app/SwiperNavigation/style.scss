@@ -28,7 +28,7 @@
 
   @media screen and (max-width: 786px) {
     width: 100%;
-    justify-content: space-between;
+    justify-content: space-between !important;
     right: 0 !important;
     padding: 0 20px;
   }

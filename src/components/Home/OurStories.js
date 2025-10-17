@@ -3,12 +3,13 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
-import SwiperNavigation from "../../app/SwiperNavigation";
-import FlashCardForImg from '../../app/FlashCardForImg'
 import { Navigation, Pagination } from "swiper/modules";
-
+import SwiperNavigation from "../../app/SwiperNavigation";
+import FlashCardForImg from "../../app/FlashCardForImg";
 import ContentPopup from "../Popups/ContentPopup";
+import { useSelector } from "react-redux";
 
+// --- IMAGES ---
 import Thailand1 from "../../assets/images/Thailand/Thailand-1.jpeg";
 import Thailand2 from "../../assets/images/Thailand/Thailand-2.jpeg";
 import Thailand3 from "../../assets/images/Thailand/Thailand-3.jpeg";
@@ -37,6 +38,14 @@ import Goa6 from "../../assets/images/Goa/Goa-6.jpeg";
 import Goa7 from "../../assets/images/Goa/Goa-7.jpeg";
 import Goa8 from "../../assets/images/Goa/Goa-8.jpeg";
 import Goa9 from "../../assets/images/Goa/Goa-9.jpeg";
+import Goa10 from "../../assets/images/Goa/Goa-10.jpeg";
+import Goa11 from "../../assets/images/Goa/Goa-11.jpeg";
+import Goa12 from "../../assets/images/Goa/Goa-12.jpeg";
+import Goa13 from "../../assets/images/Goa/Goa-13.jpeg";
+import Goa14 from "../../assets/images/Goa/Goa-14.jpeg";
+import Goa15 from "../../assets/images/Goa/Goa-15.jpeg";
+import Goa16 from "../../assets/images/Goa/Goa-16.jpeg";
+import Goa17 from "../../assets/images/Goa/Goa-17.jpeg";
 
 import Jaipur1 from "../../assets/images/Jaipur/Jaipur-1.jpeg";
 import Jaipur2 from "../../assets/images/Jaipur/Jaipur-2.jpeg";
@@ -57,8 +66,8 @@ import Mumbai4 from "../../assets/images/Mumbai/Mumbai-4.jpeg";
 import Mumbai5 from "../../assets/images/Mumbai/Mumbai-5.jpeg";
 import Mumbai6 from "../../assets/images/Mumbai/Mumbai-6.jpeg";
 import Mumbai7 from "../../assets/images/Mumbai/Mumbai-7.jpeg";
-import { useSelector } from "react-redux";
 
+// --- DATA ---
 const data = [
   {
     displayImg: Thailand1,
@@ -84,16 +93,41 @@ const data = [
     ],
     city: "Thailand",
     popupTitle: "@Thailand",
-    popupDesc: "",
+    cardDesc: "Stop sleeping at night — Thailand’s good nights are calling!",
+    popupDesc: `<p>Pack a few outfits… looking cute matters too.</p>
+
+<p>At URSMARTSPOC, we make things happen — from leisure trips to seamless MICE events. We handle everything from airport to airport, planning Meetings, Incentives, Conferences, and Exhibitions with precision so you can relax, enjoy, and achieve your business goals.</p>
+
+<p>Your happiness, your perfect event — that’s our promise.</p>`,
   },
   {
     displayImg: Goa1,
-    hoverImgs: [Goa3, Goa4, Goa5, Goa6, Goa7, Goa8, Goa9],
+    hoverImgs: [
+      Goa3,
+      Goa4,
+      Goa5,
+      Goa6,
+      Goa7,
+      Goa8,
+      Goa9,
+      Goa10,
+      Goa11,
+      Goa12,
+      Goa13,
+      Goa14,
+      Goa15,
+      Goa16,
+      Goa17,
+    ],
     city: "Goa",
     popupTitle: "@Goa",
     popupDesc:
-      "Orchestrated the Annual Sales Meet 2025 in Goa with precision and flair, managing end-to-end logistics for attendees from multiple cities. The 3-day event featured seamless group transfers, warm airport welcomes, structured review sessions, collaborative workshops, and personalized team activities. From thoughtful refreshments and team briefings to evening beach dinners and leadership walk-and-talks, the event was a hit.",
-  },
+      `<p>Goa’s beaches, nightlife, seafood, and charm make it unforgettable. Soak up the sun, let your hair down, and maybe even spot a mermaid or two along the shore.</p>
+      <p>URSMARTSPOC – Weddings & Corporate Events</p>
+      <p>From dream beach weddings to seamless corporate and MICE events, URSMARTSPOC handles everything under the sun — logistics, décor, and experiences. Just walk in, relax, and enjoy — we make every moment memorable.</p>
+      `,
+
+      cardDesc:"Goa – Where Memories Begin"  },
   {
     displayImg: Jaipur1,
     hoverImgs: [
@@ -110,19 +144,26 @@ const data = [
     ],
     city: "Jaipur",
     popupTitle: "@Jaipur",
-    popupDesc: "",
+    popupDesc: `<p>Sit on the king’s throne and let the magic of Jaipur surround you. Leave the files and folders, just hand them over to us — we’ll organize everything for you. URSMARTSPOC arranges everything — from grand palace weddings and intimate royal-themed ceremonies to corporate events and seamless MICE experiences — so all you need to do is relax and enjoy your royal moment.</p>
+    <p>Touch the sword of your choice, point it whichever way you like — at URSMARTSPOC, your royal wishes and corporate visions come true exactly the way you want!</p>
+    `,
+    cardDesc:"Jaipur – Feel Like Royalty"
   },
   {
     displayImg: Mumbai1,
     hoverImgs: [Mumbai2, Mumbai3, Mumbai4, Mumbai5, Mumbai6, Mumbai7],
     city: "Mumbai",
     popupTitle: "@Mumbai",
-    popupDesc: "",
+    popupDesc: `<p>From high-powered corporate events to product launches, conferences, and team-building experiences, Mumbai is the city that never sleeps — and neither does URSMARTSPOC when it comes to making your events unforgettable.</p>
+    <p>We arrange everything from start to finish. Whether it’s a glamorous gala, an interactive workshop, or a large-scale corporate meet, we handle all the details — so you can sleep peacefully and enjoy the moment, while we stay up making sure everything is perfect and you’re happy.</p>
+    `,
+    cardDesc:"Mumbai – Where Business Meets Style"
   },
 ];
 
 export default function OurStories() {
   const [popupData, setPopupData] = useState(null);
+  const [activeIndex, setActiveIndex] = useState(1);
   const timerRef = useRef(null);
   const [dimension] = useSelector((state) => [state.dimension]);
 
@@ -130,28 +171,20 @@ export default function OurStories() {
     let index = 0;
     timerRef.current = setInterval(() => {
       e.target.src = story.hoverImgs[index];
-      if (index == story.hoverImgs.length - 1) {
-        index = 0;
-      } else index++;
+      if (index === story.hoverImgs.length - 1) index = 0;
+      else index++;
     }, 1000);
-  };
-
-  const getCardsCountInOneRow = () => {
-    let count = 0;
-    dimension.containerSize > 992
-      ? (count = 3)
-      : dimension.containerSize < 992 && dimension.containerSize > 768
-        ? (count = 2)
-        : dimension.containerSize < 768 && dimension.containerSize > 576
-          ? (count = 1)
-          : (count = 1);
-
-    return count;
   };
 
   const onHoverLeaveHandle = (e, story) => {
     clearInterval(timerRef.current);
     e.target.src = story.displayImg;
+  };
+
+  const getCardsCountInOneRow = () => {
+    if (dimension.containerSize > 992) return 3;
+    if (dimension.containerSize > 768) return 2;
+    return 1;
   };
 
   return (
@@ -162,25 +195,37 @@ export default function OurStories() {
 
       <div className="container stories-wrapper position-relative">
         <Swiper
+
+
           navigation={{
             prevEl: "#prev-story-btn",
             nextEl: "#next-story-btn",
           }}
           pagination={true}
           slidesPerView={getCardsCountInOneRow()}
-          // spaceBetween={20}
+          centeredSlides={true}
+          spaceBetween={30}
+          initialSlide={1} // 👈 start from second slide
+          onSlideChange={(swiper) => setActiveIndex(swiper.realIndex)}
+          onSwiper={(swiper) => setActiveIndex(swiper.realIndex)} // 👈 sync active index on mount
           modules={[Pagination, Navigation]}
-          // slidesPerView={'auto'}
-          // centeredSlides={true}
         >
-          {data.map((story, index) => {
-            return (
-              <SwiperSlide key={`story-${index}`}>
-                <FlashCardForImg setPopupData={setPopupData} data={story} />
-
-              </SwiperSlide>
-            );
-          })}
+          {data.map((story, index) => (
+            <SwiperSlide key={`story-${index}`}>
+              <div
+                className={`transition-all duration-300 d-flex justify-content-center ${activeIndex === index ? "scale-110 z-10" : "scale-90 opacity-70"
+                  }`}
+                style={{ transition: "all 0.4s ease" }}
+              >
+                <FlashCardForImg
+                  setPopupData={setPopupData}
+                  data={story}
+                  onMouseEnter={(e) => onHoverHandle(e, story)}
+                  onMouseLeave={(e) => onHoverLeaveHandle(e, story)}
+                />
+              </div>
+            </SwiperSlide>
+          ))}
         </Swiper>
 
         <SwiperNavigation
@@ -190,7 +235,7 @@ export default function OurStories() {
         />
       </div>
 
-      {popupData != null && (
+      {popupData && (
         <ContentPopup
           img={popupData.hoverImgs}
           title={popupData.popupTitle}

@@ -50,7 +50,7 @@ export default function Index({ data, setPopupData }) {
           {data.city}
         </h3>
 
-        <p className="text-white">{data?.popupDesc}</p>
+        <p className="text-white mb-2" dangerouslySetInnerHTML={{__html:data?.cardDesc}}></p>
         <button
           className="font-alice text-white z-1 position-relative text-decoration-none"
           onClick={() => setPopupData(data)}

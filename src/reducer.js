@@ -15,6 +15,7 @@ const initialState = {
   userAddresses: [],
   topProfessionals: [],
   adminDetails: {},
+  dashboardFilters: null,
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -101,6 +102,12 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         adminDetails: action.payload,
+      };
+
+    case "SET_DASHBOARD_FILTERS":
+      return {
+        ...state,
+        dashboardFilters: action.payload,
       };
 
     default:

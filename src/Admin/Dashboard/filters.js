@@ -4,8 +4,13 @@ import { generateHeader } from "../../helper";
 import "./style.scss";
 import MultiSelectDropdown from "../../app/MultiSelectDropdown";
 import DateRangeFilter from "../../app/DateRangeFilter";
+import { useDispatch, useSelector } from "react-redux";
+import { setDashboardFilters } from "../../action";
 
 const DashboardFilters = ({ onSearch, isLoading = false }) => {
+    const dispatch = useDispatch();
+    const reduxFilters = useSelector((state) => state.dashboardFilters);
+
     // Get today's date
     const today = new Date();
     // Get 15 days before today
@@ -33,66 +38,113 @@ const DashboardFilters = ({ onSearch, isLoading = false }) => {
     const [selectedCompanies, setSelectedCompanies] = useState(new Set());
 
     const [selectedCities, setSelectedCities] = useState(new Set());
-    const hasSetDefaultRef = useRef(false);
+    const selectedStatesRef = useRef(selectedStates);
+
+    useEffect(()=>{
+        if(selectedStatesRef.current !== selectedStates){
+            selectedStatesRef.current = selectedStates;
+        }
+    }, [selectedStates])
+
+    useEffect(() => {
+        if (reduxFilters) {
+            setStartDate(reduxFilters.startDate);
+            setEndDate(reduxFilters.endDate);
+            setSelectedStates(new Set(reduxFilters.selectedStates));
+            selectedStatesRef.current = new Set(reduxFilters.selectedStates);
+            setSelectedCities(new Set(reduxFilters.selectedCities));
+            setSelectedCompanies(new Set(reduxFilters.selectedCompanies));
+            setFilters({ sapId: reduxFilters.sapId });
+            setCitiesList(reduxFilters.citiesList || []);
+            setStatesList(reduxFilters.statesList || []);
+            setComapaniesList(reduxFilters.comapaniesList || [])
+        }
+    }, []);
+
+
+    useEffect(() => {
+        dispatch(
+            setDashboardFilters({
+                startDate,
+                endDate,
+                selectedStates: Array.from(selectedStates),
+                selectedCities: Array.from(selectedCities),
+                selectedCompanies: Array.from(selectedCompanies),
+                sapId: filters.sapId,
+                statesList,
+                citiesList,
+                comapaniesList
+            })
+        );
+    }, [startDate, endDate, selectedStates, selectedCities, selectedCompanies, filters.sapId, statesList, citiesList, comapaniesList]);
 
     // Fetch all states on initial load
     useEffect(() => {
-        const fetchStates = async () => {
-            try {
-                const response = await fetch(`${basePath}/api/hotels/states`, {
-                    method: "GET",
-                    headers: generateHeader(),
-                });
-                const states = await response.json();
-                setStatesList(states);
-
-                if (states.length > 0 && states.includes("Maharashtra")) {
-                    setSelectedStates(new Set(["Maharashtra"]));
-                    hasSetDefaultRef.current = false; // allow Mumbai to be set when cities load
-                }
-            } catch (error) {
-                console.error("Error fetching states:", error);
-            } finally {
-                setLoadingStates(false);
-            }
-        };
-        fetchStates();
+        if (reduxFilters && reduxFilters.statesList && reduxFilters.statesList.length > 0) {
+            setStatesList(reduxFilters.statesList);
+            setLoadingStates(false);
+        } else {
+            fetchStates();
+        }
     }, []);
 
     useEffect(() => {
-        const fetchCompanies = async () => {
-            try {
-                const response = await fetch(`${basePath}/api/companies/distinct`, {
-                    method: "GET",
-                    headers: generateHeader(),
-                });
-                const companies = await response.json();
-                setComapaniesList(companies);
-
-            } catch (error) {
-                console.error("Error fetching states:", error);
-            }
-        };
-        fetchCompanies();
+        if (reduxFilters && reduxFilters.comapaniesList && reduxFilters.comapaniesList.length > 0) {
+            setComapaniesList(reduxFilters.comapaniesList);
+        } else
+            fetchCompanies();
     }, []);
 
-    // Fetch cities when state changes
-    useEffect(() => {
-        // Debounce city fetch to avoid rapid calls
+    const fetchCompanies = async () => {
+        try {
+            const response = await fetch(`${basePath}/api/companies/distinct`, {
+                method: "GET",
+                headers: generateHeader(),
+            });
+            const companies = await response.json();
+            setComapaniesList(companies);
+
+        } catch (error) {
+            console.error("Error fetching states:", error);
+        }
+    };
+
+    const fetchStates = async () => {
+        try {
+            const response = await fetch(`${basePath}/api/hotels/states`, {
+                method: "GET",
+                headers: generateHeader(),
+            });
+            const states = await response.json();
+            setStatesList(states);
+
+            if (states.length > 0 && states.includes("Maharashtra")) {
+                setSelectedStates(new Set(["Maharashtra"]));
+                selectedStatesRef.current = new Set(["Maharashtra"]);
+                getCitiesByStates();
+            }
+        } catch (error) {
+            console.error("Error fetching states:", error);
+        } finally {
+            setLoadingStates(false);
+        }
+    };
+
+    const getCitiesByStates = () => {
         if (citiesTimerRef.current) {
             clearTimeout(citiesTimerRef.current);
         }
         citiesTimerRef.current = setTimeout(() => {
             fetchCities();
         }, 1500);
-    }, [selectedStates]);
+    }
 
     const fetchCities = async () => {
         if (selectedStates.length == 0) return;
         const url = new URL(`${basePath}/api/hotels/cities`);
 
         const params = new URLSearchParams();
-        selectedStates.forEach(id => params.append("state", id));
+        selectedStatesRef.current.forEach(id => params.append("state", id));
 
         url.search = params.toString();
         setLoadingCities(true);
@@ -109,13 +161,16 @@ const DashboardFilters = ({ onSearch, isLoading = false }) => {
                 setCitiesList(cities);
 
                 // Only set Mumbai if Maharashtra is selected AND this is the first time
+                console.log("selectedStatesRef.current", selectedStatesRef.current);
+                
                 if (
-                    selectedStates.has("Maharashtra") &&
-                    !hasSetDefaultRef.current &&
+                    selectedStatesRef.current.has("Maharashtra") &&
                     cities.includes("Mumbai")
                 ) {
                     setSelectedCities(new Set(["Mumbai"]));
-                    hasSetDefaultRef.current = true; // Prevent it from running again
+                } else {
+                    setSelectedCities(new Set());
+
                 }
             }
 
@@ -136,11 +191,12 @@ const DashboardFilters = ({ onSearch, isLoading = false }) => {
 
     const handleReset = () => {
         setSelectedStates(new Set(["Maharashtra"]));
-        setSelectedCities(new Set(["Mumbai"]));
+        selectedStatesRef.current = new Set(["Maharashtra"]);
+        getCitiesByStates();
+
         setFilters({ sapId: "" });
         setStartDate(formatDate(fifteenDaysAgo));
         setEndDate(formatDate(today));
-        hasSetDefaultRef.current = true; // Prevent first-load Mumbai selection again
     };
 
 
@@ -154,7 +210,11 @@ const DashboardFilters = ({ onSearch, isLoading = false }) => {
                         <MultiSelectDropdown
                             items={statesList}
                             selectedItems={selectedStates}
-                            setSelectedItems={setSelectedStates}
+                            setSelectedItems={(val)=>{
+                                setSelectedStates(val);
+                                selectedStatesRef.current = val;
+                                getCitiesByStates();
+                            }}
                             label="Select State"
                         />
 

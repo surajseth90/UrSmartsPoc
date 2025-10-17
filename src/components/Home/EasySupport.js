@@ -7,7 +7,7 @@ export default function Index() {
             <div className="container bg-secondary">
                 <img className="position-absolute top-0 h-100 w-100 start-0" src={Lines}/>
                 <h3 className="h3-heading">Easy Support</h3>
-                <div className="d-flex gap-5 mt-5">
+                <div className="d-flex gap-5 mt-5 flex-lg-row flex-column">
                     <p>At UrSmartSpoc, we believe great travel experiences start with great support.
                         Our 24×7 live chat, call, and email assistance ensures help is always just a tap away — no waiting, no hassle.
                         Whether it’s a booking change, travel query, or last-minute request, our expert team is ready to resolve it instantly.
