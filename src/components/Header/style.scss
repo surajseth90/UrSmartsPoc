@@ -1,5 +1,5 @@
 .header-container {
-  z-index: 1000;
+  z-index: 1001;
   border-bottom: 1px solid var(--grey);
 
   .hd-content-wrapper img {
@@ -133,9 +133,15 @@
     .pay-btn {
       display: flex;
       justify-content: center;
-      padding: 10px !important;
-      font-size: 24px;
-      margin-top: 24px;
+      padding: 8px 12px !important;
+      font-size: 18px;
+      width: 50%;
+    }
+
+    .login-btn {
+      font-size: 18px;
+      padding: 8px 12px !important;
+      width: 50%;
     }
 
     .navbar-toggler {

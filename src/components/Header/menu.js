@@ -46,7 +46,7 @@ export default function MobileNavbar({ drawerClickHandler }) {
       </ul>
       <div className="d-flex gap-3">
         <a target="_blank" href="https://pmny.in/zIrYTtNgWD1d" className="btn-primary pay-btn px-4 py-1 text-decoration-none">Pay</a>
-        <button className="btn-primary px-4 py-1" onClick={() => setIsLoginPopupOpened(true)}>Login</button>
+        <button className="btn-primary login-btn px-4 py-1" onClick={() => setIsLoginPopupOpened(true)}>Login</button>
       </div>
 
       {isLoginPopupOpened && <LoginPopup onClose={() => setIsLoginPopupOpened(false)} />}
