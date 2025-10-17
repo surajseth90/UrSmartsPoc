@@ -44,19 +44,20 @@ export default function ContentPopup({ onClose }) {
           <h3>Login As</h3>
           <div className="d-flex gap-3 mt-3">
 
-          <Link
+          <a
             className="btn-primary px-4 py-1 text-decoration-none"
-            to={"/customer/login"}
+            href="/customer/login"
+            target="_blank"
           >
             Customer
-          </Link>
-          <Link
+          </a>
+          <a
             className="btn-primary px-4 py-1 text-decoration-none"
-            to={"/admin/login"}
-
+            href="/customer/login"
+            target="_blank"
           >
             Admin
-          </Link>
+          </a>
           </div>
 
         </div>
